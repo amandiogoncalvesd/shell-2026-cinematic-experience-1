@@ -2,7 +2,12 @@
 // Todas as fotografias fornecidas, organizadas por categoria/capítulo emocional.
 const BASE = "https://res.cloudinary.com/deeki0eou/image/upload/";
 
-const u = (path: string) => `${BASE}${path}`;
+// Otimização na entrega: largura máxima sensata + qualidade automática + melhor formato.
+// Mantém o design intacto enquanto reduz drasticamente o peso de cada fotografia.
+const u = (path: string, w = 1200) => `${BASE}w_${w},q_auto,f_auto/${path}`;
+
+// Versões em alta resolução para ecrãs inteiros (heróis).
+export const hiRes = (path: string) => u(path, 1800);
 
 export const featured = [
   u("v1782392326/shelcia-melhor-foto-com-amigos_ex5e8d.webp"),

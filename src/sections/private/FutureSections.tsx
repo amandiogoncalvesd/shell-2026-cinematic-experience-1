@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Parallax, Reveal } from "../../components/effects";
-import { VideoCard, openLightbox } from "../../components/media";
+import { SmartImg, VideoCard, openLightbox } from "../../components/media";
 import { SectionHeading, Kicker, GlassButton } from "../../components/ui";
 import { dreamChapters, playlist, skyText } from "../../data/content";
 import { generic2026, backstageClassic } from "../../data/photos";
@@ -85,7 +85,7 @@ export function SkySection({ energy }: { energy: number }) {
             whileHover={{ scale: 1.06 }}
             onClick={() => openLightbox(skyPhotos.map((s) => ({ type: "photo" as const, src: s })), i)}
           >
-            <img src={src} className="h-full w-full object-cover" style={{ filter: `saturate(${1 + energy * 0.4})` }} alt="" />
+            <SmartImg src={src} className="h-full w-full object-cover" style={{ filter: `saturate(${1 + energy * 0.4})` }} />
           </motion.div>
         ))}
       </div>
@@ -94,7 +94,7 @@ export function SkySection({ energy }: { energy: number }) {
 }
 
 export function MusicSection() {
-  const { play, currentTrack, isPlaying, toggle, energy } = useMusic();
+  const { play, currentTrack, isPlaying, toggle, energy, volume, setVolume } = useMusic();
   const [selected, setSelected] = useState(0);
   return (
     <section id="p-musica" className="relative py-28">
@@ -152,6 +152,23 @@ export function MusicSection() {
             >
               {isPlaying ? "Pausar" : "Reproduzir"}
             </GlassButton>
+
+            <div className="mt-5 flex items-center gap-3">
+              <span className="text-xs text-ocean-300/70" aria-hidden>🔈</span>
+              <input
+                type="range"
+                min={0}
+                max={1}
+                step={0.01}
+                value={volume}
+                onChange={(e) => setVolume(parseFloat(e.target.value))}
+                className="w-full"
+                aria-label="Volume da música"
+              />
+              <span className="w-9 text-right text-[10px] tabular-nums uppercase tracking-widest text-ocean-300/60">
+                {Math.round(volume * 100)}%
+              </span>
+            </div>
           </div>
         </div>
       </div>

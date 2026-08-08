@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import Navbar from "../components/Navbar";
-import { CanvasParticles, LiquidBlobs, Parallax, Reveal, VideoText } from "../components/effects";
+import { CanvasParticles, Countdown, CursorGlow, FilmGrain, LiquidBlobs, Parallax, Reveal, ScrollProgress, SectionDock, VideoText } from "../components/effects";
 import { AutoMosaic, LightboxHost, MediaCarousel, PhotoStage, VideoCard, openLightbox } from "../components/media";
 import { SectionHeading, GlassButton, Kicker } from "../components/ui";
 import { useMusic } from "../audio/MusicProvider";
@@ -30,15 +30,23 @@ const SECTIONS = [
 export default function GuestArea({ onGoPrivate, onExitPortal }: { onGoPrivate: () => void; onExitPortal: () => void }) {
   const { play, energy } = useMusic();
   const heroRef = useRef<HTMLDivElement | null>(null);
+  const startedRef = useRef(false);
 
   useEffect(() => {
-    play(audioTracks[0]);
+    if (!startedRef.current) {
+      startedRef.current = true;
+      play(audioTracks[0]);
+    }
     window.scrollTo(0, 0);
   }, [play]);
 
   return (
     <div className="relative bg-[#03101f]">
       <LightboxHost />
+      <ScrollProgress />
+      <FilmGrain />
+      <CursorGlow />
+      <SectionDock sections={SECTIONS} />
       <Navbar sections={SECTIONS} brand="Shell 2026 · Convidados" onExit={onExitPortal} exitLabel="← Portal" />
 
       {/* HERO */}
@@ -67,6 +75,9 @@ export default function GuestArea({ onGoPrivate, onExitPortal }: { onGoPrivate: 
             Bem-vindo à galeria de celebração de Shelcia Fernanda Neves Van-Dúnem. Uma coleção viva de
             memórias, amizades e momentos que mereciam ser eternizados.
           </motion.p>
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.85 }}>
+            <Countdown />
+          </motion.div>
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }}>
             <GlassButton variant="solid" onClick={() => document.getElementById("g-momentos")?.scrollIntoView({ behavior: "smooth" })}>
               Explorar a Galeria ↓

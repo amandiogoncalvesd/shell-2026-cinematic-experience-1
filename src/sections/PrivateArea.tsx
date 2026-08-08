@@ -1,6 +1,7 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import Navbar from "../components/Navbar";
 import { LightboxHost } from "../components/media";
+import { CursorGlow, FilmGrain, ScrollProgress, SectionDock } from "../components/effects";
 import { useMusic } from "../audio/MusicProvider";
 import { audioTracks } from "../data/videos";
 import { HomeSection, MemoriesSection, StoriesSection } from "./private/NarrativeSections";
@@ -24,15 +25,25 @@ const SECTIONS = [
 
 export default function PrivateArea({ onExit }: { onExit: () => void }) {
   const { play, energy } = useMusic();
+  const startedRef = useRef(false);
 
+  // Toca a faixa de abertura apenas uma vez — sem este guard, cada mudança de
+  // faixa escolhida pela Shelcia na secção Música seria sobrescrita por este efeito.
   useEffect(() => {
-    play(audioTracks[10]);
+    if (!startedRef.current) {
+      startedRef.current = true;
+      play(audioTracks[10]);
+    }
     window.scrollTo(0, 0);
   }, [play]);
 
   return (
     <div className="relative bg-[#03101f]">
       <LightboxHost />
+      <ScrollProgress />
+      <FilmGrain />
+      <CursorGlow />
+      <SectionDock sections={SECTIONS} />
       <Navbar sections={SECTIONS} brand="Shell 2026 · Shelcia" onExit={onExit} exitLabel="Sair" />
       <HomeSection energy={energy} />
       <MemoriesSection energy={energy} />

@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useMusic } from "../audio/MusicProvider";
 
 export interface NavSection {
@@ -20,13 +20,32 @@ export default function Navbar({
 }) {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [active, setActive] = useState(sections[0]?.id);
   const { isPlaying, toggle, currentTrack } = useMusic();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
-    window.addEventListener("scroll", onScroll);
+    window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
+
+  // Deteta o capítulo visível para iluminar o elo certo da navegação.
+  useEffect(() => {
+    const observers: IntersectionObserver[] = [];
+    sections.forEach((s) => {
+      const el = document.getElementById(s.id);
+      if (!el) return;
+      const obs = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting) setActive(s.id);
+        },
+        { rootMargin: "-38% 0px -55% 0px" }
+      );
+      obs.observe(el);
+      observers.push(obs);
+    });
+    return () => observers.forEach((o) => o.disconnect());
+  }, [sections]);
 
   const go = (id: string) => {
     setOpen(false);
@@ -54,14 +73,21 @@ export default function Navbar({
           <span className="font-display text-lg font-semibold tracking-wide text-white">{brand}</span>
         </button>
 
-        <nav className="hidden items-center gap-7 lg:flex">
+        <nav className="hidden items-center gap-6 lg:flex xl:gap-7">
           {sections.map((s) => (
             <button
               key={s.id}
               onClick={() => go(s.id)}
-              className="text-xs font-medium uppercase tracking-[0.2em] text-ocean-100/70 transition hover:text-white"
+              className={`relative pb-1 text-xs font-medium uppercase tracking-[0.2em] transition ${
+                active === s.id ? "text-white" : "text-ocean-100/70 hover:text-white"
+              }`}
             >
               {s.label}
+              <span
+                className={`absolute inset-x-0 -bottom-0.5 h-px bg-gradient-to-r from-transparent via-ocean-300 to-transparent transition-opacity duration-500 ${
+                  active === s.id ? "opacity-100" : "opacity-0"
+                }`}
+              />
             </button>
           ))}
         </nav>
@@ -94,30 +120,40 @@ export default function Navbar({
           >
             {exitLabel}
           </button>
-          <button className="grid h-9 w-9 place-items-center rounded-full glass text-white lg:hidden" onClick={() => setOpen((o) => !o)}>
-            ☰
+          <button
+            className="grid h-9 w-9 place-items-center rounded-full glass text-white lg:hidden"
+            onClick={() => setOpen((o) => !o)}
+            aria-label={open ? "Fechar menu" : "Abrir menu"}
+            aria-expanded={open}
+          >
+            {open ? "✕" : "☰"}
           </button>
         </div>
       </div>
 
-      {open && (
-        <motion.div
-          initial={{ opacity: 0, height: 0 }}
-          animate={{ opacity: 1, height: "auto" }}
-          exit={{ opacity: 0, height: 0 }}
-          className="glass-strong mx-4 mt-2 flex flex-col gap-1 rounded-2xl p-4 lg:hidden"
-        >
-          {sections.map((s) => (
-            <button
-              key={s.id}
-              onClick={() => go(s.id)}
-              className="rounded-lg px-3 py-2 text-left text-sm uppercase tracking-widest text-ocean-100/80 hover:bg-white/10"
-            >
-              {s.label}
-            </button>
-          ))}
-        </motion.div>
-      )}
+      <AnimatePresence>
+        {open && (
+          <motion.div
+            initial={{ opacity: 0, height: 0, y: -8 }}
+            animate={{ opacity: 1, height: "auto", y: 0 }}
+            exit={{ opacity: 0, height: 0, y: -8 }}
+            transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            className="glass-strong mx-4 mt-2 flex flex-col gap-1 overflow-hidden rounded-2xl p-4 lg:hidden"
+          >
+            {sections.map((s) => (
+              <button
+                key={s.id}
+                onClick={() => go(s.id)}
+                className={`rounded-lg px-3 py-2 text-left text-sm uppercase tracking-widest transition ${
+                  active === s.id ? "bg-white/10 text-white" : "text-ocean-100/80 hover:bg-white/10"
+                }`}
+              >
+                {s.label}
+              </button>
+            ))}
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.header>
   );
 }

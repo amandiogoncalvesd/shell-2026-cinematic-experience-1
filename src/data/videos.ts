@@ -2,6 +2,15 @@
 const V = "https://res.cloudinary.com/deeki0eou/video/upload/";
 const v = (path: string) => `${V}${path}`;
 
+// Cartaz automático: pede ao Cloudinary um fotograma do vídeo como imagem,
+// para que os cartões de vídeo tenham pré-visualização sem descarregar o vídeo.
+export function videoPoster(src: string, sec = 1.2, width = 900): string {
+  if (!src.includes("cloudinary.com") || !src.includes("/video/upload/")) return "";
+  return src
+    .replace("/video/upload/", `/video/upload/so_${sec},w_${width},q_auto/`)
+    .replace(/\.(mp4|webm|mov)$/i, ".jpg");
+}
+
 export const videoBackstage2026 = [
   v("v1784116659/Shelcia-bastidores-2026-01_t3trse.mp4"),
   v("v1784116657/Shelcia-bastidores-2026-03_inm4b9.mp4"),

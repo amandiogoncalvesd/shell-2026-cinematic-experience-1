@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { CanvasParticles, LiquidBlobs } from "../components/effects";
+import { CanvasParticles, Countdown, FilmGrain, LiquidBlobs } from "../components/effects";
 
 export default function Portal({ onEnter }: { onEnter: (role: "guests" | "shelcia") => void }) {
   const [phase, setPhase] = useState<"loading" | "portal" | "leaving">("loading");
@@ -20,6 +20,11 @@ export default function Portal({ onEnter }: { onEnter: (role: "guests" | "shelci
     }, 180);
     return () => clearInterval(id);
   }, []);
+
+  const skipIntro = () => {
+    setProgress(100);
+    setPhase("portal");
+  };
 
   const choose = (role: "guests" | "shelcia") => {
     setLeavingTo(role);
@@ -68,6 +73,15 @@ export default function Portal({ onEnter }: { onEnter: (role: "guests" | "shelci
               />
             </div>
             <p className="text-xs uppercase tracking-[0.4em] text-ocean-300/60">a abrir o portal de cristal…</p>
+            <motion.button
+              onClick={skipIntro}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 1.2 }}
+              className="mt-2 text-[10px] uppercase tracking-[0.3em] text-ocean-200/40 transition hover:text-white"
+            >
+              Pular introdução →
+            </motion.button>
           </motion.div>
         )}
 
@@ -112,6 +126,10 @@ export default function Portal({ onEnter }: { onEnter: (role: "guests" | "shelci
               />
             </motion.div>
 
+            <motion.div variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}>
+              <Countdown compact />
+            </motion.div>
+
             <motion.p
               variants={{ hidden: { opacity: 0 }, show: { opacity: 1 } }}
               className="max-w-md text-xs leading-relaxed text-ocean-200/50"
@@ -121,6 +139,8 @@ export default function Portal({ onEnter }: { onEnter: (role: "guests" | "shelci
           </motion.div>
         )}
       </AnimatePresence>
+
+      <FilmGrain />
 
       <AnimatePresence>
         {phase === "leaving" && (

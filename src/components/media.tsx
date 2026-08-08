@@ -1,6 +1,30 @@
 import { useEffect, useMemo, useRef, useState, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { createPortal } from "react-dom";
+import { videoPoster } from "../data/videos";
+
+/* ---------------------------------------------------------
+   SmartImg — imagem com revelação suave ao terminar de
+   carregar (nunca aparece um quadrado vazio a "piscar")
+--------------------------------------------------------- */
+export function SmartImg({
+  src,
+  alt = "",
+  className = "",
+  ...rest
+}: React.ImgHTMLAttributes<HTMLImageElement> & { src: string }) {
+  const [loaded, setLoaded] = useState(false);
+  return (
+    <img
+      src={src}
+      alt={alt}
+      loading="lazy"
+      onLoad={() => setLoaded(true)}
+      className={`img-fade ${loaded ? "is-loaded" : ""} ${className}`}
+      {...rest}
+    />
+  );
+}
 
 /* ---------------------------------------------------------
    Lightbox context (very small, global overlay)
@@ -46,6 +70,33 @@ export function LightboxHost() {
     return () => window.removeEventListener("keydown", onKey);
   }, [state, close, next, prev]);
 
+  // Pré-carrega as fotos vizinhas para navegação instantânea.
+  useEffect(() => {
+    if (!state) return;
+    [-1, 1].forEach((off) => {
+      const it = state.items[(state.index + off + state.items.length) % state.items.length];
+      if (it?.type === "photo") {
+        const img = new Image();
+        img.src = it.src;
+      }
+    });
+  }, [state]);
+
+  // Gesto de deslizar (swipe) em ecrãs de toque.
+  const touchX = useRef<number | null>(null);
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchX.current = e.touches[0].clientX;
+  };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (touchX.current === null) return;
+    const dx = e.changedTouches[0].clientX - touchX.current;
+    touchX.current = null;
+    if (Math.abs(dx) > 48) {
+      if (dx < 0) next();
+      else prev();
+    }
+  };
+
   if (!state) return null;
   const current = state.items[state.index];
 
@@ -57,6 +108,8 @@ export function LightboxHost() {
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
         onClick={close}
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
       >
         <button
           className="absolute right-6 top-6 z-10 grid h-11 w-11 place-items-center rounded-full glass text-ocean-100 transition hover:scale-110"
@@ -65,6 +118,9 @@ export function LightboxHost() {
         >
           ✕
         </button>
+        <div className="absolute left-6 top-6 z-10 rounded-full glass px-4 py-2 text-xs tracking-[0.25em] text-ocean-100">
+          {state.index + 1} <span className="text-ocean-300/60">/ {state.items.length}</span>
+        </div>
         {state.items.length > 1 && (
           <>
             <button
@@ -97,10 +153,11 @@ export function LightboxHost() {
           onClick={(e) => e.stopPropagation()}
         >
           {current.type === "photo" ? (
-            <img src={current.src} alt="" className="max-h-[85vh] w-auto object-contain" />
+            <img src={current.src} alt="" className="max-h-[85vh] w-auto object-contain" draggable={false} />
           ) : (
             <video
               src={current.src}
+              poster={videoPoster(current.src, 0.6, 1280) || undefined}
               className="max-h-[85vh] w-auto"
               controls
               autoPlay
@@ -197,18 +254,21 @@ export function AutoMosaic({
   className?: string;
   energy?: number;
 }) {
+  // Nunca criar mosaicos vazios: o número de células adapta-se às fotos existentes.
+  const count = Math.max(1, Math.min(tiles, photos.length));
+
   const buckets = useMemo(() => {
-    const arr: string[][] = Array.from({ length: tiles }, () => []);
-    photos.forEach((p, i) => arr[i % tiles].push(p));
+    const arr: string[][] = Array.from({ length: count }, () => []);
+    photos.forEach((p, i) => arr[i % count].push(p));
     return arr;
-  }, [photos, tiles]);
+  }, [photos, count]);
 
   const sizes = useMemo(
     () =>
-      Array.from({ length: tiles }, (_, i) =>
+      Array.from({ length: count }, (_, i) =>
         i % 7 === 0 ? "row-span-2 col-span-2" : i % 5 === 0 ? "col-span-2" : ""
       ),
-    [tiles]
+    [count]
   );
 
   return (
@@ -281,7 +341,7 @@ export function MediaCarousel({
             )
           }
         >
-          <img src={src} alt="" loading="lazy" className="h-full w-full object-cover transition duration-700 group-hover:brightness-110" />
+          <SmartImg src={src} className="h-full w-full object-cover transition duration-700 group-hover:brightness-110" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 transition group-hover:opacity-100" />
           <div className="absolute inset-0 opacity-0 shimmer-border rounded-2xl transition group-hover:opacity-100" />
         </motion.div>
@@ -347,11 +407,11 @@ export function VideoCard({
       <video
         ref={ref}
         src={src}
-        poster={poster}
+        poster={poster ?? (videoPoster(src) || undefined)}
         muted
         loop
         playsInline
-        preload="metadata"
+        preload="none"
         className="h-full w-full cursor-pointer object-cover"
       />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/10" />
