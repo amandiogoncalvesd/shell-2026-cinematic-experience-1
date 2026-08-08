@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Parallax, Reveal } from "../../components/effects";
+import { Framemation } from "../../components/cinema";
 import { SmartImg, VideoCard, openLightbox } from "../../components/media";
 import { SectionHeading, Kicker, GlassButton } from "../../components/ui";
 import { dreamChapters, playlist, skyText } from "../../data/content";
 import { generic2026, backstageClassic } from "../../data/photos";
+import { arquiteturaSonhoPhotos, irmaosVideos, infanciaVideos, bastidoresTopVideos } from "../../data/media2026";
 import { privateVideos, videoSpecial, audioTracks } from "../../data/videos";
 import { useMusic } from "../../audio/MusicProvider";
 
@@ -12,8 +14,39 @@ export function CinemaSection() {
   return (
     <section id="p-videos" className="relative py-28">
       <div className="mx-auto max-w-7xl px-6">
-        <SectionHeading kicker="Cinema" title="Momentos em Movimento" subtitle="Vídeos que se revelam automaticamente ao entrarem em foco — pequenos filmes de uma grande vida." align="center" />
+        <SectionHeading kicker="Cinema" title="Momentos em Movimento" subtitle="Vídeos que se reproduzem sozinhos ao entrarem em foco — só o vídeo em foco ganha vida. Pára sobre um para o carregar mais depressa." align="center" />
 
+        {/* Emocional — com os irmãos */}
+        <Reveal className="mt-14">
+          <Kicker>Emocional · com os irmãos</Kicker>
+        </Reveal>
+        <div className="mt-5 grid grid-cols-2 gap-4 lg:grid-cols-4">
+          {irmaosVideos.map((src, i) => (
+            <VideoCard key={src} src={src} playlist={irmaosVideos} index={i} className="aspect-[3/4]" />
+          ))}
+        </div>
+
+        {/* Infância em vídeo */}
+        <Reveal className="mt-14">
+          <Kicker>Infância · os primeiros passos</Kicker>
+        </Reveal>
+        <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
+          {infanciaVideos.map((src, i) => (
+            <VideoCard key={src} src={src} playlist={infanciaVideos} index={i} />
+          ))}
+        </div>
+
+        {/* Bastidores top */}
+        <Reveal className="mt-14">
+          <Kicker>Bastidores · top vídeos</Kicker>
+        </Reveal>
+        <div className="mt-5 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
+          {bastidoresTopVideos.map((src, i) => (
+            <VideoCard key={src} src={src} playlist={bastidoresTopVideos} index={i} className="aspect-[3/4]" />
+          ))}
+        </div>
+
+        {/* Arquivo geral */}
         <div className="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {videoSpecial.map((src, i) => (
             <VideoCard key={src} src={src} playlist={videoSpecial} index={i} className="aspect-video lg:col-span-1" />
@@ -24,7 +57,7 @@ export function CinemaSection() {
         </div>
         <div className="mt-10 flex justify-center">
           <GlassButton onClick={() => openLightbox(privateVideos.map((s) => ({ type: "video" as const, src: s })), 0)}>
-            Ver todo o arquivo de vídeo
+            Ver todo o arquivo de vídeo ✦
           </GlassButton>
         </div>
       </div>
@@ -32,7 +65,7 @@ export function CinemaSection() {
   );
 }
 
-export function DreamsSection() {
+export function DreamsSection({ energy = 0 }: { energy?: number }) {
   return (
     <section id="p-sonhos" className="relative overflow-hidden py-28">
       <Parallax speed={0.2} className="absolute inset-0 -z-10">
@@ -41,19 +74,27 @@ export function DreamsSection() {
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-[#03101f] via-[#03101f]/70 to-[#03101f]" />
 
       <div className="mx-auto max-w-6xl px-6">
-        <SectionHeading kicker="Sonhos" title="The Architect" subtitle="“Alguns sonhos começam como um desenho.” — tornar-se arquiteta e construir uma linda família." align="center" />
+        <SectionHeading kicker="Sonhos" title="The Architect" subtitle="“Alguns sonhos começam como um desenho.” — tornar-se uma arquiteta bem-sucedida e construir uma linda família." align="center" />
 
         <div className="mt-16 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-5">
           {dreamChapters.map((d, i) => (
             <Reveal key={d.id} delay={i * 0.08}>
-              <div className="glass shimmer-border flex h-full flex-col items-center gap-3 rounded-2xl px-5 py-9 text-center">
-                <span className="font-display text-xs uppercase tracking-[0.3em] text-ocean-300">{String(i + 1).padStart(2, "0")}</span>
+              <div className="glass shimmer-border flex h-full flex-col items-center gap-3 rounded-2xl px-5 py-9 text-center transition hover:-translate-y-1">
+                <span className="font-display text-xs uppercase tracking-[0.3em] text-shell-sky">{String(i + 1).padStart(2, "0")}</span>
                 <h3 className="font-display text-lg font-semibold text-white">{d.title}</h3>
                 <p className="text-[11px] uppercase tracking-widest text-ocean-200/50">{d.pt}</p>
                 <p className="mt-2 text-xs leading-relaxed text-ocean-100/60">{d.text}</p>
               </div>
             </Reveal>
           ))}
+        </div>
+
+        {/* O sonho em imagens — molduras reais que respiram */}
+        <Reveal className="mt-20 text-center">
+          <Kicker>Arquitetura · o sonho dela em imagens</Kicker>
+        </Reveal>
+        <div className="mt-8">
+          <Framemation photos={arquiteturaSonhoPhotos} frames={7} energy={energy} />
         </div>
       </div>
     </section>

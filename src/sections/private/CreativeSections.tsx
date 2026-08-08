@@ -1,8 +1,10 @@
 import { Reveal } from "../../components/effects";
+import { Framemation } from "../../components/cinema";
 import { AutoMosaic, MediaCarousel, VideoCard } from "../../components/media";
 import { SectionHeading, Kicker } from "../../components/ui";
 import { identity, instruments, musicStyles } from "../../data/content";
 import { artMagic } from "../../data/photos";
+import { artTxtPhotos, frasesSeriePhotos } from "../../data/media2026";
 import { videoArtMagic } from "../../data/videos";
 
 const universeEmoji: Record<string, string> = {
@@ -85,6 +87,22 @@ export function ArtSection({ energy }: { energy: number }) {
         </div>
         <div className="mt-10">
           <MediaCarousel photos={artMagic} height="h-72" />
+        </div>
+
+        {/* Arte & texto — palavras que ela transforma em imagem */}
+        <Reveal className="mt-20 text-center">
+          <Kicker>Arte & texto · palavras em imagem</Kicker>
+        </Reveal>
+        <div className="mt-8">
+          <Framemation photos={artTxtPhotos} frames={7} energy={energy} aspect="aspect-square" />
+        </div>
+
+        {/* Frases da série que ela ama — Bridgerton */}
+        <Reveal className="mt-20 text-center">
+          <Kicker>As declarações que ela ama · Bridgerton</Kicker>
+        </Reveal>
+        <div className="mt-8">
+          <MediaCarousel photos={frasesSeriePhotos} height="h-72" />
         </div>
       </div>
     </section>

@@ -8,6 +8,7 @@ import { HomeSection, MemoriesSection, StoriesSection } from "./private/Narrativ
 import { FriendsSection, LettersSection } from "./private/PeopleSections";
 import { LibrarySection, ArtSection } from "./private/CreativeSections";
 import { CinemaSection, DreamsSection, SkySection, MusicSection } from "./private/FutureSections";
+import { NaturezaSection } from "./private/NatureSections";
 
 const SECTIONS = [
   { id: "p-home", label: "Home" },
@@ -15,9 +16,10 @@ const SECTIONS = [
   { id: "p-historias", label: "Histórias" },
   { id: "p-amigos", label: "Amigos" },
   { id: "p-cartas", label: "Cartas" },
+  { id: "p-natureza", label: "Natureza" },
   { id: "p-livros", label: "Livros" },
   { id: "p-arte", label: "Arte" },
-  { id: "p-videos", label: "Vídeos" },
+  { id: "p-videos", label: "Cinema" },
   { id: "p-sonhos", label: "Sonhos" },
   { id: "p-ceu", label: "Céu" },
   { id: "p-musica", label: "Música" },
@@ -50,10 +52,11 @@ export default function PrivateArea({ onExit }: { onExit: () => void }) {
       <StoriesSection />
       <FriendsSection />
       <LettersSection />
+      <NaturezaSection energy={energy} />
       <LibrarySection />
       <ArtSection energy={energy} />
       <CinemaSection />
-      <DreamsSection />
+      <DreamsSection energy={energy} />
       <SkySection energy={energy} />
       <MusicSection />
       <footer className="border-t border-white/5 py-10 text-center text-xs uppercase tracking-[0.3em] text-ocean-300/40">

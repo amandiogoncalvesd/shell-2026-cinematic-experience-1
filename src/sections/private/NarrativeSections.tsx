@@ -4,13 +4,13 @@ import { AutoMosaic, MediaCarousel, PhotoStage } from "../../components/media";
 import { SectionHeading, Kicker } from "../../components/ui";
 import { identity, chapters, essenceWords } from "../../data/content";
 import { featured, childhoodPublic, childhoodPrivate, backstage2026, generic2026 } from "../../data/photos";
-import { videoBackstage2026 } from "../../data/videos";
+import { destaquePhotos, txtFraseVideo } from "../../data/media2026";
 
 export function HomeSection({ energy }: { energy: number }) {
   return (
     <section id="p-home" className="relative flex min-h-screen items-center justify-center overflow-hidden">
       <div className="absolute inset-0">
-        <PhotoStage photos={[...backstage2026].reverse().slice(0, 20)} interval={4000} energy={energy} className="h-full w-full" onClickOpen={false} />
+        <PhotoStage photos={[...destaquePhotos.slice(0, 12), ...backstage2026.slice(0, 8)]} interval={4000} energy={energy} className="h-full w-full" onClickOpen={false} />
         <div className="absolute inset-0 bg-gradient-to-b from-[#03101f]/70 via-[#03101f]/55 to-[#03101f]" />
       </div>
       <LiquidBlobs />
@@ -18,7 +18,7 @@ export function HomeSection({ energy }: { energy: number }) {
 
       <div className="relative z-10 flex flex-col items-center gap-6 px-6 text-center">
         <Kicker>Portal Pessoal</Kicker>
-        <VideoText id="private-home" text="SHELCIA" videoSrc={videoBackstage2026[0]} className="w-[92vw] max-w-3xl" fontSize={120} />
+        <VideoText id="private-home" text="SHELCIA" videoSrc={txtFraseVideo} className="w-[92vw] max-w-3xl" fontSize={120} />
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 1 }}>
           <p className="text-sm uppercase tracking-[0.4em] text-ocean-200/70">{identity.fullName}</p>
           <p className="mt-1 text-xs uppercase tracking-[0.3em] text-ocean-300/50">{identity.birthday} · 18 anos</p>

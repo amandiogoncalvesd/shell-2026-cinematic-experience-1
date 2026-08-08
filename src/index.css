@@ -15,6 +15,14 @@
   --color-ocean-800: #1a4f8a;
   --color-ocean-900: #0f2f57;
   --color-ocean-950: #081b34;
+
+  /* Paleta oficial da Shelcia — o azul claro é a cor principal ✦ */
+  --color-shell-sky: #87c3e3;
+  --color-shell-serenity: #5a75c2;
+  --color-shell-night: #3e4e90;
+  --color-shell-lavender: #d9b8e3;
+  --color-shell-violet: #9f7ca9;
+  --color-shell-rose: #da8ba0;
 }
 
 html {
@@ -126,7 +134,84 @@ body {
 
 .crystal-divider {
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(154, 220, 255, 0.6), transparent);
+  background: linear-gradient(90deg, transparent, rgba(135, 195, 227, 0.65), transparent);
+}
+
+/* ---------- Onda 2 · Estilo Cinderela: azul claro, cores sólidas, molduras reais ---------- */
+
+/* Brilho suave para títulos em azul claro sólido */
+.glow-shell {
+  color: #a5d5ef;
+  text-shadow: 0 0 34px rgba(135, 195, 227, 0.45), 0 0 90px rgba(90, 117, 194, 0.25);
+}
+
+/* Moldura real — borda azul sólida com faíscas nos cantos, digna de um conto de fadas */
+.royal-frame {
+  position: relative;
+  border: 2px solid rgba(135, 195, 227, 0.6);
+  box-shadow:
+    0 18px 55px rgba(3, 14, 30, 0.6),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.09),
+    0 0 26px rgba(135, 195, 227, 0.12);
+  background: rgba(10, 30, 58, 0.55);
+}
+.royal-frame::before,
+.royal-frame::after {
+  content: "✦";
+  position: absolute;
+  font-size: 13px;
+  line-height: 1;
+  color: #bfe4f7;
+  text-shadow: 0 0 10px rgba(135, 195, 227, 0.95);
+  pointer-events: none;
+  z-index: 3;
+}
+.royal-frame::before {
+  top: -7px;
+  left: -6px;
+}
+.royal-frame::after {
+  bottom: -7px;
+  right: -6px;
+}
+
+/* Botão real — azul claro sólido */
+.btn-royal {
+  background: #87c3e3;
+  color: #0a2540;
+  box-shadow: 0 10px 34px rgba(135, 195, 227, 0.35);
+}
+.btn-royal:hover {
+  filter: brightness(1.08);
+}
+
+/* Respiração lenta — nenhuma fotografia fica parada */
+@keyframes breathe {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.06); }
+}
+.animate-breathe {
+  animation: breathe 16s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Balanço suave das molduras reais */
+@keyframes sway {
+  0%, 100% { transform: rotate(-1deg) translateY(0); }
+  50% { transform: rotate(1deg) translateY(-9px); }
+}
+.animate-sway {
+  animation: sway 9s ease-in-out infinite;
+  will-change: transform;
+}
+
+/* Faísca que pulsa (ornamento Cinderela) */
+@keyframes sparkle-pop {
+  0%, 100% { opacity: 0.25; transform: scale(0.8) rotate(0deg); }
+  50% { opacity: 1; transform: scale(1.15) rotate(20deg); }
+}
+.animate-sparkle {
+  animation: sparkle-pop 3.2s ease-in-out infinite;
 }
 
 /* ---------- Cinematic polish (normas do designer: luz suave, nunca brusco) ---------- */

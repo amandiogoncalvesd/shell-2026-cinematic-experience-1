@@ -161,6 +161,7 @@ export function LightboxHost() {
               className="max-h-[85vh] w-auto"
               controls
               autoPlay
+              muted
               playsInline
               loop
             />
@@ -187,7 +188,7 @@ export function PhotoStage({
   energy = 0,
   className = "",
   imgClassName = "",
-  kenBurns = true,
+  kenBurns = false,
   onClickOpen = true,
 }: {
   photos: string[];
@@ -231,7 +232,10 @@ export function PhotoStage({
           initial={{ opacity: 0, scale: kenBurns ? 1.08 : 1 }}
           animate={{ opacity: 1, scale: kenBurns ? 1.0 : 1 }}
           exit={{ opacity: 0 }}
-          transition={{ opacity: { duration: 1.1, ease: "easeInOut" }, scale: { duration: interval / 1000 + 1, ease: "linear" } }}
+          transition={{
+            opacity: { duration: 0.9, ease: "easeInOut" },
+            scale: kenBurns ? { duration: interval / 1000 + 1, ease: "linear" } : { duration: 0 },
+          }}
         />
       </AnimatePresence>
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-black/10" />
@@ -391,12 +395,28 @@ export function VideoCard({
     }
   }, [inView]);
 
+  // Quando o utilizador para sobre o vídeo, começamos logo a carregá-lo
+  // para que a reprodução (aqui ou no cinema) seja instantânea.
+  const startBuffering = () => {
+    const v = ref.current;
+    if (v && v.preload === "none") {
+      v.preload = "auto";
+      try {
+        v.load();
+      } catch {
+        /* ignora */
+      }
+    }
+  };
+
   return (
     <motion.div
       ref={wrapRef}
-      className={`group relative shrink-0 overflow-hidden rounded-2xl bg-ocean-950 shadow-xl shadow-black/50 ${className}`}
+      className={`group relative shrink-0 overflow-hidden rounded-2xl bg-[#0a1e3a] shadow-xl shadow-black/50 ${className}`}
       whileHover={{ scale: 1.03 }}
       transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+      onMouseEnter={startBuffering}
+      onTouchStart={startBuffering}
       onClick={() =>
         openLightbox(
           (playlist ?? [src]).map((s) => ({ type: "video" as const, src: s })),

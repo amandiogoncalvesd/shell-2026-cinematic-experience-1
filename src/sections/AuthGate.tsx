@@ -72,7 +72,7 @@ export default function AuthGate({ onSuccess, onBack }: { onSuccess: () => void;
         <button
           type="submit"
           disabled={checking}
-          className="mt-8 w-full rounded-full bg-gradient-to-r from-ocean-400 to-ocean-600 py-3 text-sm font-medium uppercase tracking-widest text-white shadow-lg shadow-ocean-500/30 transition hover:brightness-110 disabled:opacity-60"
+          className="btn-royal mt-8 w-full rounded-full py-3 text-sm font-semibold uppercase tracking-widest transition hover:brightness-110 disabled:opacity-60"
         >
           {checking ? "A verificar…" : "Abrir o Portal"}
         </button>

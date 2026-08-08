@@ -73,8 +73,27 @@
 
 ## Checklist de conformidade (para cada mudança)
 
-1. Usa apenas a paleta ocean + branco translúcido?
+1. Usa apenas a paleta ocean/shell + branco translúcido?
 2. Tipografia: Playfair para display, Inter para corpo, kicker em uppercase espaçado?
 3. Superfícies em glass/glass-strong + shimmer onde houver destaque emocional?
 4. Animações com os easings assinatura e ritmo lento?
 5. Preserva o tom narrativo (“capítulos”, “universo”, “portal”)?
+
+---
+
+## FASE 8 — Onda 2: “Cinderela em Azul Claro” (normas novas, mandatórias)
+
+Direção recebida do cliente — sobrepõe-se onde conflitar com as fases anteriores:
+
+1. **Azul claro é a cor principal.** Paleta oficial enviada pela Shelcia:
+   `#87C3E3` (céu claro, PRINCIPAL) · `#5A75C2` · `#3E4E90` · `#D9B8E3` · `#9F7CA9` · `#DA8BA0`.
+   Tokens Tailwind: `shell-sky`, `shell-serenity`, `shell-night`, `shell-lavender`, `shell-violet`, `shell-rose`.
+2. **Cores sólidas** em botões, bordas, kickers e títulos (`glow-shell`, `btn-royal`) — gradientes só em texto de herói/vídeo-texto.
+3. **Estilo Disney/Cinderela + Liquid Glass:** molduras reais (`.royal-frame`) com faíscas ✦ nos cantos, ornamentos ❈✦, brilho suave.
+4. **Nenhuma fotografia pode estar parada:** ou transiciona (crossfade limpo, SEM zoom/distorção entre fotos — zero distrações), ou respira (`animate-breathe`), ou flutua (`animate-sway`, `animate-floaty`), ou desliza com o scroll.
+5. **Framemations:** todas as fotos agrupadas devem aparecer em molduras animadas (`Framemation`) que trocam de foto automaticamente em segundos.
+6. **Imersão obrigatória:** parallax, scroll-motion (`ScrollCinema` — filas que deslizam conforme o scroll), carrosséis contínuos.
+7. **Velocidade das transições acompanha a música:** prop `energy` do `MusicProvider` acelera todos os palcos de fotos. (Próxima fase: uma música por secção.)
+8. **Vídeos:** cartaz automático; só o vídeo em foco reproduz; parar sobre um vídeo inicia o carregamento; ao abrir, reprodução automática.
+9. **Vídeo-texto:** títulos principais podem conter vídeo dentro das letras (`VideoText`), com as frases em vídeo fornecidas (`txtDestaqueVideos`, `txtFraseVideo`).
+10. **Futuro (aguardar):** fundo *liquid chrome* — preparar superfícies para o receber sem redesenhar.
