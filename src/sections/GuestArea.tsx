@@ -13,6 +13,7 @@ import {
   VideoText,
 } from "../components/effects";
 import { Framemation, ScrollCinema } from "../components/cinema";
+import FloatingMusic from "../components/FloatingMusic";
 import { LightboxHost, MediaCarousel, PhotoStage, VideoCard, openLightbox } from "../components/media";
 import { SectionHeading, GlassButton, Kicker } from "../components/ui";
 import { useMusic } from "../audio/MusicProvider";
@@ -61,6 +62,7 @@ export default function GuestArea({ onGoPrivate, onExitPortal }: { onGoPrivate: 
       <ScrollProgress />
       <FilmGrain />
       <CursorGlow />
+      <FloatingMusic />
       <SectionDock sections={SECTIONS} />
       <Navbar sections={SECTIONS} brand="Shell 2026 · Convidados" onExit={onExitPortal} exitLabel="← Portal" />
 

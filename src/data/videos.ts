@@ -256,30 +256,11 @@ export const privateVideos = [
   ...videoBackstageClassic, ...videoChapters2023, ...videoArtMagic, ...videoGeneric2026,
 ];
 
-// Trilha sonora — Princesinha Shell & Escada de 2023 (usadas como ambiência por secção)
+// Trilha sonora — atualmente uma única música, escolhida para a Shelcia.
+// (Futuramente o Amândio enviará mais faixas, que serão adicionadas aqui.)
 export const audioTracks = [
-  { title: "Princesinha Shell — I", src: v("v1784115846/Princesinha_Shell_lexizb.mp3") },
-  { title: "Princesinha Shell — IX", src: v("v1784115846/Princesinha_Shell_9_e6josq.mp3") },
-  { title: "Princesinha Shell — VIII", src: v("v1784115845/Princesinha_Shell_8_eryrmp.mp3") },
-  { title: "Princesinha Shell — VII", src: v("v1784115843/Princesinha_Shell_7_psqc27.mp3") },
-  { title: "Princesinha Shell — VI", src: v("v1784115842/Princesinha_Shell_6_kmrrje.mp3") },
-  { title: "Princesinha Shell — VI (b)", src: v("v1784115842/Princesinha_Shell_6_1_rlya62.mp3") },
-  { title: "Princesinha Shell — V", src: v("v1784115838/Princesinha_Shell_5_w3wwfh.mp3") },
-  { title: "Princesinha Shell — V (b)", src: v("v1784115832/Princesinha_Shell_5_1_zal90c.mp3") },
-  { title: "Princesinha Shell — IV", src: v("v1784115832/Princesinha_Shell_4_unmpxt.mp3") },
-  { title: "Princesinha Shell — IV (b)", src: v("v1784115829/Princesinha_Shell_4_1_y2vkx1.mp3") },
-  { title: "Princesinha Shell — III", src: v("v1784115829/Princesinha_Shell_3_rauo6d.mp3") },
-  { title: "Princesinha Shell — III (b)", src: v("v1784115820/Princesinha_Shell_3_1_zhjrhp.mp3") },
-  { title: "Escada de 2023", src: v("v1784115820/Escada_de_2023_r2sqlv.mp3") },
-  { title: "Princesinha Shell — II", src: v("v1784115820/Princesinha_Shell_2_pvtjtp.mp3") },
-  { title: "Princesinha Shell — II (b)", src: v("v1784115817/Princesinha_Shell_2_1_xxr4by.mp3") },
-  { title: "Princesinha Shell — X", src: v("v1784115817/Princesinha_Shell_10_yoqjfk.mp3") },
-  { title: "Princesinha Shell — I (b)", src: v("v1784115815/Princesinha_Shell_1_gossm3.mp3") },
-  { title: "Princesinha Shell — I (c)", src: v("v1784115807/Princesinha_Shell_1_1_lgrugj.mp3") },
-  { title: "Princesinha Shell", src: v("v1784115807/Princesinha_Shell_ywybac.mp3") },
-  { title: "Princesinha Shell — II (c)", src: v("v1784115805/Princesinha_Shell_2_m5knzz.mp3") },
-  { title: "Princesinha Shell — I (d)", src: v("v1784115804/Princesinha_Shell_1_iuaceg.mp3") },
-  { title: "Escada de 2023 (b)", src: v("v1784115802/Escada_de_2023_1_zthwzt.mp3") },
-  { title: "Princesinha Shell — Origem", src: v("v1776682961/Princesinha_Shell_rm4tgt.mp3") },
-  { title: "Princesinha Shell — Ato IV", src: v("v1774368336/Princesinha_Shell__4__nsgkqf.mp3") },
+  {
+    title: "Photograph — Ed Sheeran",
+    src: "https://res.cloudinary.com/deeki0eou/video/upload/v1786010540/Ed_Sheeran_Photograph_Official_Music_Video_xps4ep.mp4",
+  },
 ];

@@ -105,3 +105,22 @@ Direção recebida do cliente — sobrepõe-se onde conflitar com as fases anter
     (`PreloadGate` + `data/preload.ts`, contador elegante); galerias densas usam
     `thumb()` (w_600/w_800) — heróis e molduras mantêm w_1200.
 13. **Texto↔imagem:** os textos dos Capítulos descrevem exatamente as imagens que mostram.
+
+---
+
+## FASE 9 — Onda 4: multi-páginas, música única e Neural Puzzle
+
+1. **A área da Shelcia deixou de ser página única.** Três páginas com transições próprias:
+   ❈ *O Universo* (a página original, intacta) · ✦ *Galeria Imersiva* (módulos Fotografias/Vídeos) ·
+   ⬡ *Neural Puzzle*.
+2. **Navbar em dois módulos obrigatórios:** (a) agrupados, os links que navegam na mesma
+   página (âncoras); (b) separados e agrupados entre si, os links para páginas diferentes.
+   Um divisor de cristal marca a fronteira entre os módulos.
+3. **Música:** todas as faixas antigas foram removidas. Só existe *Photograph — Ed Sheeran*,
+   que toca automaticamente quando a Shelcia abre a página dela. Novas faixas serão
+   adicionadas em `data/videos.ts → audioTracks`. Botão flutuante de música (jóia de vidro)
+   em todas as áreas; controlo de volume persiste na secção Música.
+4. **Neural Puzzle:** adaptado ao tema (azul claro, faíscas ✦, Playfair nos títulos),
+   594 URLs carregadas aleatoriamente (excluindo sempre a sessão Toque de Magia),
+   progresso guardado automaticamente (nível, concluídos, recordes, imagem atual)
+   com retoma ao reabrir.

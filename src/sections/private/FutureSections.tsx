@@ -1,4 +1,4 @@
-import { useState } from "react";
+
 import { motion } from "framer-motion";
 import { Parallax, Reveal } from "../../components/effects";
 import { Framemation } from "../../components/cinema";
@@ -137,7 +137,7 @@ export function SkySection({ energy }: { energy: number }) {
 
 export function MusicSection() {
   const { play, currentTrack, isPlaying, toggle, energy, volume, setVolume } = useMusic();
-  const [selected, setSelected] = useState(0);
+  const track = audioTracks[0];
   return (
     <section id="p-musica" className="relative py-28">
       <div className="mx-auto max-w-5xl px-6">
@@ -148,21 +148,24 @@ export function MusicSection() {
             <Kicker>As tuas músicas favoritas</Kicker>
             <ul className="mt-4 space-y-3">
               {playlist.map((p) => (
-                <li key={p.title} className="flex items-center justify-between border-b border-white/5 pb-2 text-sm">
-                  <span className="text-ocean-50">{p.title}</span>
-                  <span className="text-xs text-ocean-300/60">{p.artist}</span>
+                <li key={p.title} className="flex items-center justify-between gap-3 border-b border-white/5 pb-2 text-sm">
+                  <span className="text-ocean-50">
+                    {p.title}
+                    {p.note && <span className="mt-0.5 block text-[10px] italic text-shell-lavender/60">{p.note}</span>}
+                  </span>
+                  <span className="shrink-0 text-xs text-ocean-300/60">{p.artist}</span>
                 </li>
               ))}
             </ul>
           </div>
 
-          <div className="glass rounded-2xl p-6">
-            <Kicker>Trilha ambiente — Princesinha Shell</Kicker>
+          <div className="glass royal-frame rounded-2xl p-6">
+            <Kicker>A música do teu universo</Kicker>
             <div className="mt-4 flex items-end gap-[3px]">
               {Array.from({ length: 24 }).map((_, i) => (
                 <span
                   key={i}
-                  className="w-1.5 rounded-full bg-gradient-to-t from-ocean-500 to-ocean-200"
+                  className="w-1.5 rounded-full bg-gradient-to-t from-shell-serenity to-shell-sky"
                   style={{
                     height: isPlaying ? `${10 + Math.abs(Math.sin(i + energy * 10)) * 40 + energy * 30}px` : "6px",
                     transition: "height 0.15s ease",
@@ -170,27 +173,18 @@ export function MusicSection() {
                 />
               ))}
             </div>
-            <div className="mt-6 max-h-40 space-y-1 overflow-y-auto pr-2 text-sm">
-              {audioTracks.slice(0, 8).map((t, i) => (
-                <button
-                  key={t.src}
-                  onClick={() => {
-                    setSelected(i);
-                    play(t);
-                  }}
-                  className={`flex w-full items-center justify-between rounded-lg px-3 py-2 text-left transition hover:bg-white/5 ${
-                    currentTrack?.src === t.src ? "bg-white/10 text-white" : "text-ocean-100/70"
-                  }`}
-                >
-                  {t.title}
-                  {currentTrack?.src === t.src && <span className="text-ocean-300">{isPlaying ? "❚❚" : "▶"}</span>}
-                </button>
-              ))}
+
+            <div className="mt-6 rounded-xl border border-shell-sky/25 bg-shell-sky/5 px-4 py-3">
+              <p className="font-display text-lg font-semibold text-white">{track.title}</p>
+              <p className="mt-0.5 text-[10px] uppercase tracking-[0.3em] text-shell-sky/60">
+                ✦ toca automaticamente quando abres a tua página ✦
+              </p>
             </div>
+
             <GlassButton
               className="mt-4 w-full"
               variant="solid"
-              onClick={() => (currentTrack ? toggle() : play(audioTracks[selected]))}
+              onClick={() => (currentTrack ? toggle() : play(track))}
             >
               {isPlaying ? "Pausar" : "Reproduzir"}
             </GlassButton>
