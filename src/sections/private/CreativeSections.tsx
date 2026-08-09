@@ -24,8 +24,8 @@ export function LibrarySection() {
       <div className="mx-auto max-w-7xl px-6">
         <SectionHeading
           kicker="Biblioteca"
-          title="Os Pequenos Universos de Shelcia"
-          subtitle="Leitora, poetisa, filósofa, mitóloga — cada interesse é um mundo à parte que compõe quem ela é."
+          title="Os Teus Pequenos Universos"
+          subtitle="Sei que cada interesse teu é um mundo à parte, Shelcia — leitora, poetisa, filósofa, mitóloga. Por isso construí esta biblioteca com todos eles, um por um."
           align="center"
         />
 
@@ -42,9 +42,9 @@ export function LibrarySection() {
         </div>
 
         <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2">
-          <Reveal>
-            <div className="glass rounded-2xl p-8">
-              <Kicker>Instrumentos que aprecia</Kicker>
+            <Reveal>
+              <div className="glass rounded-2xl p-8">
+                <Kicker>Os instrumentos que tu aprecias</Kicker>
               <div className="mt-4 flex flex-wrap gap-2">
                 {instruments.map((i) => (
                   <span key={i} className="rounded-full border border-white/10 px-4 py-1.5 text-xs text-ocean-100/80">
@@ -54,9 +54,9 @@ export function LibrarySection() {
               </div>
             </div>
           </Reveal>
-          <Reveal delay={0.1}>
-            <div className="glass rounded-2xl p-8">
-              <Kicker>Estilos que ouve</Kicker>
+            <Reveal delay={0.1}>
+              <div className="glass rounded-2xl p-8">
+                <Kicker>Os estilos que tu ouves</Kicker>
               <div className="mt-4 flex flex-wrap gap-2">
                 {musicStyles.map((i) => (
                   <span key={i} className="rounded-full border border-white/10 px-4 py-1.5 text-xs text-ocean-100/80">
@@ -76,7 +76,7 @@ export function ArtSection({ energy }: { energy: number }) {
   return (
     <section id="p-arte" className="relative py-28">
       <div className="mx-auto max-w-7xl px-6">
-        <SectionHeading kicker="Arte · Toque de Magia" title="Onde a Fotografia Vira Arte" subtitle="Retratos editados como pequenas obras — luz, cor e alma reunidas em cada quadro." align="center" />
+        <SectionHeading kicker="Arte · Toque de Magia" title="Onde Dei Magia às Tuas Fotos" subtitle="Peguei nas tuas fotografias e transformei-as em pequenas obras — luz, cor e alma. Cada edição foi feita a pensar em ti." align="center" />
         <div className="mt-14">
           <AutoMosaic photos={artMagic} tiles={16} energy={energy} />
         </div>
@@ -91,7 +91,7 @@ export function ArtSection({ energy }: { energy: number }) {
 
         {/* Arte & texto — palavras que ela transforma em imagem */}
         <Reveal className="mt-20 text-center">
-          <Kicker>Arte & texto · palavras em imagem</Kicker>
+          <Kicker>Arte & texto · as tuas palavras em imagem</Kicker>
         </Reveal>
         <div className="mt-8">
           <Framemation photos={artTxtPhotos} frames={7} energy={energy} aspect="aspect-square" />
@@ -99,7 +99,7 @@ export function ArtSection({ energy }: { energy: number }) {
 
         {/* Frases da série que ela ama — Bridgerton */}
         <Reveal className="mt-20 text-center">
-          <Kicker>As declarações que ela ama · Bridgerton</Kicker>
+          <Kicker>As declarações da série que tu amas · Bridgerton</Kicker>
         </Reveal>
         <div className="mt-8">
           <MediaCarousel photos={frasesSeriePhotos} height="h-72" />

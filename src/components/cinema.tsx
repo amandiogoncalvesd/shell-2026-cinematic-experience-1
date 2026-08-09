@@ -2,6 +2,7 @@ import { useMemo, useRef } from "react";
 import { motion, useScroll, useTransform, type MotionValue } from "framer-motion";
 import { PhotoStage, SmartImg, openLightbox } from "./media";
 import { Reveal } from "./effects";
+import { thumb } from "../utils/cloudinary";
 
 /* ---------------------------------------------------------
    Framemation — framemations: molduras reais (estilo
@@ -126,7 +127,7 @@ function CinemaRow({
           >
             <div className="absolute inset-0 overflow-hidden rounded-[14px]">
               <SmartImg
-                src={src}
+                src={thumb(src, 800)}
                 className="animate-breathe h-full w-full object-cover transition duration-700 group-hover:brightness-110"
                 style={{ animationDelay: `${(i % 7) * -2.3}s` }}
               />
@@ -166,7 +167,7 @@ export function DriftGallery({
         >
           <div className="royal-frame overflow-hidden rounded-xl p-1">
             <div className="overflow-hidden rounded-lg">
-              <SmartImg src={src} className="animate-breathe aspect-square h-full w-full object-cover" style={{ animationDelay: `${(i % 5) * -3}s` }} />
+              <SmartImg src={thumb(src, 600)} className="animate-breathe aspect-square h-full w-full object-cover" style={{ animationDelay: `${(i % 5) * -3}s` }} />
             </div>
           </div>
         </motion.div>

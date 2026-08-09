@@ -87,39 +87,39 @@ export const musicStyles = ["Pop", "Gospel", "Trap Gospel", "Clássica", "Instru
 export const chapters = [
   {
     id: "infancia",
-    title: "A Infância",
+    title: "A Tua Infância",
     subtitle: "Onde tudo começou",
-    text: "Antes das câmaras profissionais, antes das cerimónias — havia uma menina curiosa, olhando o mundo com olhos grandes e um coração pensativo. Das primeiras memórias guardadas em imagem até aos primeiros dias na escola, conta-se aqui o início de tudo.",
+    text: "Guardei estas tuas primeiras fotografias com todo o cuidado. Antes das câmaras profissionais e das cerimónias, existia esta menina de olhos grandes e coração pensativo — e eu escolhi as imagens que achei mais bonitas dessa tua primeira luz.",
   },
   {
     id: "amizade",
-    title: "Amizade & Ruth",
+    title: "Tu e a Ruth",
     subtitle: "Bestas para sempre",
-    text: "Uma amizade nascida na 6ª classe, no Colégio Vladimir Edson, que atravessou anos, festas do pijama, pizzas queimadas e risos intermináveis. Ruth: a única que conhece, entende, apoia — e nunca decepcionou.",
+    text: "Sei o quanto a Ruth é importante para ti — a única que te conhece, entende e apoia. Por isso separei estas fotos vossas: as cerimónias, as risadas, os momentos que mereciam um capítulo só vosso.",
   },
   {
     id: "familia",
-    title: "Família",
-    subtitle: "As raízes",
-    text: "Entre abraços, celebrações e momentos emocionais com os irmãos, a família de Shelcia é o alicerce sobre o qual ela constrói tudo o resto — como uma futura arquiteta que aprendeu, desde cedo, o valor de fundações fortes.",
+    title: "A Tua Família",
+    subtitle: "As tuas raízes",
+    text: "Estas foram as fotos em que apareces com a tua família e que eu achei mais especiais. São as tuas raízes — o alicerce sobre o qual constróis tudo, como a futura arquiteta que és.",
   },
   {
     id: "escola",
-    title: "Escola & Amigos",
-    subtitle: "Capítulos de crescimento",
-    text: "Salas de aula, corredores, os Capítulos de 2023 e o aniversário de 15 anos — retratos de uma jovem em constante descoberta de si mesma, rodeada de amigos que se tornaram família.",
+    title: "Escola & Crescimento",
+    subtitle: "Os teus capítulos",
+    text: "Os teus Capítulos de 2023, o teu aniversário de 15 anos, os bastidores entre aulas e amigos — escolhi cada uma destas imagens para honrar a jovem em descoberta que eu tive o privilégio de ver crescer.",
   },
   {
     id: "magia",
-    title: "Toque de Magia",
-    subtitle: "Arte, luz e transformação",
-    text: "Cada fotografia editada é uma pequena obra de arte — um retrato entre o real e o fantástico, entre a menina e a mulher em que Shelcia se está a tornar.",
+    title: "O Meu Toque de Magia",
+    subtitle: "Arte feita para ti",
+    text: "Peguei nas tuas fotografias e dei-lhes um toque de magia — luz, cor e transformação. Esta é a parte em que a tua imagem vira arte: cada edição foi feita a pensar em ti.",
   },
   {
     id: "celebracao",
-    title: "Celebração 2026",
-    subtitle: "18 anos, um novo capítulo",
-    text: "A Cinderela cresceu. Não é o fim de um conto de fadas — é o início de um novo capítulo, escrito com a mesma leveza, mas com passos mais firmes rumo ao futuro.",
+    title: "Os Teus 18 Anos",
+    subtitle: "A Cinderela cresceu",
+    text: "E chegámos ao teu grande dia. Estas foram as fotos da celebração que achei mais extraordinárias — guardei-as para que nunca esqueças o dia em que a Cinderela cresceu.",
   },
 ];
 
@@ -138,15 +138,15 @@ export const essenceWords = [
 ];
 
 export const skyText = {
-  title: "O Céu Que Guarda o Que Ela Sente",
-  subtitle: "WHEN SHE LOOKS AT THE SKY",
-  text: "“Só tiro fotos do céu quando estou verdadeiramente feliz ou triste.” Por isso, cada nuvem, cada cor de entardecer aqui guardada, é uma emoção — uma linguagem silenciosa entre ela e o infinito.",
+  title: "O Céu Que Guarda O Que Sentes",
+  subtitle: "WHEN YOU LOOK AT THE SKY",
+  text: "Contaste-me que só fotografas o céu quando estás verdadeiramente feliz ou triste. Por isso guardei cada um desses céus aqui — para que saibas que até o teu silêncio merece ser lembrado.",
 };
 
 export const natureText = {
-  title: "Onde a Alma Dela Respira",
-  subtitle: "A NATUREZA ENCANTADA",
-  text: "A praia ao pôr do sol, os bosques, as flores — qualquer paisagem natural encanta a Shelcia. Este jardim vivo reúne o olhar dela sobre o mundo: 71 fragmentos de natureza que nunca ficam parados, tal como ela.",
+  title: "Onde a Tua Alma Respira",
+  subtitle: "A NATUREZA, COMO TU A AMAS",
+  text: "Disseste-me que amas a praia ao pôr do sol e os bosques — que qualquer paisagem natural te encanta. Por isso plantei este jardim só para ti: nenhuma flor fica parada, tal como tu.",
 };
 
 export const guestMessages = [

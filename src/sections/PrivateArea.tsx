@@ -59,8 +59,8 @@ export default function PrivateArea({ onExit }: { onExit: () => void }) {
       <DreamsSection energy={energy} />
       <SkySection energy={energy} />
       <MusicSection />
-      <footer className="border-t border-white/5 py-10 text-center text-xs uppercase tracking-[0.3em] text-ocean-300/40">
-        Shell 2026 · Um universo privado para Shelcia Fernanda Neves Van-Dúnem
+      <footer className="border-t border-white/5 py-10 text-center text-xs uppercase tracking-[0.3em] text-shell-sky/45">
+        Shell 2026 · Construí este universo só para ti, Shelcia — Amândio ✦
       </footer>
     </div>
   );

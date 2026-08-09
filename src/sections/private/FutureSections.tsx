@@ -7,6 +7,7 @@ import { SectionHeading, Kicker, GlassButton } from "../../components/ui";
 import { dreamChapters, playlist, skyText } from "../../data/content";
 import { generic2026, backstageClassic } from "../../data/photos";
 import { arquiteturaSonhoPhotos, irmaosVideos, infanciaVideos, bastidoresTopVideos } from "../../data/media2026";
+import { thumb } from "../../utils/cloudinary";
 import { privateVideos, videoSpecial, audioTracks } from "../../data/videos";
 import { useMusic } from "../../audio/MusicProvider";
 
@@ -14,7 +15,7 @@ export function CinemaSection() {
   return (
     <section id="p-videos" className="relative py-28">
       <div className="mx-auto max-w-7xl px-6">
-        <SectionHeading kicker="Cinema" title="Momentos em Movimento" subtitle="Vídeos que se reproduzem sozinhos ao entrarem em foco — só o vídeo em foco ganha vida. Pára sobre um para o carregar mais depressa." align="center" />
+        <SectionHeading kicker="Cinema" title="Os Teus Momentos em Movimento" subtitle="Escolhi cada vídeo a dedo para ti. Eles ganham vida sozinhos quando chegam ao centro do ecrã — só o que está em foco reproduz, os outros esperam pela sua vez." align="center" />
 
         {/* Emocional — com os irmãos */}
         <Reveal className="mt-14">
@@ -74,7 +75,7 @@ export function DreamsSection({ energy = 0 }: { energy?: number }) {
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-[#03101f] via-[#03101f]/70 to-[#03101f]" />
 
       <div className="mx-auto max-w-6xl px-6">
-        <SectionHeading kicker="Sonhos" title="The Architect" subtitle="“Alguns sonhos começam como um desenho.” — tornar-se uma arquiteta bem-sucedida e construir uma linda família." align="center" />
+        <SectionHeading kicker="Sonhos" title="The Architect" subtitle="“Alguns sonhos começam como um desenho.” Disseste-me que sonhas ser uma arquiteta bem-sucedida e construir uma linda família — eu acredito nesse sonho, por isso desenhei este capítulo para ti." align="center" />
 
         <div className="mt-16 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-5">
           {dreamChapters.map((d, i) => (
@@ -91,7 +92,7 @@ export function DreamsSection({ energy = 0 }: { energy?: number }) {
 
         {/* O sonho em imagens — molduras reais que respiram */}
         <Reveal className="mt-20 text-center">
-          <Kicker>Arquitetura · o sonho dela em imagens</Kicker>
+          <Kicker>Arquitetura · o teu sonho em imagens</Kicker>
         </Reveal>
         <div className="mt-8">
           <Framemation photos={arquiteturaSonhoPhotos} frames={7} energy={energy} />
@@ -126,7 +127,7 @@ export function SkySection({ energy }: { energy: number }) {
             whileHover={{ scale: 1.06 }}
             onClick={() => openLightbox(skyPhotos.map((s) => ({ type: "photo" as const, src: s })), i)}
           >
-            <SmartImg src={src} className="h-full w-full object-cover" style={{ filter: `saturate(${1 + energy * 0.4})` }} />
+            <SmartImg src={thumb(src, 600)} className="h-full w-full object-cover" style={{ filter: `saturate(${1 + energy * 0.4})` }} />
           </motion.div>
         ))}
       </div>
@@ -140,11 +141,11 @@ export function MusicSection() {
   return (
     <section id="p-musica" className="relative py-28">
       <div className="mx-auto max-w-5xl px-6">
-        <SectionHeading kicker="Música" title="A Trilha Sonora de Shelcia" subtitle="Pop, gospel, clássica e instrumentais — sons que a transportam para outro lugar." align="center" />
+        <SectionHeading kicker="Música" title="A Trilha Sonora Que Escolhi Para Ti" subtitle="Estas são as músicas que sei que te transportam para outro lugar — pop, gospel, clássica e instrumentais. Deixei-as aqui, à tua espera." align="center" />
 
         <div className="mt-14 grid grid-cols-1 gap-8 md:grid-cols-2">
           <div className="glass rounded-2xl p-6">
-            <Kicker>Músicas favoritas</Kicker>
+            <Kicker>As tuas músicas favoritas</Kicker>
             <ul className="mt-4 space-y-3">
               {playlist.map((p) => (
                 <li key={p.title} className="flex items-center justify-between border-b border-white/5 pb-2 text-sm">

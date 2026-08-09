@@ -11,7 +11,7 @@ export function FriendsSection() {
   return (
     <section id="p-amigos" className="relative py-28">
       <div className="mx-auto max-w-7xl px-6">
-        <SectionHeading kicker="Amigos" title="Ruth — A Melhor Amiga" subtitle={ruth.since} />
+        <SectionHeading kicker="Amigos" title="Ruth — A Tua Melhor Amiga" subtitle={`${ruth.since} · dei-lhe o lugar que ela merece, porque sei o que ela significa para ti.`} />
 
         <div className="mt-12 grid grid-cols-1 gap-10 md:grid-cols-2 md:items-center">
           <Reveal>
@@ -36,7 +36,7 @@ export function FriendsSection() {
 
         {/* O círculo de confiança */}
         <Reveal className="mt-14">
-          <Kicker>O círculo de confiança da Shelcia</Kicker>
+          <Kicker>Os amigos que tu escolheste</Kicker>
         </Reveal>
         <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2">
           {others.map((f, i) => (
@@ -72,7 +72,7 @@ export function LettersSection() {
   return (
     <section id="p-cartas" className="relative py-28">
       <div className="mx-auto max-w-4xl px-6">
-        <SectionHeading kicker="Cartas" title="Words I Carry" align="center" subtitle="Palavras guardadas — de Deus, da Ruth, da família e para o futuro." />
+        <SectionHeading kicker="Cartas" title="Palavras Que Guardei Para Ti" align="center" subtitle="Reuni aqui as cartas e mensagens que te escreveram — guardei-as com cuidado, para que nunca esqueças o quanto és amada." />
 
         <div className="mt-14 space-y-6">
           <LetterCard title="Ruth Antónia Bongue Pereira" text={ruth.letter} highlight />

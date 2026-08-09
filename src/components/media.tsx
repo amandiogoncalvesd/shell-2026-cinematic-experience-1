@@ -2,6 +2,7 @@ import { useEffect, useMemo, useRef, useState, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { createPortal } from "react-dom";
 import { videoPoster } from "../data/videos";
+import { thumb } from "../utils/cloudinary";
 
 /* ---------------------------------------------------------
    SmartImg — imagem com revelação suave ao terminar de
@@ -345,7 +346,7 @@ export function MediaCarousel({
             )
           }
         >
-          <SmartImg src={src} className="h-full w-full object-cover transition duration-700 group-hover:brightness-110" />
+          <SmartImg src={thumb(src, 600)} className="h-full w-full object-cover transition duration-700 group-hover:brightness-110" />
           <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-0 transition group-hover:opacity-100" />
           <div className="absolute inset-0 opacity-0 shimmer-border rounded-2xl transition group-hover:opacity-100" />
         </motion.div>

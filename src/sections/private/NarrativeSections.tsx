@@ -3,7 +3,19 @@ import { CanvasParticles, LiquidBlobs, Parallax, Reveal, VideoText } from "../..
 import { AutoMosaic, MediaCarousel, PhotoStage } from "../../components/media";
 import { SectionHeading, Kicker } from "../../components/ui";
 import { identity, chapters, essenceWords } from "../../data/content";
-import { featured, childhoodPublic, childhoodPrivate, backstage2026, generic2026 } from "../../data/photos";
+import {
+  featured,
+  childhoodPublic,
+  childhoodPrivate,
+  backstage2026,
+  generic2026,
+  ruthCeremony,
+  ruthMoments,
+  familyFriends2026,
+  familyFriendsAlbum,
+  chapters2023,
+  artMagic,
+} from "../../data/photos";
 import { destaquePhotos, txtFraseVideo } from "../../data/media2026";
 
 export function HomeSection({ energy }: { energy: number }) {
@@ -17,7 +29,7 @@ export function HomeSection({ energy }: { energy: number }) {
       <CanvasParticles density={80} />
 
       <div className="relative z-10 flex flex-col items-center gap-6 px-6 text-center">
-        <Kicker>Portal Pessoal</Kicker>
+        <Kicker>O Teu Universo</Kicker>
         <VideoText id="private-home" text="SHELCIA" videoSrc={txtFraseVideo} className="w-[92vw] max-w-3xl" fontSize={120} />
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.6, duration: 1 }}>
           <p className="text-sm uppercase tracking-[0.4em] text-ocean-200/70">{identity.fullName}</p>
@@ -45,6 +57,15 @@ export function HomeSection({ energy }: { energy: number }) {
         >
           "{identity.verse.text}" — {identity.verse.ref}
         </motion.p>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.7 }}
+          className="text-[11px] uppercase tracking-[0.35em] text-shell-sky/70"
+        >
+          ✦ Construí este universo só para ti — Amândio ✦
+        </motion.p>
       </div>
     </section>
   );
@@ -57,8 +78,8 @@ export function MemoriesSection({ energy }: { energy: number }) {
         <img src={childhoodPublic[2]} className="h-full w-full object-cover blur-sm" alt="" />
       </Parallax>
       <div className="mx-auto max-w-7xl px-6">
-        <SectionHeading kicker="Memórias" title="Uma Vida Guardada em Imagens" align="center"
-          subtitle="Da infância aos 18 anos — cada fase, um fragmento precioso de quem Shelcia é." />
+        <SectionHeading kicker="Memórias" title="As Tuas Fotos Que Eu Guardei" align="center"
+          subtitle="Estas foram as fotos tuas que achei mais interessantes — da infância aos teus 18 anos. Guardei cada uma com cuidado, e deixo-as trocar sozinhas, como memórias vivas." />
         <div className="mt-14">
           <AutoMosaic photos={[...childhoodPublic, ...childhoodPrivate, ...generic2026]} tiles={20} energy={energy} />
         </div>
@@ -71,7 +92,7 @@ export function StoriesSection() {
   return (
     <section id="p-historias" className="relative py-28">
       <div className="mx-auto max-w-7xl px-6">
-        <SectionHeading kicker="Histórias" title="Capítulos de uma Vida" subtitle="Cada capítulo, uma emoção. Cada fotografia, uma frase de uma longa história ainda a ser escrita." />
+        <SectionHeading kicker="Histórias" title="Capítulos da Tua Vida" subtitle="Escrevi cada capítulo a pensar em ti, Shelcia. Cada fotografia é uma frase da tua história — contada por mim, para ti." />
       </div>
       <div className="mt-14 space-y-5 px-4 sm:px-6">
         {chapters.map((c, i) => (
@@ -94,13 +115,14 @@ export function StoriesSection() {
 }
 
 function ChapterRow({ chapter, reverse }: { chapter: (typeof chapters)[number]; reverse?: boolean }) {
+  // Cada capítulo mostra exatamente as imagens que o texto descreve.
   const photosByChapter: Record<string, string[]> = {
-    infancia: childhoodPublic,
-    amizade: featured,
-    familia: generic2026.slice(20, 40),
-    escola: backstage2026.slice(0, 20),
-    magia: generic2026.slice(40),
-    celebracao: featured,
+    infancia: [...childhoodPublic, ...childhoodPrivate],
+    amizade: [...ruthCeremony.slice(0, 12), ...ruthMoments.slice(0, 12)],
+    familia: [...familyFriends2026, ...familyFriendsAlbum.slice(0, 10)],
+    escola: [...chapters2023, ...backstage2026.slice(0, 8)],
+    magia: artMagic,
+    celebracao: [...destaquePhotos.slice(0, 10), ...featured],
   };
   const photos = photosByChapter[chapter.id] ?? featured;
   return (

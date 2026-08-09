@@ -97,3 +97,11 @@ Direção recebida do cliente — sobrepõe-se onde conflitar com as fases anter
 8. **Vídeos:** cartaz automático; só o vídeo em foco reproduz; parar sobre um vídeo inicia o carregamento; ao abrir, reprodução automática.
 9. **Vídeo-texto:** títulos principais podem conter vídeo dentro das letras (`VideoText`), com as frases em vídeo fornecidas (`txtDestaqueVideos`, `txtFraseVideo`).
 10. **Futuro (aguardar):** fundo *liquid chrome* — preparar superfícies para o receber sem redesenhar.
+11. **Voz narrativa (OBRIGATÓRIO na área privada):** todas as palavras são ditas em
+    **primeira pessoa pelo Amândio Gonçalves, dirigidas à Shelcia (tu)**. A página é dela,
+    só ela a vê — nada de terceira pessoa (“a Shelcia”, “ela”). Ex.: “Estas foram as fotos
+    tuas que eu achei mais interessantes.” A área de convidados mantém a terceira pessoa.
+12. **Performance:** ~55% das mídias são pré-carregadas antes da experiência abrir
+    (`PreloadGate` + `data/preload.ts`, contador elegante); galerias densas usam
+    `thumb()` (w_600/w_800) — heróis e molduras mantêm w_1200.
+13. **Texto↔imagem:** os textos dos Capítulos descrevem exatamente as imagens que mostram.
