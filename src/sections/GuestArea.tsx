@@ -15,6 +15,7 @@ import {
 import { Framemation, ScrollCinema } from "../components/cinema";
 import FloatingMusic from "../components/FloatingMusic";
 import WelcomeModal from "../components/WelcomeModal";
+import AppFooter from "../components/AppFooter";
 import { LightboxHost, MediaCarousel, PhotoStage, VideoCard, openLightbox } from "../components/media";
 import { SectionHeading, GlassButton, Kicker } from "../components/ui";
 import { useMusic } from "../audio/MusicProvider";
@@ -239,14 +240,7 @@ export default function GuestArea({ onGoPrivate, onExitPortal }: { onGoPrivate: 
         </div>
       </section>
 
-      <footer className="border-t border-white/5 py-10 text-center">
-        <p className="text-xs uppercase tracking-[0.3em] text-shell-sky/45">
-          Shell 2026 · Shelcia Fernanda Neves Van-Dúnem
-        </p>
-        <p className="mt-2 text-[10px] uppercase tracking-[0.3em] text-shell-sky/35">
-          Designer by Amândio Gonçalves
-        </p>
-      </footer>
+      <AppFooter />
     </div>
   );
 }

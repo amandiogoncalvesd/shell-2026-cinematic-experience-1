@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import Navbar from "../components/Navbar";
 import FloatingMusic from "../components/FloatingMusic";
 import WelcomeModal from "../components/WelcomeModal";
+import AppFooter from "../components/AppFooter";
 import { LightboxHost } from "../components/media";
 import { CursorGlow, FilmGrain, ScrollProgress, SectionDock } from "../components/effects";
 import { useMusic } from "../audio/MusicProvider";
@@ -227,17 +228,7 @@ export default function PrivateArea({ onExit }: { onExit: () => void }) {
         )}
       </AnimatePresence>
 
-      <footer className="border-t border-white/5 py-10 text-center">
-        <p className="font-display text-xs italic text-[#b9d9ec]/50">
-          “A fotografia é a história que não consigo contar com palavras.” — Destin Sparks
-        </p>
-        <p className="mt-3 text-xs uppercase tracking-[0.3em] text-shell-sky/45">
-          Shell 2026 · Shelcia Fernanda Neves Van-Dúnem
-        </p>
-        <p className="mt-2 text-[10px] uppercase tracking-[0.3em] text-shell-sky/35">
-          Designer by Amândio Gonçalves
-        </p>
-      </footer>
+      <AppFooter pages={PAGES} onSelect={(id) => goPage(id)} />
     </div>
   );
 }

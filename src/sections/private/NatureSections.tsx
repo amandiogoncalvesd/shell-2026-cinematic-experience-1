@@ -26,11 +26,11 @@ export function NaturezaSection({ energy }: { energy: number }) {
       <CanvasParticles density={40} />
 
       <div className="mx-auto max-w-7xl px-6">
-        <SectionHeading kicker={natureText.subtitle} title={natureText.title} align="center" />
+        <SectionHeading kicker={natureText.subtitle} title={natureText.title} align="center" subtitle={natureText.text} />
 
         {/* Flores que flutuam como pétalas */}
         <Reveal className="mt-14 text-center">
-          <Kicker>O jardim dela — flores que flutuam</Kicker>
+          <Kicker>As flores que você ama</Kicker>
         </Reveal>
         <div className="mt-8">
           <DriftGallery photos={naturezaFloresPhotos} />

@@ -275,3 +275,22 @@ clichés genéricos. Cada palavra é dita por ele, para ela.
    Sem play manual, nada toca — a regra de ouro mantém-se.
 3. As fotografias já trocam ao ritmo da energia da música (`energy` acelera
    PhotoStage/Framemation/ScrollCinema).
+
+---
+
+## FASE 19 — Electric Border, portal Disney+ e voz quente
+
+1. **ElectricBorder** (migrado do Shel 2026, otimizado: 6 octaves, DPR ≤ 1.5,
+   pausa fora do ecrã e em modo cinema): cartão de assinatura no rodapé,
+   cartões de entrada do portal e destaque Photograph 2026.
+2. **Portal Disney+ liquid glass:** abertura com emblema e anel pulsante,
+   cartões de entrada em vidro líquido premium com borda elétrica, varrido de
+   luz no hover e saída em wipe circular.
+3. **Rodapé premium** (`AppFooter`): emblema, frase do universo, chips das
+   páginas e assinatura “Designer by Amândio Gonçalves” em destaque sólido,
+   cercada por ElectricBorder.
+4. **Erros de texto↔imagem corrigidos:** “Escola” virou “Capítulos de 2023”
+   (mostra só os capítulos); “Bestas para sempre” mostra somente fotos da
+   Shelcia com a Ruth (ruthCeremony); “O jardim dela” removido.
+5. **Subtítulos de volta na voz quente do Amândio** (“cada foto aqui é um
+   pedaço de você”, “este cantinho é todo seu”, “este é só o começo”).

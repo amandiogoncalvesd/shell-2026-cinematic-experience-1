@@ -22,7 +22,12 @@ export function LibrarySection() {
   return (
     <section id="p-livros" className="relative py-28">
       <div className="mx-auto max-w-7xl px-6">
-        <SectionHeading kicker="Biblioteca" title="Pequenos Universos" align="center" />
+        <SectionHeading
+          kicker="Biblioteca"
+          title="Pequenos Universos"
+          align="center"
+          subtitle="Leitora, poetisa, artista — cada paixão sua tem um lugar aqui."
+        />
 
         <div className="mt-14 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
           {identity.universes.map((u, i) => (
@@ -71,7 +76,7 @@ export function ArtSection({ energy }: { energy: number }) {
   return (
     <section id="p-arte" className="relative py-28">
       <div className="mx-auto max-w-7xl px-6">
-        <SectionHeading kicker="Arte" title="Testes de Arte" align="center" />
+        <SectionHeading kicker="Arte" title="Testes de Arte" align="center" subtitle="Artes com o seu nome, feitas para você." />
         <div className="mt-14">
           <AutoMosaic photos={artMagic} tiles={16} energy={energy} />
         </div>

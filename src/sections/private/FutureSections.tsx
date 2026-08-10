@@ -2,6 +2,7 @@
 import { motion } from "framer-motion";
 import { Parallax, Reveal } from "../../components/effects";
 import { Framemation } from "../../components/cinema";
+import ElectricBorder from "../../components/ElectricBorder";
 import { PhotoStage, SmartImg, VideoCard, openLightbox } from "../../components/media";
 import { SectionHeading, Kicker, GlassButton } from "../../components/ui";
 import { dreamChapters, playlist, skyText } from "../../data/content";
@@ -15,37 +16,39 @@ export function CinemaSection() {
   return (
     <section id="p-videos" className="relative py-28">
       <div className="mx-auto max-w-7xl px-6">
-        <SectionHeading kicker="Cinema" title="Cinema" align="center" />
+        <SectionHeading kicker="Cinema" title="Cinema" align="center" subtitle="Os seus momentos, em movimento." />
 
         {/* ═══ O DESTAQUE PRINCIPAL · PHOTOGRAPH 2026 ═══ */}
         <Reveal className="mt-14">
-          <div className="royal-frame relative overflow-hidden rounded-3xl">
-            <div className="absolute inset-0">
-              <PhotoStage photos={destaque18Photos.slice(0, 8)} interval={5200} className="h-full w-full opacity-35" onClickOpen={false} />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#03101f] via-[#03101f]/60 to-[#03101f]/30" />
-            </div>
-            <div className="relative z-10 flex flex-col items-center gap-5 px-6 py-20 text-center sm:py-28">
-              <Kicker>O destaque do cinema</Kicker>
-              <h3 className="glow-shell font-display text-4xl font-bold sm:text-6xl">Photograph 2026</h3>
-              <p className="max-w-md text-xs uppercase tracking-[0.3em] text-[#b9d9ec]/60 sm:text-sm">
-                As melhores memórias · da infância aos 18 anos
-              </p>
-              <div className="mt-4 flex flex-wrap items-center justify-center gap-4">
-                <GlassButton variant="solid" onClick={() => openLightbox([{ type: "video" as const, src: photographFilm.url }], 0)}>
-                  ▶ Assistir
-                </GlassButton>
-                <a
-                  href={photographFilm.url}
-                  download
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 rounded-full border border-shell-sky/50 px-7 py-3 text-sm font-semibold tracking-wide text-shell-sky transition hover:bg-shell-sky/15"
-                >
-                  ⬇ Baixar o filme
-                </a>
+          <ElectricBorder color="#87C3E3" speed={0.6} chaos={0.08} borderRadius={32}>
+            <div className="relative overflow-hidden rounded-[32px]">
+              <div className="absolute inset-0">
+                <PhotoStage photos={destaque18Photos.slice(0, 8)} interval={5200} className="h-full w-full opacity-35" onClickOpen={false} />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#03101f] via-[#03101f]/60 to-[#03101f]/30" />
+              </div>
+              <div className="relative z-10 flex flex-col items-center gap-5 px-6 py-20 text-center sm:py-28">
+                <Kicker>O destaque do cinema</Kicker>
+                <h3 className="glow-shell font-display text-4xl font-bold sm:text-6xl">Photograph 2026</h3>
+                <p className="max-w-md text-xs uppercase tracking-[0.3em] text-[#b9d9ec]/60 sm:text-sm">
+                  As melhores memórias · da infância aos 18 anos
+                </p>
+                <div className="mt-4 flex flex-wrap items-center justify-center gap-4">
+                  <GlassButton variant="solid" onClick={() => openLightbox([{ type: "video" as const, src: photographFilm.url }], 0)}>
+                    ▶ Assistir
+                  </GlassButton>
+                  <a
+                    href={photographFilm.url}
+                    download
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center gap-2 rounded-full border border-shell-sky/50 px-7 py-3 text-sm font-semibold tracking-wide text-shell-sky transition hover:bg-shell-sky/15"
+                  >
+                    ⬇ Baixar o filme
+                  </a>
+                </div>
               </div>
             </div>
-          </div>
+          </ElectricBorder>
         </Reveal>
 
         {/* Emocional — com os irmãos */}
@@ -106,7 +109,7 @@ export function DreamsSection({ energy = 0 }: { energy?: number }) {
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-[#03101f] via-[#03101f]/70 to-[#03101f]" />
 
       <div className="mx-auto max-w-6xl px-6">
-        <SectionHeading kicker="Sonhos" title="The Architect" align="center" />
+        <SectionHeading kicker="Sonhos" title="The Architect" align="center" subtitle="Você vai construir coisas lindas — este é só o começo." />
 
         <div className="mt-16 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-5">
           {dreamChapters.map((d, i) => (
@@ -171,7 +174,7 @@ export function MusicSection() {
   return (
     <section id="p-musica" className="relative py-28">
       <div className="mx-auto max-w-5xl px-6">
-        <SectionHeading kicker="Música" title="A Tua Playlist" align="center" />
+        <SectionHeading kicker="Música" title="A Sua Música" align="center" subtitle="As melodias que levam você para outro lugar." />
 
         <div className="mt-14 grid grid-cols-1 gap-8 md:grid-cols-2">
           <div className="glass rounded-2xl p-6">

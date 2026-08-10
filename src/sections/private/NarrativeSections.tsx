@@ -10,7 +10,6 @@ import {
   backstage2026,
   generic2026,
   ruthCeremony,
-  ruthMoments,
   familyFriends2026,
   familyFriendsAlbum,
   chapters2023,
@@ -78,7 +77,8 @@ export function MemoriesSection({ energy }: { energy: number }) {
         <img src={childhoodPublic[2]} className="h-full w-full object-cover blur-sm" alt="" />
       </Parallax>
       <div className="mx-auto max-w-7xl px-6">
-        <SectionHeading kicker="Memórias" title="Uma Vida em Imagens" align="center" />
+        <SectionHeading kicker="Memórias" title="Uma Vida em Imagens" align="center"
+          subtitle="Da infância aos 18 anos — cada foto aqui é um pedaço de você, trocando sozinha como memória viva." />
         <div className="mt-14">
           <AutoMosaic photos={[...childhoodPublic, ...childhoodPrivate, ...generic2026]} tiles={20} energy={energy} />
         </div>
@@ -91,7 +91,7 @@ export function StoriesSection() {
   return (
     <section id="p-historias" className="relative py-28">
       <div className="mx-auto max-w-7xl px-6">
-        <SectionHeading kicker="Histórias" title="Capítulos de uma Vida" />
+        <SectionHeading kicker="Histórias" title="Capítulos de uma Vida" subtitle="Cada capítulo, uma parte de você." />
       </div>
       <div className="mt-14 space-y-5 px-4 sm:px-6">
         {chapters.map((c, i) => (
@@ -117,9 +117,11 @@ function ChapterRow({ chapter, reverse }: { chapter: (typeof chapters)[number]; 
   // Cada capítulo mostra exatamente as imagens que o título descreve.
   const photosByChapter: Record<string, string[]> = {
     infancia: [...childhoodPublic, ...childhoodPrivate],
-    amizade: [...ruthCeremony.slice(0, 12), ...ruthMoments.slice(0, 12)],
+    // Bestas para sempre — somente fotografias da Shelcia com a Ruth.
+    amizade: ruthCeremony,
     familia: [...familyFriends2026, ...familyFriendsAlbum.slice(0, 10)],
-    escola: [...chapters2023, ...backstage2026.slice(0, 8)],
+    // Capítulos de 2023 — somente as imagens dos capítulos.
+    escola: chapters2023,
     magia: artMagic,
     celebracao: [...destaque18Photos.slice(0, 14), ...destaquePhotos.slice(0, 6)],
   };

@@ -102,8 +102,10 @@ export default function Navbar({
         className={`fixed inset-x-0 top-0 z-50 transition-all duration-500 ${scrolled ? "py-1.5" : "py-3"}`}
       >
         <div
-          className={`mx-auto flex h-11 max-w-[92rem] items-center gap-3 rounded-full px-3 transition-all duration-500 sm:h-12 sm:px-4 ${
-            scrolled ? "glass-strong mx-3 sm:mx-6" : "mx-3 bg-[#03101f]/30 backdrop-blur-md sm:mx-6"
+          className={`mx-auto flex h-11 max-w-[92rem] items-center gap-3 rounded-full border px-3 transition-all duration-500 sm:h-12 sm:px-4 ${
+            scrolled
+              ? "glass-strong border-shell-sky/20 mx-3 sm:mx-6"
+              : "mx-3 border-white/[0.06] bg-[#061a33]/40 backdrop-blur-md sm:mx-6"
           }`}
         >
           {/* ── Marca real ── */}

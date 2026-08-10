@@ -100,9 +100,9 @@ export const chapters = [
   },
   {
     id: "escola",
-    title: "Escola",
-    subtitle: "Capítulos de crescimento",
-    text: "Os Capítulos de 2023, o aniversário de 15 anos e os bastidores de uma jovem em constante descoberta.",
+    title: "Capítulos de 2023",
+    subtitle: "Os 15 anos",
+    text: "Os capítulos de 2023 e o aniversário de 15 anos — retratos de uma jovem em constante descoberta de si mesma.",
   },
   {
     id: "magia",
@@ -140,7 +140,8 @@ export const skyText = {
 
 export const natureText = {
   title: "A Natureza",
-  subtitle: "BOSQUES · PÔR DO SOL · FLORES",
+  subtitle: "O SEU CANTINHO",
+  text: "Você ama a praia ao pôr do sol e os bosques — então este cantinho é todo seu.",
 };
 
 // A carta original — escrita pelo próprio Amândio, palavra por palavra.

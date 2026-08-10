@@ -2,7 +2,7 @@ import { Reveal } from "../../components/effects";
 import { MediaCarousel, SmartImg, VideoCard, openLightbox } from "../../components/media";
 import { SectionHeading } from "../../components/ui";
 import { closeFriends, friends, identity, momLetter } from "../../data/content";
-import { ruthCeremony, ruthBackstage, ruthMoments } from "../../data/photos";
+import { ruthCeremony, ruthBackstage } from "../../data/photos";
 import { fraseBiblicaPhoto, aniversarioMaePhoto } from "../../data/media2026";
 import { videoRuthCeremony, videoRuthMoments } from "../../data/videos";
 
@@ -11,7 +11,7 @@ export function FriendsSection() {
   return (
     <section id="p-amigos" className="relative py-28">
       <div className="mx-auto max-w-7xl px-6">
-        <SectionHeading kicker="Amigos" title="Ruth — A Melhor Amiga" subtitle={ruth.since} />
+        <SectionHeading kicker="Amigos" title="Ruth — A Melhor Amiga" subtitle={`${ruth.since} · a amiga que você escolheu`} />
 
 
         <div className="mt-12 grid grid-cols-1 gap-10 md:grid-cols-2 md:items-center">
@@ -46,10 +46,10 @@ export function FriendsSection() {
           </div>
         </Reveal>
 
+        {/* Somente fotografias da Shelcia com a Ruth */}
         <div className="mt-14 space-y-5">
           <MediaCarousel photos={ruthCeremony} height="h-64" />
           <MediaCarousel photos={ruthBackstage} height="h-56" />
-          <MediaCarousel photos={ruthMoments} height="h-64" />
         </div>
       </div>
     </section>
@@ -61,7 +61,7 @@ export function LettersSection({ onOpenCarta }: { onOpenCarta?: () => void }) {
   return (
     <section id="p-cartas" className="relative py-28">
       <div className="mx-auto max-w-4xl px-6">
-        <SectionHeading kicker="Cartas" title="Cartas" align="center" />
+        <SectionHeading kicker="Cartas" title="Cartas" align="center" subtitle="Palavras que são só suas." />
 
         {/* Há uma carta especial à espera — abre-se numa página só dela */}
         <Reveal className="mt-14">
