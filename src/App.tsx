@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { MusicProvider } from "./audio/MusicProvider";
 import PreloadGate from "./components/PreloadGate";
@@ -6,12 +6,26 @@ import Portal from "./sections/Portal";
 import GuestArea from "./sections/GuestArea";
 import AuthGate from "./sections/AuthGate";
 import PrivateArea from "./sections/PrivateArea";
+import { requestImmersiveFullscreen } from "./utils/fullscreen";
 
 type View = "portal" | "guests" | "auth" | "private";
 
 export default function App() {
   const [view, setView] = useState<View>("portal");
   const [mediaReady, setMediaReady] = useState(false);
+
+  // A aplicação inteira vive em tela cheia: ao primeiro gesto do utilizador
+  // (o navegador exige um gesto), pedimos fullscreen. Depois disso, navegar
+  // entre páginas nunca o quebra — e nunca forçamos reentrar à força.
+  useEffect(() => {
+    const once = () => requestImmersiveFullscreen();
+    window.addEventListener("pointerdown", once, { once: true });
+    window.addEventListener("keydown", once, { once: true });
+    return () => {
+      window.removeEventListener("pointerdown", once);
+      window.removeEventListener("keydown", once);
+    };
+  }, []);
 
   return (
     <MusicProvider>

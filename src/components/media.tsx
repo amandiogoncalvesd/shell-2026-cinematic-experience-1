@@ -3,6 +3,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { createPortal } from "react-dom";
 import { videoPoster } from "../data/videos";
 import { thumb } from "../utils/cloudinary";
+import { isCinema, onCinema, setCinema } from "./cinemaLock";
+import { useMusic } from "../audio/MusicProvider";
 
 /* ---------------------------------------------------------
    SmartImg — imagem com revelação suave ao terminar de
@@ -43,12 +45,43 @@ export function openLightbox(items: LightboxItem[], index = 0) {
 
 export function LightboxHost() {
   const [state, setState] = useState<LightboxState | null>(null);
+  const { isPlaying, stop, play, currentTrack } = useMusic();
+
+  // Refs frescas para o cinema-lock controlar a música sem re-executar efeitos.
+  const isPlayingRef = useRef(isPlaying);
+  isPlayingRef.current = isPlaying;
+  const stopRef = useRef(stop);
+  stopRef.current = stop;
+  const playRef = useRef(play);
+  playRef.current = play;
+  const trackRef = useRef(currentTrack);
+  trackRef.current = currentTrack;
+  const wasPlayingRef = useRef(false);
+
   useEffect(() => {
     externalSetLightbox = setState;
     return () => {
       externalSetLightbox = null;
     };
   }, []);
+
+  // MODO CINEMA: com um vídeo aberto, ele é a única coisa viva no sistema.
+  // A música pausa; ao sair, regressa exatamente onde estava.
+  useEffect(() => {
+    const item = state?.items[state.index];
+    if (item?.type === "video") {
+      setCinema(true);
+      if (isPlayingRef.current) wasPlayingRef.current = true;
+      stopRef.current();
+    } else {
+      setCinema(false);
+      if (wasPlayingRef.current && trackRef.current) {
+        wasPlayingRef.current = false;
+        playRef.current(trackRef.current);
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [state]);
 
   const close = useCallback(() => setState(null), []);
   const next = useCallback(
@@ -233,7 +266,18 @@ export function PhotoStage({
   useEffect(() => {
     if (list.length < 2) return;
     const speedFactor = 1 / (1 + energy * 2.2);
-    const id = setTimeout(() => setIndex((i) => (i + 1) % list.length), interval * speedFactor);
+    let id: ReturnType<typeof setTimeout>;
+    const schedule = () => {
+      id = setTimeout(() => {
+        // Em modo cinema as fotos descansam — nada concorre com o vídeo.
+        if (isCinema()) {
+          schedule();
+          return;
+        }
+        setIndex((i) => (i + 1) % list.length);
+      }, interval * speedFactor);
+    };
+    schedule();
     return () => clearTimeout(id);
   }, [index, list.length, interval, energy]);
 
@@ -343,7 +387,8 @@ export function MediaCarousel({
     if (!track) return;
     let raf: number;
     const step = () => {
-      if (!paused) {
+      // Em modo cinema o carrossel congela — só o vídeo aberto se move.
+      if (!paused && !isCinema()) {
         track.scrollLeft += 0.6;
         if (track.scrollLeft >= track.scrollWidth / 2) track.scrollLeft = 0;
       }
@@ -416,11 +461,24 @@ export function VideoCard({
   useEffect(() => {
     const v = ref.current;
     if (!v) return;
-    if (inView) {
+    if (inView && !isCinema()) {
       v.play().catch(() => {});
     } else {
       v.pause();
     }
+  }, [inView]);
+
+  // Em modo cinema, este cartão adormece — só o vídeo aberto trabalha.
+  useEffect(() => {
+    return onCinema((on) => {
+      const v = ref.current;
+      if (!v) return;
+      if (on) {
+        v.pause();
+      } else if (inView) {
+        v.play().catch(() => {});
+      }
+    });
   }, [inView]);
 
   // Quando o utilizador para sobre o vídeo, começamos logo a carregá-lo

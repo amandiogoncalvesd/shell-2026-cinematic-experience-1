@@ -6,6 +6,7 @@
 export function requestImmersiveFullscreen() {
   try {
     const el = document.documentElement as any;
+    if (document.fullscreenElement) return; // já está — nunca força nem bloqueia
     if (el.requestFullscreen) {
       el.requestFullscreen({ navigationUI: "hide" } as any).catch(() => {});
     } else if (el.webkitRequestFullscreen) {
@@ -15,3 +16,19 @@ export function requestImmersiveFullscreen() {
     /* silencioso — a experiência continua normalmente */
   }
 }
+
+export function exitImmersiveFullscreen() {
+  try {
+    const doc = document as any;
+    if (document.fullscreenElement || doc.webkitFullscreenElement) {
+      if (document.fullscreenElement) {
+        document.exitFullscreen().catch(() => {});
+      } else {
+        doc.webkitExitFullscreen?.();
+      }
+    }
+  } catch {
+    /* silencioso */
+  }
+}
+

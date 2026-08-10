@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { CanvasParticles, Countdown, FilmGrain, LiquidBlobs } from "../components/effects";
+import InstallBanner from "../components/InstallBanner";
 import { requestImmersiveFullscreen } from "../utils/fullscreen";
 
 export default function Portal({ onEnter }: { onEnter: (role: "guests" | "shelcia") => void }) {
@@ -144,6 +145,9 @@ export default function Portal({ onEnter }: { onEnter: (role: "guests" | "shelci
       </AnimatePresence>
 
       <FilmGrain />
+
+      {/* Convite para instalar como aplicação — antes de entrar em qualquer página */}
+      {phase === "portal" && <InstallBanner />}
 
       <AnimatePresence>
         {phase === "leaving" && (

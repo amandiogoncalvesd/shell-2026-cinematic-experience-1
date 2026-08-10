@@ -1,0 +1,17 @@
+{
+  "name": "SHELL 2026 — Shelcia Fernanda",
+  "short_name": "SHELL 2026",
+  "description": "Um universo digital cinematográfico construído só para Shelcia Fernanda Neves Van-Dúnem.",
+  "lang": "pt",
+  "start_url": "/",
+  "scope": "/",
+  "display": "fullscreen",
+  "orientation": "any",
+  "background_color": "#03101f",
+  "theme_color": "#03101f",
+  "icons": [
+    { "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

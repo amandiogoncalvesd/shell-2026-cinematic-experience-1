@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useMotionValue, useReducedMotion, useScroll, useSpring, useTransform, type MotionValue } from "framer-motion";
 import type { ReactNode } from "react";
+import { isCinema, onCinema } from "./cinemaLock";
 
 /* ---------------------------------------------------------
    CanvasParticles — crystalline sparkles / bokeh drifting up
@@ -43,6 +44,11 @@ export function CanvasParticles({
     window.addEventListener("resize", onResize);
 
     const render = () => {
+      // Em modo cinema as partículas descansam — só o vídeo trabalha.
+      if (isCinema()) {
+        raf = requestAnimationFrame(render);
+        return;
+      }
       ctx.clearRect(0, 0, w, h);
       for (const p of particles) {
         p.y -= p.vy;
@@ -217,10 +223,13 @@ export function fadeScale(scrollYProgress: MotionValue<number>) {
 }
 
 /* ---------------------------------------------------------
-   FilmGrain — textura de película, cinema em toda a tela
+   FilmGrain — textura de película, cinema em toda a tela.
+   Desaparece em modo cinema para não roubar GPU ao vídeo.
 --------------------------------------------------------- */
 export function FilmGrain({ opacity = 0.045 }: { opacity?: number }) {
-  return <div aria-hidden className="film-grain" style={{ opacity }} />;
+  const [cinema, setCinemaState] = useState(false);
+  useEffect(() => onCinema(setCinemaState), []);
+  return <div aria-hidden className="film-grain" style={{ opacity: cinema ? 0 : opacity, animationPlayState: cinema ? "paused" : "running" }} />;
 }
 
 /* ---------------------------------------------------------
@@ -228,7 +237,10 @@ export function FilmGrain({ opacity = 0.045 }: { opacity?: number }) {
 --------------------------------------------------------- */
 export function CursorGlow() {
   const [enabled, setEnabled] = useState(false);
+  const [cinema, setCinemaState] = useState(false);
   const reduced = useReducedMotion();
+
+  useEffect(() => onCinema(setCinemaState), []);
   const x = useMotionValue(-600);
   const y = useMotionValue(-600);
   const sx = useSpring(x, { stiffness: 55, damping: 18, mass: 0.6 });
@@ -248,7 +260,7 @@ export function CursorGlow() {
     return () => window.removeEventListener("mousemove", move);
   }, [enabled, x, y]);
 
-  if (!enabled || reduced) return null;
+  if (!enabled || reduced || cinema) return null;
   return (
     <motion.div
       aria-hidden

@@ -142,3 +142,21 @@ Direção recebida do cliente — sobrepõe-se onde conflitar com as fases anter
    backdrop-blur, que é o maior peso de GPU), moldura sem shimmer em vídeo,
    preload="auto" e play() explícito com som. As pré-visualizações em grelha
    continuam mudas (padrão de galeria; vários vídeos com som em simultâneo seria caos).
+
+---
+
+## FASE 11 — Onda 6: cinema absoluto, tela cheia persistente e PWA
+
+1. **Cinema Lock (`cinemaLock.ts`):** quando um vídeo é aberto, ele torna-se a ÚNICA
+   coisa viva no sistema — os outros vídeos pausam, carrosséis e fotos congelam,
+   partículas e grão descansam, o cursor luminoso desaparece e a música pausa
+   (regressa ao fechar, exatamente como estava).
+2. **Tela cheia persistente:** a aplicação pede fullscreen ao primeiro gesto do
+   utilizador e em cada entrada (Convidados/Shelcia/Puzzle); navegar nunca o quebra
+   e nada força reentrada após o utilizador sair. O Neural Puzzle abre em tela cheia
+   por padrão, com botão “✕ Fechar tela cheia”.
+3. **PWA instalável:** manifest + ícones + service worker (`public/sw.js`):
+   guarda a aplicação inteira, fontes e até 400 mídias já vistas no dispositivo —
+   nas visitas seguintes carrega muito mais depressa e o que já foi visto abre
+   mesmo sem internet. Antes de entrar, aparece o convite real de instalação
+   (`InstallBanner`, com instruções próprias para iPhone).
