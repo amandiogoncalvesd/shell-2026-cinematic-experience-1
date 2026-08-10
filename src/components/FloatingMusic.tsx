@@ -1,13 +1,18 @@
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import { useMusic } from "../audio/MusicProvider";
+import { audioTracks } from "../data/videos";
 
-/* Botão flutuante de música — jóia de vidro líquido que pulsa com a melodia. */
+/* Botão flutuante de música — jóia de vidro líquido.
+   A música só toca quando o utilizador quiser. */
 export default function FloatingMusic() {
-  const { isPlaying, toggle, next, currentTrack } = useMusic();
+  const { isPlaying, toggle, next, play, currentTrack } = useMusic();
   const [hover, setHover] = useState(false);
 
-  if (!currentTrack) return null;
+  const start = () => {
+    if (!currentTrack) play(audioTracks[0]);
+    else toggle();
+  };
 
   return (
     <motion.div
@@ -19,7 +24,7 @@ export default function FloatingMusic() {
       onMouseLeave={() => setHover(false)}
     >
       <motion.button
-        onClick={toggle}
+        onClick={start}
         whileHover={{ scale: 1.06 }}
         whileTap={{ scale: 0.94 }}
         aria-label={isPlaying ? "Pausar música" : "Tocar música"}
@@ -37,7 +42,7 @@ export default function FloatingMusic() {
               ))}
             </span>
           ) : (
-            <span className="text-sm text-shell-sky">❈</span>
+            <span className="text-sm text-shell-sky">♪</span>
           )}
           {isPlaying && (
             <span className="animate-ping-slow absolute inset-0 rounded-full border border-shell-sky/40" />
@@ -53,7 +58,7 @@ export default function FloatingMusic() {
               className="whitespace-nowrap text-left"
             >
               <span className="block max-w-[180px] truncate text-xs font-medium text-white">
-                {currentTrack.title}
+                {currentTrack ? currentTrack.title : "A Tua Playlist"}
               </span>
               <span className="block text-[9px] uppercase tracking-[0.25em] text-shell-sky/70">
                 {isPlaying ? "Pausar ✦" : "Tocar ✦"}
@@ -61,7 +66,7 @@ export default function FloatingMusic() {
             </motion.span>
           )}
         </AnimatePresence>
-        {hover && (
+        {currentTrack && hover && (
           <span
             role="button"
             tabIndex={0}

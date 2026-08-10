@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useMusic } from "../audio/MusicProvider";
+import { audioTracks } from "../data/videos";
 
 export interface NavSection {
   id: string;
@@ -43,7 +44,7 @@ export default function Navbar({
   const [pagesOpen, setPagesOpen] = useState(false);
   const [active, setActive] = useState(sections[0]?.id);
   const pagesRef = useRef<HTMLDivElement | null>(null);
-  const { isPlaying, toggle, currentTrack } = useMusic();
+  const { isPlaying, toggle, play, currentTrack } = useMusic();
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -207,29 +208,27 @@ export default function Navbar({
             </div>
           )}
 
-          {/* ── Controlo de música ── */}
-          {currentTrack && (
-            <button
-              onClick={toggle}
-              className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-white/10 transition hover:border-shell-sky/50 hover:bg-shell-sky/10"
-              title={currentTrack.title}
-              aria-label={isPlaying ? "Pausar música" : "Tocar música"}
-            >
-              {isPlaying ? (
-                <span className="flex items-end gap-[2px]">
-                  {[0, 1, 2].map((i) => (
-                    <span
-                      key={i}
-                      className="w-[2.5px] rounded-full bg-shell-sky"
-                      style={{ height: 9, animation: `pulse-glow ${0.6 + i * 0.2}s ease-in-out infinite` }}
-                    />
-                  ))}
-                </span>
-              ) : (
-                <span className="text-[10px] text-shell-sky/70">♪</span>
-              )}
-            </button>
-          )}
+          {/* ── Controlo de música (o utilizador decide quando toca) ── */}
+          <button
+            onClick={() => (currentTrack ? toggle() : play(audioTracks[0]))}
+            className="grid h-8 w-8 shrink-0 place-items-center rounded-full border border-white/10 transition hover:border-shell-sky/50 hover:bg-shell-sky/10"
+            title={currentTrack?.title ?? "Tocar música"}
+            aria-label={isPlaying ? "Pausar música" : "Tocar música"}
+          >
+            {isPlaying ? (
+              <span className="flex items-end gap-[2px]">
+                {[0, 1, 2].map((i) => (
+                  <span
+                    key={i}
+                    className="w-[2.5px] rounded-full bg-shell-sky"
+                    style={{ height: 9, animation: `pulse-glow ${0.6 + i * 0.2}s ease-in-out infinite` }}
+                  />
+                ))}
+              </span>
+            ) : (
+              <span className="text-[10px] text-shell-sky/70">♪</span>
+            )}
+          </button>
 
           {/* ── Sair ── */}
           <button
@@ -327,14 +326,12 @@ export default function Navbar({
                 transition={{ delay: 0.4 }}
                 className="flex items-center justify-center gap-3"
               >
-                {currentTrack && (
-                  <button
-                    onClick={toggle}
-                    className="rounded-full glass px-5 py-2 text-[10px] uppercase tracking-[0.2em] text-ocean-100"
-                  >
-                    {isPlaying ? "❚❚ Música" : "♪ Música"}
-                  </button>
-                )}
+                <button
+                  onClick={() => (currentTrack ? toggle() : play(audioTracks[0]))}
+                  className="rounded-full glass px-5 py-2 text-[10px] uppercase tracking-[0.2em] text-ocean-100"
+                >
+                  {isPlaying ? "❚❚ Música" : "♪ Música"}
+                </button>
                 <button
                   onClick={onExit}
                   className="rounded-full border border-shell-sky/40 px-5 py-2 text-[10px] uppercase tracking-[0.2em] text-shell-sky"

@@ -1,7 +1,7 @@
 import { Reveal } from "../../components/effects";
 import { MediaCarousel, SmartImg, VideoCard, openLightbox } from "../../components/media";
 import { SectionHeading } from "../../components/ui";
-import { closeFriends, friends, identity, momLetter } from "../../data/content";
+import { closeFriends, friends, identity, momLetter, amandioLetter } from "../../data/content";
 import { ruthCeremony, ruthBackstage, ruthMoments } from "../../data/photos";
 import { fraseBiblicaPhoto, aniversarioMaePhoto } from "../../data/media2026";
 import { videoRuthCeremony, videoRuthMoments } from "../../data/videos";
@@ -12,6 +12,7 @@ export function FriendsSection() {
     <section id="p-amigos" className="relative py-28">
       <div className="mx-auto max-w-7xl px-6">
         <SectionHeading kicker="Amigos" title="Ruth — A Melhor Amiga" subtitle={ruth.since} />
+
 
         <div className="mt-12 grid grid-cols-1 gap-10 md:grid-cols-2 md:items-center">
           <Reveal>
@@ -60,10 +61,11 @@ export function LettersSection() {
   return (
     <section id="p-cartas" className="relative py-28">
       <div className="mx-auto max-w-4xl px-6">
-        <SectionHeading kicker="Cartas" title="Cartas" align="center" subtitle="Palavras reais, guardadas." />
+        <SectionHeading kicker="Cartas" title="Cartas" align="center" />
 
         <div className="mt-14 space-y-6">
           <LetterCard title={momLetter.from} text={momLetter.text} highlight />
+          <LetterCard title={amandioLetter.from} text={amandioLetter.text} highlight />
           <LetterCard title="Ruth Antónia Bongue Pereira" text={ruth.letter} />
           <LetterCard
             title={`O versículo dela · ${identity.verse.ref}`}

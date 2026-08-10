@@ -16,7 +16,7 @@ import {
   chapters2023,
   artMagic,
 } from "../../data/photos";
-import { destaque18Photos, destaquePhotos, txtFraseVideo } from "../../data/media2026";
+import { destaque18Photos, destaquePhotos, txtFraseVideo, universeQuote } from "../../data/media2026";
 
 export function HomeSection({ energy }: { energy: number }) {
   return (
@@ -52,7 +52,16 @@ export function HomeSection({ energy }: { energy: number }) {
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.3 }}
+          transition={{ delay: 1.2 }}
+          className="max-w-lg font-display text-sm italic leading-relaxed text-shell-lavender/80"
+        >
+          “{universeQuote.text}” — {universeQuote.author}
+        </motion.p>
+
+        <motion.p
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.5 }}
           className="max-w-lg text-sm italic leading-relaxed text-ocean-100/60"
         >
           "{identity.verse.text}" — {identity.verse.ref}
@@ -69,8 +78,7 @@ export function MemoriesSection({ energy }: { energy: number }) {
         <img src={childhoodPublic[2]} className="h-full w-full object-cover blur-sm" alt="" />
       </Parallax>
       <div className="mx-auto max-w-7xl px-6">
-        <SectionHeading kicker="Memórias" title="Uma Vida em Imagens" align="center"
-          subtitle="Da infância aos 18 anos — cada fase, um fragmento." />
+        <SectionHeading kicker="Memórias" title="Uma Vida em Imagens" align="center" />
         <div className="mt-14">
           <AutoMosaic photos={[...childhoodPublic, ...childhoodPrivate, ...generic2026]} tiles={20} energy={energy} />
         </div>
@@ -83,7 +91,7 @@ export function StoriesSection() {
   return (
     <section id="p-historias" className="relative py-28">
       <div className="mx-auto max-w-7xl px-6">
-        <SectionHeading kicker="Histórias" title="Capítulos de uma Vida" subtitle="Cada capítulo, uma emoção." />
+        <SectionHeading kicker="Histórias" title="Capítulos de uma Vida" />
       </div>
       <div className="mt-14 space-y-5 px-4 sm:px-6">
         {chapters.map((c, i) => (
@@ -124,7 +132,6 @@ function ChapterRow({ chapter, reverse }: { chapter: (typeof chapters)[number]; 
       <div className="w-full md:w-1/2">
         <Kicker>{chapter.subtitle}</Kicker>
         <h3 className="mt-3 font-display text-3xl font-semibold text-white sm:text-4xl">{chapter.title}</h3>
-        <p className="mt-4 text-sm leading-relaxed text-ocean-100/65">{chapter.text}</p>
       </div>
     </div>
   );

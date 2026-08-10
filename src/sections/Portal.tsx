@@ -3,6 +3,8 @@ import { AnimatePresence, motion } from "framer-motion";
 import { CanvasParticles, Countdown, FilmGrain, LiquidBlobs } from "../components/effects";
 import InstallBanner from "../components/InstallBanner";
 import { requestImmersiveFullscreen } from "../utils/fullscreen";
+import { universeQuote } from "../data/media2026";
+import { identity } from "../data/content";
 
 export default function Portal({ onEnter }: { onEnter: (role: "guests" | "shelcia") => void }) {
   const [phase, setPhase] = useState<"loading" | "portal" | "leaving">("loading");
@@ -134,12 +136,21 @@ export default function Portal({ onEnter }: { onEnter: (role: "guests" | "shelci
               <Countdown compact />
             </motion.div>
 
-            <motion.p
-              variants={{ hidden: { opacity: 0 }, show: { opacity: 1 } }}
-              className="max-w-md text-xs leading-relaxed text-ocean-200/50"
+            <motion.div
+              variants={{ hidden: { opacity: 0, y: 16 }, show: { opacity: 1, y: 0 } }}
+              className="mx-auto max-w-md"
             >
-              "O ódio excita contendas, mas o amor cobre todas as transgressões." — Provérbios 10:12
-            </motion.p>
+              <p className="font-display text-sm italic leading-relaxed text-shell-lavender/90">
+                “{universeQuote.text}”
+              </p>
+              <p className="mt-1.5 text-[10px] uppercase tracking-[0.3em] text-ocean-200/50">
+                — {universeQuote.author}
+              </p>
+              <div className="crystal-divider mx-auto my-4 w-40" />
+              <p className="text-xs leading-relaxed text-ocean-200/50">
+                "{identity.verse.text}" — {identity.verse.ref}
+              </p>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>

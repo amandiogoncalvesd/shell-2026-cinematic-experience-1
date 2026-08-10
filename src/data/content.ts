@@ -119,11 +119,11 @@ export const chapters = [
 ];
 
 export const dreamChapters = [
-  { id: "dream", title: "THE DREAM", pt: "O Sonho", text: "Alguns sonhos começam como um desenho." },
-  { id: "architect", title: "THE ARCHITECT", pt: "A Arquiteta", text: "Construir espaços é também construir sentido." },
-  { id: "blueprint", title: "THE BLUEPRINT", pt: "O Projeto", text: "Toda grande construção começa numa simples linha." },
-  { id: "structure", title: "THE STRUCTURE", pt: "A Construção", text: "Camada sobre camada, a vida ganha forma." },
-  { id: "future", title: "THE FUTURE", pt: "O Futuro", text: "Uma linda família, uma vida bem desenhada." },
+  { id: "dream", title: "THE DREAM", pt: "O Sonho" },
+  { id: "architect", title: "THE ARCHITECT", pt: "A Arquiteta" },
+  { id: "blueprint", title: "THE BLUEPRINT", pt: "O Projeto" },
+  { id: "structure", title: "THE STRUCTURE", pt: "A Construção" },
+  { id: "future", title: "THE FUTURE", pt: "O Futuro" },
 ];
 
 export const essenceWords = [
@@ -141,5 +141,11 @@ export const skyText = {
 export const natureText = {
   title: "A Natureza",
   subtitle: "BOSQUES · PÔR DO SOL · FLORES",
-  text: "A praia ao pôr do sol, os bosques, as flores — cada paisagem viva, sempre em movimento.",
+};
+
+// A carta de aniversário do Amândio — adaptada das mais belas declarações de
+// 18 anos encontradas na web e transformada numa carta para a Princesinha Shell.
+export const amandioLetter = {
+  from: "Amândio Gonçalves",
+  text: "Shelcia, hoje completas 18 anos — e com essa data chegam sentimentos difíceis de colocar em palavras. Por isso fiz o que sei fazer: transformei-os num universo. São 18 anos da alegria mais pura — a menina de olhos grandes que aprendeu a sonhar entre livros, poesias, flores e céus de entardecer, e que se tornou essa mulher forte, sensível e luminosa. Que essa nova caminhada seja com muita alegria, saúde e sabedoria, e com Deus sempre em primeiro lugar. Que nunca percas a tua essência, que sigas aprendendo com cada fase da vida, e que saibas sempre reconhecer o valor das coisas simples: a paz de um coração tranquilo, a beleza de uma amizade verdadeira e o poder gigante do amor. A vida está só começando, Princesinha Shell. Vai em frente com coragem, ternura e verdade — sonha como arquiteta, e constrói como quem sabe que a fundação mais linda é a família. Estarei aqui, sempre, torcendo por ti. Feliz aniversário. ✦",
 };

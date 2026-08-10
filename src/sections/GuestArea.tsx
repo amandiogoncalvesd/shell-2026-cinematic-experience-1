@@ -14,6 +14,7 @@ import {
 } from "../components/effects";
 import { Framemation, ScrollCinema } from "../components/cinema";
 import FloatingMusic from "../components/FloatingMusic";
+import WelcomeModal from "../components/WelcomeModal";
 import { LightboxHost, MediaCarousel, PhotoStage, VideoCard, openLightbox } from "../components/media";
 import { SectionHeading, GlassButton, Kicker } from "../components/ui";
 import { useMusic } from "../audio/MusicProvider";
@@ -29,7 +30,7 @@ import {
   capitulos2023Videos,
   bastidoresTopVideos,
 } from "../data/media2026";
-import { audioTracks, guestVideos } from "../data/videos";
+import { guestVideos } from "../data/videos";
 import { natureText } from "../data/content";
 
 const SECTIONS = [
@@ -43,21 +44,26 @@ const SECTIONS = [
 ];
 
 export default function GuestArea({ onGoPrivate, onExitPortal }: { onGoPrivate: () => void; onExitPortal: () => void }) {
-  const { play, energy } = useMusic();
+  const { energy } = useMusic();
   const heroRef = useRef<HTMLDivElement | null>(null);
-  const startedRef = useRef(false);
 
   useEffect(() => {
-    if (!startedRef.current) {
-      startedRef.current = true;
-      play(audioTracks[0]);
-    }
     window.scrollTo(0, 0);
-  }, [play]);
+  }, []);
 
   return (
     <div className="relative bg-[#03101f]">
       <LightboxHost />
+      <WelcomeModal
+        storageKey="shell2026-welcome-guest"
+        title="Bem-vindos à celebração ✦"
+        mentionPhotograph
+        lines={[
+          "Esta galeria celebra os 18 anos de Shelcia Fernanda — criada para a família e os amigos.",
+          "As fotografias nunca ficam paradas e os vídeos reproduzem-se sozinhos quando chegam ao centro do ecrã.",
+          "A música espera por vocês — toca no botão flutuante quando quiserem.",
+        ]}
+      />
       <ScrollProgress />
       <FilmGrain />
       <CursorGlow />
@@ -88,8 +94,7 @@ export default function GuestArea({ onGoPrivate, onExitPortal }: { onGoPrivate: 
             transition={{ delay: 0.6, duration: 1 }}
             className="max-w-xl text-sm leading-relaxed text-[#b9d9ec]/75 sm:text-base"
           >
-            Uma coleção viva de memórias, amizades e momentos de Shelcia Fernanda Neves Van-Dúnem —
-            nada aqui fica parado.
+            Uma coleção viva de memórias de Shelcia Fernanda Neves Van-Dúnem.
           </motion.p>
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.85 }}>
             <Countdown />
@@ -105,11 +110,7 @@ export default function GuestArea({ onGoPrivate, onExitPortal }: { onGoPrivate: 
       {/* ═══════════ CAPÍTULO I — DESTAQUES DOS 18 ANOS ═══════════ */}
       <section id="g-destaques" className="relative py-28">
         <div className="mx-auto max-w-7xl px-6">
-          <SectionHeading
-            kicker="Capítulo I"
-            title="Destaques dos 18 Anos"
-            subtitle="Molduras que balançam; fotografias que trocam sozinhas."
-          />
+          <SectionHeading kicker="Capítulo I" title="Destaques dos 18 Anos" />
           <div className="mt-14">
             <Framemation photos={destaque18Photos} frames={8} energy={energy} />
           </div>
@@ -149,12 +150,7 @@ export default function GuestArea({ onGoPrivate, onExitPortal }: { onGoPrivate: 
           <PhotoStage photos={familyFriendsAlbum.slice(0, 6)} interval={6000} className="h-full w-full blur-sm" onClickOpen={false} />
         </div>
         <div className="mx-auto max-w-7xl px-6">
-          <SectionHeading
-            kicker="Capítulo III"
-            title="Família & Amigos"
-            subtitle="As raízes e os laços."
-            align="center"
-          />
+          <SectionHeading kicker="Capítulo III" title="Família & Amigos" align="center" />
         </div>
         <div className="mt-12 space-y-6">
           <MediaCarousel photos={familyFriends2026} height="h-64" />
@@ -181,7 +177,7 @@ export default function GuestArea({ onGoPrivate, onExitPortal }: { onGoPrivate: 
       {/* ═══════════ CAPÍTULO IV — NATUREZA ENCANTADA (scroll-cinema) ═══════════ */}
       <section id="g-natureza" className="relative">
         <div className="mx-auto max-w-7xl px-6 pb-10 pt-28">
-          <SectionHeading kicker="Capítulo IV" title={natureText.title} subtitle={natureText.text} align="center" />
+          <SectionHeading kicker={`Capítulo IV · ${natureText.subtitle}`} title={natureText.title} align="center" />
         </div>
         <ScrollCinema
           height="260vh"
@@ -197,12 +193,7 @@ export default function GuestArea({ onGoPrivate, onExitPortal }: { onGoPrivate: 
       <section id="g-videos" className="relative py-28">
         <LiquidBlobs className="opacity-40" />
         <div className="relative mx-auto max-w-7xl px-6">
-          <SectionHeading
-            kicker="Capítulo V"
-            title="Cinema & Bastidores"
-            subtitle="Vídeos que se reproduzem sozinhos ao entrar em foco."
-            align="center"
-          />
+          <SectionHeading kicker="Capítulo V" title="Cinema & Bastidores" align="center" />
           <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             {[...capitulos2023Videos.slice(0, 3), ...bastidoresTopVideos.slice(0, 3), ...guestVideos.slice(0, 6)].map((src, i) => (
               <VideoCard key={src + i} src={src} playlist={guestVideos} index={i} />
@@ -238,9 +229,6 @@ export default function GuestArea({ onGoPrivate, onExitPortal }: { onGoPrivate: 
           <h2 className="mt-4 font-display text-4xl font-semibold text-white sm:text-5xl">
             És a Shelcia? <span className="glow-shell">O teu universo espera.</span>
           </h2>
-          <p className="mt-4 text-sm text-[#b9d9ec]/65">
-            Memórias, histórias, sonhos, natureza e cartas — um espaço só dela.
-          </p>
           <div className="mt-8">
             <GlassButton variant="solid" onClick={onGoPrivate}>
               Entrar no meu universo ✦
@@ -249,8 +237,13 @@ export default function GuestArea({ onGoPrivate, onExitPortal }: { onGoPrivate: 
         </div>
       </section>
 
-      <footer className="border-t border-white/5 py-10 text-center text-xs uppercase tracking-[0.3em] text-shell-sky/45">
-        Shell 2026 · Shelcia Fernanda Neves Van-Dúnem
+      <footer className="border-t border-white/5 py-10 text-center">
+        <p className="text-xs uppercase tracking-[0.3em] text-shell-sky/45">
+          Shell 2026 · Shelcia Fernanda Neves Van-Dúnem
+        </p>
+        <p className="mt-2 text-[10px] uppercase tracking-[0.3em] text-shell-sky/35">
+          Designer by Amândio Gonçalves
+        </p>
       </footer>
     </div>
   );

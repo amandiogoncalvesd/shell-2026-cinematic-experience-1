@@ -175,3 +175,26 @@ Direção recebida do cliente — sobrepõe-se onde conflitar com as fases anter
    foi apagado.
 4. **Destaque principal:** o arquivo “Destaque dos seus 18 anos” (56 fotos + 36 vídeos)
    é a face da aplicação — heróis, galeria e Capítulo I.
+
+---
+
+## FASE 13 — ONDA OMEGA (classificação premium)
+
+1. **Photograph 2026** (o filme do Amândio, 404 MB, GitHub Releases) é o destaque
+   principal do Cinema: herói real com ▶ Assistir + ⬇ Baixar; mencionado também
+   no modal de boas-vindas das duas áreas.
+2. **Página da Shelcia = segunda pessoa.** Nada de “dela/ela” na área privada:
+   títulos como “A Tua Playlist”, “Princesinha Shell ✦”. Ela vê o universo como
+   criado para ela — porque foi.
+3. **Carta do Amândio:** adaptada das mais belas declarações de 18 anos da web,
+   juntou-se às cartas reais (mãe, Ruth, versículo). É a única declaração
+   permitida — porque pedida.
+4. **Música 100% manual:** nada toca sozinho; o utilizador dá play no botão
+   flutuante, na navbar ou na secção Música.
+5. **Boas-vindas:** modal único por sessão explica cada área (convidados e privada).
+6. **Texto mínimo:** só títulos que condizem com as imagens; descrições cliché
+   eliminadas (capítulos sem parágrafos, playlist sem notas, módulos sem legendas).
+7. **Neural Puzzle:** arranque robusto (não depende de um só evento do browser),
+   carregamento com 6 tentativas + timeout de 12 s + ecrã de retry; interface da
+   página limpa (sem botões desnecessários).
+8. **Rodapé oficial:** “Designer by Amândio Gonçalves”.

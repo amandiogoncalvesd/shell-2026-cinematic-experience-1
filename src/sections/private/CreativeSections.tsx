@@ -22,12 +22,7 @@ export function LibrarySection() {
   return (
     <section id="p-livros" className="relative py-28">
       <div className="mx-auto max-w-7xl px-6">
-        <SectionHeading
-          kicker="Biblioteca"
-          title="Pequenos Universos"
-          subtitle="Leitora, poetisa, filósofa, mitóloga — cada interesse, um mundo."
-          align="center"
-        />
+        <SectionHeading kicker="Biblioteca" title="Pequenos Universos" align="center" />
 
         <div className="mt-14 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
           {identity.universes.map((u, i) => (
@@ -76,7 +71,7 @@ export function ArtSection({ energy }: { energy: number }) {
   return (
     <section id="p-arte" className="relative py-28">
       <div className="mx-auto max-w-7xl px-6">
-        <SectionHeading kicker="Arte" title="Toque de Magia" subtitle="Retratos entre o real e o fantástico." align="center" />
+        <SectionHeading kicker="Arte" title="Testes de Arte" align="center" />
         <div className="mt-14">
           <AutoMosaic photos={artMagic} tiles={16} energy={energy} />
         </div>
@@ -89,7 +84,6 @@ export function ArtSection({ energy }: { energy: number }) {
           <MediaCarousel photos={artMagic} height="h-72" />
         </div>
 
-        {/* Arte & texto — palavras que ela transforma em imagem */}
         <Reveal className="mt-20 text-center">
           <Kicker>Arte & texto</Kicker>
         </Reveal>
@@ -97,9 +91,8 @@ export function ArtSection({ energy }: { energy: number }) {
           <Framemation photos={artTxtPhotos} frames={7} energy={energy} aspect="aspect-square" />
         </div>
 
-        {/* Frases da série que ela ama — Bridgerton */}
         <Reveal className="mt-20 text-center">
-          <Kicker>Frases da série favorita · Bridgerton</Kicker>
+          <Kicker>Bridgerton</Kicker>
         </Reveal>
         <div className="mt-8">
           <MediaCarousel photos={frasesSeriePhotos} height="h-72" />

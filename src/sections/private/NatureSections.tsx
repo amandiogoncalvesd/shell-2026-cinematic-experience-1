@@ -12,7 +12,7 @@ import {
 export function NaturezaSection({ energy }: { energy: number }) {
   return (
     <section id="p-natureza" className="relative overflow-hidden py-28">
-      {/* Fundo vivo: as paisagens dela a respirar atrás de tudo */}
+      {/* Fundo vivo: paisagens a respirar atrás de tudo */}
       <div className="absolute inset-0 -z-10">
         <PhotoStage
           photos={naturezaPaisagensPhotos.slice(0, 10)}
@@ -26,7 +26,7 @@ export function NaturezaSection({ energy }: { energy: number }) {
       <CanvasParticles density={40} />
 
       <div className="mx-auto max-w-7xl px-6">
-        <SectionHeading kicker="Natureza" title={natureText.title} subtitle={natureText.text} align="center" />
+        <SectionHeading kicker={natureText.subtitle} title={natureText.title} align="center" />
 
         {/* Flores que flutuam como pétalas */}
         <Reveal className="mt-14 text-center">

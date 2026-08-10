@@ -102,9 +102,9 @@ export default function ImmersiveGallery() {
           <div className="mx-auto mt-10 grid max-w-xl grid-cols-2 gap-4">
             {(
               [
-                { id: "fotos", emblem: "✦", title: "Fotografias", sub: "Molduras vivas, sempre a trocar" },
-                { id: "videos", emblem: "▶", title: "Vídeos", sub: "Reproduzem sozinhos, em foco" },
-              ] as { id: Module; emblem: string; title: string; sub: string }[]
+                { id: "fotos", emblem: "✦", title: "Fotografias" },
+                { id: "videos", emblem: "▶", title: "Vídeos" },
+              ] as { id: Module; emblem: string; title: string }[]
             ).map((m) => (
               <motion.button
                 key={m.id}
@@ -112,7 +112,7 @@ export default function ImmersiveGallery() {
                 whileHover={{ y: -4 }}
                 whileTap={{ scale: 0.98 }}
                 transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-                className={`relative overflow-hidden rounded-2xl p-6 text-left transition ${
+                className={`relative overflow-hidden rounded-2xl p-6 text-center transition ${
                   module === m.id ? "glass-strong royal-frame" : "glass opacity-70 hover:opacity-100"
                 }`}
               >
@@ -122,11 +122,10 @@ export default function ImmersiveGallery() {
                     className="absolute -right-8 -top-8 h-28 w-28 rounded-full bg-shell-sky/25 blur-3xl"
                   />
                 )}
-                <span className="relative grid h-10 w-10 place-items-center rounded-full border border-shell-sky/50 bg-shell-sky/10 text-shell-sky">
+                <span className="relative mx-auto grid h-10 w-10 place-items-center rounded-full border border-shell-sky/50 bg-shell-sky/10 text-shell-sky">
                   {m.emblem}
                 </span>
                 <h3 className="relative mt-3 font-display text-xl font-semibold text-white">{m.title}</h3>
-                <p className="relative mt-1 text-[11px] leading-relaxed text-[#b9d9ec]/60">{m.sub}</p>
               </motion.button>
             ))}
           </div>

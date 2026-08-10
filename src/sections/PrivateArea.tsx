@@ -2,10 +2,10 @@ import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import Navbar from "../components/Navbar";
 import FloatingMusic from "../components/FloatingMusic";
+import WelcomeModal from "../components/WelcomeModal";
 import { LightboxHost } from "../components/media";
 import { CursorGlow, FilmGrain, ScrollProgress, SectionDock } from "../components/effects";
 import { useMusic } from "../audio/MusicProvider";
-import { audioTracks } from "../data/videos";
 import { HomeSection, MemoriesSection, StoriesSection } from "./private/NarrativeSections";
 import { FriendsSection, LettersSection } from "./private/PeopleSections";
 import { LibrarySection, ArtSection } from "./private/CreativeSections";
@@ -38,19 +38,13 @@ const SECTIONS = [
 ];
 
 export default function PrivateArea({ onExit }: { onExit: () => void }) {
-  const { play, energy } = useMusic();
-  const startedRef = useRef(false);
+  const { energy } = useMusic();
   const [page, setPage] = useState<PrivatePage>("universo");
   const pendingScroll = useRef<string | null>(null);
 
-  // A música dela — Photograph — começa a tocar assim que abre a sua página.
   useEffect(() => {
-    if (!startedRef.current) {
-      startedRef.current = true;
-      play(audioTracks[0]);
-    }
     window.scrollTo(0, 0);
-  }, [play]);
+  }, []);
 
   const goPage = (id: string) => {
     setPage(id as PrivatePage);
@@ -82,6 +76,16 @@ export default function PrivateArea({ onExit }: { onExit: () => void }) {
   return (
     <div className="relative bg-[#03101f]">
       <LightboxHost />
+      <WelcomeModal
+        storageKey="shell2026-welcome-private"
+        title="Bem-vinda, Princesinha Shell ✦"
+        mentionPhotograph
+        lines={[
+          "Este universo é teu. As fotografias trocam sozinhas e os vídeos ganham vida quando chegam ao centro do ecrã.",
+          "A música espera por ti — toca no botão flutuante quando quiseres.",
+          "Na Galeria Imersiva tens todas as tuas fotos e vídeos; no Neural Puzzle, um desafio com as tuas memórias.",
+        ]}
+      />
       {page === "universo" && <ScrollProgress />}
       <FilmGrain />
       <CursorGlow />
@@ -154,6 +158,9 @@ export default function PrivateArea({ onExit }: { onExit: () => void }) {
         </p>
         <p className="mt-3 text-xs uppercase tracking-[0.3em] text-shell-sky/45">
           Shell 2026 · Shelcia Fernanda Neves Van-Dúnem
+        </p>
+        <p className="mt-2 text-[10px] uppercase tracking-[0.3em] text-shell-sky/35">
+          Designer by Amândio Gonçalves
         </p>
       </footer>
     </div>

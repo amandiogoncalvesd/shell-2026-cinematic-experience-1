@@ -1,8 +1,7 @@
 import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import { CanvasParticles, LiquidBlobs } from "../../components/effects";
-import { Kicker } from "../../components/ui";
-import { exitImmersiveFullscreen, requestImmersiveFullscreen } from "../../utils/fullscreen";
+import { requestImmersiveFullscreen } from "../../utils/fullscreen";
 
 export default function NeuralPuzzlePage() {
   const wrapRef = useRef<HTMLDivElement | null>(null);
@@ -18,24 +17,11 @@ export default function NeuralPuzzlePage() {
       <LiquidBlobs className="opacity-50" />
       <CanvasParticles density={40} />
 
-      {/* Botão para fechar a tela cheia */}
-      <motion.button
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.6, duration: 0.5 }}
-        onClick={exitImmersiveFullscreen}
-        className="glass fixed right-4 top-16 z-[60] flex items-center gap-2 rounded-full px-4 py-2 text-[10px] font-semibold uppercase tracking-[0.2em] text-shell-sky transition hover:bg-shell-sky/15 sm:right-6"
-      >
-        ✕ Fechar tela cheia
-      </motion.button>
-
-      <section className="relative pb-6 pt-24">
+      <section className="relative pb-5 pt-24">
         <div className="mx-auto max-w-3xl px-6 text-center">
-          <Kicker>Neural Puzzle</Kicker>
-          <h1 className="glow-shell mt-3 font-display text-3xl font-semibold sm:text-4xl">O Jogo ✦</h1>
-          <p className="mx-auto mt-3 max-w-xl text-xs leading-relaxed text-[#b9d9ec]/65 sm:text-sm">
-            Onze níveis, do 2×2 ao 12×12. Centenas de imagens escolhidas ao acaso.
-            O progresso fica guardado automaticamente.
+          <h1 className="glow-shell font-display text-3xl font-semibold sm:text-4xl">Neural Puzzle ✦</h1>
+          <p className="mt-3 text-[10px] uppercase tracking-[0.35em] text-shell-sky/55">
+            11 níveis · 594 imagens · progresso guardado
           </p>
         </div>
       </section>
@@ -57,19 +43,6 @@ export default function NeuralPuzzlePage() {
               allow="fullscreen"
             />
           </div>
-        </div>
-        <div className="mt-4 flex flex-wrap justify-center gap-3 text-[9px] uppercase tracking-[0.25em] text-shell-sky/50">
-          <span className="glass rounded-full px-4 py-1.5">11 níveis · do 2×2 ao 12×12</span>
-          <span className="glass rounded-full px-4 py-1.5">594 imagens aleatórias</span>
-          <span className="glass rounded-full px-4 py-1.5">progresso guardado ✦</span>
-          <a
-            href="/neural-puzzle.html"
-            target="_blank"
-            rel="noreferrer"
-            className="rounded-full glass px-4 py-1.5 text-ocean-100/70 transition hover:text-white"
-          >
-            Abrir noutra janela ✦
-          </a>
         </div>
       </motion.section>
     </div>

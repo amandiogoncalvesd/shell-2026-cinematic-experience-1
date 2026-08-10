@@ -114,6 +114,12 @@ export const universeQuote = {
   author: "Destin Sparks",
 };
 
+// O filme principal — Photograph 2026: as melhores memórias, da infância aos 18 anos.
+export const photographFilm = {
+  title: "Photograph 2026",
+  url: "https://github.com/amandiogoncalvesd/shell-2026-cinematic-experience-1/releases/download/v1.0.0/Shelcia-Fernanda-Photograph-2026.mp4",
+};
+
 // Frases em vídeo-texto (para heróis com vídeo dentro das letras)
 export const txtDestaqueVideos = [
   v("v1785929170/shelcia-fernanda-txt-video-frase-sobre-shelcia-destaque-01_pkg4oj.mp4"),

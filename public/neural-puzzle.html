@@ -287,7 +287,9 @@ function nextImg(){
 }
 
 // ════════════════ INIT ════════════════
-window.addEventListener('load',()=>{
+let inited=false;
+function initGame(){
+  if(inited)return; inited=true;
   cv=document.getElementById('c');
   ctx=cv.getContext('2d');
   resize(); window.addEventListener('resize',resize);
@@ -333,7 +335,14 @@ window.addEventListener('load',()=>{
     loadImage(false);
   }
   requestAnimationFrame(loop);
-});
+}
+// Arranque robusto: não depende de um único evento do browser.
+if(document.readyState==='complete'||document.readyState==='interactive'){
+  setTimeout(initGame,0);
+}else{
+  window.addEventListener('DOMContentLoaded',initGame);
+  window.addEventListener('load',initGame);
+}
 
 function resize(){
   const a=document.getElementById('gameArea');
@@ -364,37 +373,45 @@ function updateLevelBar(){
   });
 }
 
-// ════════════════ CARREGAR IMAGEM ════════════════
+// ════════════════ CARREGAR IMAGEM (com tentativas e tempo limite) ════════════════
+let loadAttempts=0;
+function loadImage(sameLevel=false){
+  loadAttempts=0;
+  tryNextImg(sameLevel);
+}
 function loadImageWithUrl(url){
   if(!url){ loadImage(false); return; }
-  usedImgUrl=url;
-  showLoading(true);
-  const im=new Image();
-  im.onload=()=>{
-    image=im;
-    document.getElementById('prev-img').src=url;
-    setTimeout(()=>{hideLoading(); startGame(false);},700);
-  };
-  im.onerror=()=>loadImage(false);
-  im.src=url;
+  loadAttempts=0;
+  tryUrl(url,false,()=>loadImage(false));
 }
-function loadImage(sameLevel=false){
-  const url=nextImg();
+function tryNextImg(sameLevel){
+  if(loadAttempts>=6){ showLoadError(); return; }
+  tryUrl(nextImg(),sameLevel,()=>{ loadAttempts++; tryNextImg(sameLevel); });
+}
+function tryUrl(url,sameLevel,onFail){
+  loadAttempts++;
+  if(loadAttempts>6){ showLoadError(); return; }
   usedImgUrl=url;
   showLoading(true);
+  document.getElementById('ld-txt').textContent='CARREGANDO MEMÓRIA '+loadAttempts+'...';
   const im=new Image();
+  let done=false;
+  const timer=setTimeout(()=>{ if(!done){ done=true; onFail(); } },12000);
   im.onload=()=>{
+    if(done)return; done=true; clearTimeout(timer);
     image=im;
     document.getElementById('prev-img').src=url;
     saveProgress(false); // guarda a imagem atual para poder retomar
     setTimeout(()=>{hideLoading(); startGame(sameLevel);},700);
   };
-  im.onerror=()=>{
-    const fallback=nextImg();
-    usedImgUrl=fallback;
-    im.src=fallback;
-  };
+  im.onerror=()=>{ if(done)return; done=true; clearTimeout(timer); onFail(); };
   im.src=url;
+}
+function showLoadError(){
+  const ld=document.getElementById('loading');
+  document.getElementById('ld-txt').textContent='TOCA AQUI PARA TENTAR DE NOVO ✦';
+  ld.style.cursor='pointer';
+  ld.onclick=()=>{ ld.onclick=null; ld.style.cursor='default'; loadAttempts=0; tryNextImg(false); };
 }
 
 function showLoading(visible){

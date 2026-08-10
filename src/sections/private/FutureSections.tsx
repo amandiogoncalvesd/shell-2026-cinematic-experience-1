@@ -2,11 +2,11 @@
 import { motion } from "framer-motion";
 import { Parallax, Reveal } from "../../components/effects";
 import { Framemation } from "../../components/cinema";
-import { SmartImg, VideoCard, openLightbox } from "../../components/media";
+import { PhotoStage, SmartImg, VideoCard, openLightbox } from "../../components/media";
 import { SectionHeading, Kicker, GlassButton } from "../../components/ui";
 import { dreamChapters, playlist, skyText } from "../../data/content";
 import { generic2026, backstageClassic } from "../../data/photos";
-import { arquiteturaSonhoPhotos, irmaosVideos, infanciaVideos, bastidoresTopVideos } from "../../data/media2026";
+import { arquiteturaSonhoPhotos, irmaosVideos, infanciaVideos, bastidoresTopVideos, destaque18Photos, photographFilm } from "../../data/media2026";
 import { thumb } from "../../utils/cloudinary";
 import { privateVideos, videoSpecial, audioTracks } from "../../data/videos";
 import { useMusic } from "../../audio/MusicProvider";
@@ -15,11 +15,42 @@ export function CinemaSection() {
   return (
     <section id="p-videos" className="relative py-28">
       <div className="mx-auto max-w-7xl px-6">
-        <SectionHeading kicker="Cinema" title="Momentos em Movimento" subtitle="Vídeos que ganham vida ao entrar em foco." align="center" />
+        <SectionHeading kicker="Cinema" title="Cinema" align="center" />
+
+        {/* ═══ O DESTAQUE PRINCIPAL · PHOTOGRAPH 2026 ═══ */}
+        <Reveal className="mt-14">
+          <div className="royal-frame relative overflow-hidden rounded-3xl">
+            <div className="absolute inset-0">
+              <PhotoStage photos={destaque18Photos.slice(0, 8)} interval={5200} className="h-full w-full opacity-35" onClickOpen={false} />
+              <div className="absolute inset-0 bg-gradient-to-t from-[#03101f] via-[#03101f]/60 to-[#03101f]/30" />
+            </div>
+            <div className="relative z-10 flex flex-col items-center gap-5 px-6 py-20 text-center sm:py-28">
+              <Kicker>O destaque do cinema</Kicker>
+              <h3 className="glow-shell font-display text-4xl font-bold sm:text-6xl">Photograph 2026</h3>
+              <p className="max-w-md text-xs uppercase tracking-[0.3em] text-[#b9d9ec]/60 sm:text-sm">
+                As melhores memórias · da infância aos 18 anos
+              </p>
+              <div className="mt-4 flex flex-wrap items-center justify-center gap-4">
+                <GlassButton variant="solid" onClick={() => openLightbox([{ type: "video" as const, src: photographFilm.url }], 0)}>
+                  ▶ Assistir
+                </GlassButton>
+                <a
+                  href={photographFilm.url}
+                  download
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center gap-2 rounded-full border border-shell-sky/50 px-7 py-3 text-sm font-semibold tracking-wide text-shell-sky transition hover:bg-shell-sky/15"
+                >
+                  ⬇ Baixar o filme
+                </a>
+              </div>
+            </div>
+          </div>
+        </Reveal>
 
         {/* Emocional — com os irmãos */}
         <Reveal className="mt-14">
-          <Kicker>Emocional · com os irmãos</Kicker>
+          <Kicker>Com os irmãos</Kicker>
         </Reveal>
         <div className="mt-5 grid grid-cols-2 gap-4 lg:grid-cols-4">
           {irmaosVideos.map((src, i) => (
@@ -29,7 +60,7 @@ export function CinemaSection() {
 
         {/* Infância em vídeo */}
         <Reveal className="mt-14">
-          <Kicker>Infância · os primeiros passos</Kicker>
+          <Kicker>Infância</Kicker>
         </Reveal>
         <div className="mt-5 grid grid-cols-1 gap-4 sm:grid-cols-2">
           {infanciaVideos.map((src, i) => (
@@ -39,7 +70,7 @@ export function CinemaSection() {
 
         {/* Bastidores top */}
         <Reveal className="mt-14">
-          <Kicker>Bastidores · top vídeos</Kicker>
+          <Kicker>Bastidores</Kicker>
         </Reveal>
         <div className="mt-5 grid grid-cols-2 gap-4 sm:grid-cols-3 lg:grid-cols-4">
           {bastidoresTopVideos.map((src, i) => (
@@ -75,7 +106,7 @@ export function DreamsSection({ energy = 0 }: { energy?: number }) {
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-[#03101f] via-[#03101f]/70 to-[#03101f]" />
 
       <div className="mx-auto max-w-6xl px-6">
-        <SectionHeading kicker="Sonhos" title="The Architect" subtitle="“Alguns sonhos começam como um desenho.” — tornar-se arquiteta e construir uma linda família." align="center" />
+        <SectionHeading kicker="Sonhos" title="The Architect" align="center" />
 
         <div className="mt-16 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-5">
           {dreamChapters.map((d, i) => (
@@ -84,7 +115,6 @@ export function DreamsSection({ energy = 0 }: { energy?: number }) {
                 <span className="font-display text-xs uppercase tracking-[0.3em] text-shell-sky">{String(i + 1).padStart(2, "0")}</span>
                 <h3 className="font-display text-lg font-semibold text-white">{d.title}</h3>
                 <p className="text-[11px] uppercase tracking-widest text-ocean-200/50">{d.pt}</p>
-                <p className="mt-2 text-xs leading-relaxed text-ocean-100/60">{d.text}</p>
               </div>
             </Reveal>
           ))}
@@ -141,18 +171,15 @@ export function MusicSection() {
   return (
     <section id="p-musica" className="relative py-28">
       <div className="mx-auto max-w-5xl px-6">
-        <SectionHeading kicker="Música" title="A Trilha Sonora" subtitle="Pop, gospel, clássica e instrumentais — os sons dela." align="center" />
+        <SectionHeading kicker="Música" title="A Tua Playlist" align="center" />
 
         <div className="mt-14 grid grid-cols-1 gap-8 md:grid-cols-2">
           <div className="glass rounded-2xl p-6">
-            <Kicker>As favoritas</Kicker>
+            <Kicker>As Tuas Favoritas</Kicker>
             <ul className="mt-4 space-y-3">
               {playlist.map((p) => (
                 <li key={p.title} className="flex items-center justify-between gap-3 border-b border-white/5 pb-2 text-sm">
-                  <span className="text-ocean-50">
-                    {p.title}
-                    {p.note && <span className="mt-0.5 block text-[10px] italic text-shell-lavender/60">{p.note}</span>}
-                  </span>
+                  <span className="text-ocean-50">{p.title}</span>
                   <span className="shrink-0 text-xs text-ocean-300/60">{p.artist}</span>
                 </li>
               ))}
@@ -160,7 +187,7 @@ export function MusicSection() {
           </div>
 
           <div className="glass royal-frame rounded-2xl p-6">
-            <Kicker>A playlist</Kicker>
+            <Kicker>Princesinha Shell ✦</Kicker>
             <div className="mt-4 flex items-end gap-[3px]">
               {Array.from({ length: 24 }).map((_, i) => (
                 <span
