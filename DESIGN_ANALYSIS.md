@@ -260,3 +260,18 @@ Modelo: a secção “4 frases lindas para 4 fotos lindas de uma Garota Linda”
 **Regras da voz:** direta (você/te), uma qualidade por frase, curta e quente,
 com imagens concretas (“ilumina tudo ao seu redor”) — zero burocracia, zero
 clichés genéricos. Cada palavra é dita por ele, para ela.
+
+---
+
+## FASE 18 — Linha do Tempo em casa & músicas por secção
+
+1. **Linha do Tempo** (⏳, 6ª página): a mesma linha criada no Shell Memory
+   Lane, agora nativa — quatro eras (O Começo · 2023 · 2024–2025 · 2026),
+   itens alternados em molduras reais, vídeos abrem no cinema com som.
+2. **Músicas por secção** (`audio/sectionTracks.ts`): quando a utilizadora já
+   deu play, navegar entre secções troca suavemente de faixa (Experience no
+   Home, Photograph nas Memórias, Perfect nos Amigos, Golden Hour na Natureza,
+   Wicked Game no Céu/Cartas, Interstellar no Cinema/Sonhos, Solas na Arte).
+   Sem play manual, nada toca — a regra de ouro mantém-se.
+3. As fotografias já trocam ao ritmo da energia da música (`energy` acelera
+   PhotoStage/Framemation/ScrollCinema).

@@ -6,6 +6,8 @@ import WelcomeModal from "../components/WelcomeModal";
 import { LightboxHost } from "../components/media";
 import { CursorGlow, FilmGrain, ScrollProgress, SectionDock } from "../components/effects";
 import { useMusic } from "../audio/MusicProvider";
+import { SECTION_TRACKS } from "../audio/sectionTracks";
+import { audioTracks } from "../data/videos";
 import { HomeSection, MemoriesSection, StoriesSection } from "./private/NarrativeSections";
 import { FriendsSection, LettersSection } from "./private/PeopleSections";
 import { LibrarySection, ArtSection } from "./private/CreativeSections";
@@ -15,11 +17,13 @@ import ImmersiveGallery from "./private/ImmersiveGallery";
 import NeuralPuzzlePage from "./private/NeuralPuzzlePage";
 import CartaPage from "./private/CartaPage";
 import ReliquiasPage from "./private/ReliquiasPage";
+import TimelinePage from "./private/TimelinePage";
 
-type PrivatePage = "universo" | "galeria" | "carta" | "puzzle" | "reliquias";
+type PrivatePage = "universo" | "galeria" | "carta" | "puzzle" | "reliquias" | "timeline";
 
 const PAGES = [
   { id: "universo", label: "O Universo", emblem: "❈", desc: "As tuas memórias, histórias e sonhos" },
+  { id: "timeline", label: "Linha do Tempo", emblem: "⏳", desc: "Quatro eras, do começo aos 18" },
   { id: "galeria", label: "Galeria Imersiva", emblem: "✦", desc: "Fotografias e vídeos sempre em movimento" },
   { id: "carta", label: "A Carta", emblem: "🌹", desc: "Uma carta especial, palavra por palavra" },
   { id: "puzzle", label: "Neural Puzzle", emblem: "⬡", desc: "O teu jogo de memória e cristal" },
@@ -42,13 +46,40 @@ const SECTIONS = [
 ];
 
 export default function PrivateArea({ onExit }: { onExit: () => void }) {
-  const { energy } = useMusic();
+  const { energy, isPlaying, play } = useMusic();
+  const playingRef = useRef(false);
   const [page, setPage] = useState<PrivatePage>("universo");
   const pendingScroll = useRef<string | null>(null);
 
   useEffect(() => {
+    playingRef.current = isPlaying;
+  }, [isPlaying]);
+
+  useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  // Músicas por secção: só troca de faixa quando ela já deu play —
+  // e as fotos trocam ao ritmo da energia da música (via `energy`).
+  useEffect(() => {
+    if (page !== "universo") return;
+    const observers: IntersectionObserver[] = [];
+    Object.entries(SECTION_TRACKS).forEach(([id, idx]) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const obs = new IntersectionObserver(
+        ([entry]) => {
+          if (entry.isIntersecting && playingRef.current) {
+            play(audioTracks[idx]);
+          }
+        },
+        { rootMargin: "-45% 0px -45% 0px" }
+      );
+      obs.observe(el);
+      observers.push(obs);
+    });
+    return () => observers.forEach((o) => o.disconnect());
+  }, [page, play]);
 
   const goPage = (id: string) => {
     setPage(id as PrivatePage);
@@ -90,7 +121,7 @@ export default function PrivateArea({ onExit }: { onExit: () => void }) {
         ]}
         navigation={[
           "Para navegar na aplicação, podes simplesmente deslizar para baixo ou usar a barra de navegação no canto superior direito.",
-          "A aplicação está dividida em cinco páginas — o Universo (esta), a Galeria Imersiva, A Carta, o Neural Puzzle Pro e as Relíquias de 2024 — podes ir a qualquer uma delas pelos menus da barra de navegação.",
+          "A aplicação está dividida em seis páginas — o Universo (esta), a Linha do Tempo, a Galeria Imersiva, A Carta, o Neural Puzzle Pro e as Relíquias de 2024 — podes ir a qualquer uma delas pelos menus da barra de navegação.",
           "O Neural Puzzle Pro mudou muito: agora começa no nível básico, com 4 peças, e vai até ao nível final de 12×12. Encontrá-lo-ás na barra de navegação.",
         ]}
       />
@@ -156,6 +187,18 @@ export default function PrivateArea({ onExit }: { onExit: () => void }) {
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           >
             <CartaPage />
+          </motion.div>
+        )}
+
+        {page === "timeline" && (
+          <motion.div
+            key="timeline"
+            initial={{ opacity: 0, scale: 0.99 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, filter: "blur(6px)" }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <TimelinePage />
           </motion.div>
         )}
 
