@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>Selfies</title>
+  <link rel="stylesheet" href="./style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#000000" />
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<div class="menu">
+  <div class="toggle">
+    <ion-icon name="share-social"></ion-icon>
+    </div>
+  
+      <li style="--i:0;--clr:#1877f2">
+      <a href="#"><img src="imagens/1.jpg"></a>
+    </li>
+    <li style="--i:1;--clr:#25d366">
+      <a href="#"><img src="imagens/2.jpg">
+      </a>
+    </li>
+    <li style="--i:2;--clr:#1da1f2">
+      <a href="#"><img src="imagens/3.jpg"></a>
+    </li>
+     <li style="--i:3;--clr:#FF5733">
+      <a href="#"><img src="imagens/4.jpg"></a>
+    </li>
+    <li style="--i:4;--clr:#0a66c2">
+      <a href="#"><img src="imagens/5.jpg"></a>
+    </li>
+    <li style="--i:5;--clr:#c32aa3">
+      <a href="#"><img src="imagens/6.jpg"></a>
+    </li>
+    <li style="--i:6;--clr:#1b1e21">
+      <a href="#"><img src="imagens/7.jpg"></a>
+    </li>
+    <li style="--i:7;--clr:#ff0000">
+      <a href="#"><img src="imagens/8.jpg"></a>
+    </li>
+</div>
+<!-- partial -->
+  <script src='https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js'></script>
+<script src='https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js'></script><script>
+  const menu=document.querySelector(".menu");
+const toggle=document.querySelector(".toggle");
+toggle.addEventListener("click",()=>{
+  menu.classList.toggle("active");
+})
+</script>
+</body>
+</html>

@@ -1,0 +1,10 @@
+.message 
+  | Interactive! Tap a picture to enlarge, tap again to close<br>
+  | Made by 
+  a(href='https://codepen.io/pieter-biesemans/' target='_blank' title='check out my other work') Pieter Biesemans 
+  | with &#9749;, &#128420; &amp; &#8986;
+
+.container
+    - for (var x = 1; x < 10; x++)
+      input(id='item' + x type='checkbox')
+      label(for='item' + x class='item' + x style='background-image:url(https://picsum.photos/750/750?image='+(500+x)+');')

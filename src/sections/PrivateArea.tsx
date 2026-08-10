@@ -14,14 +14,16 @@ import { NaturezaSection } from "./private/NatureSections";
 import ImmersiveGallery from "./private/ImmersiveGallery";
 import NeuralPuzzlePage from "./private/NeuralPuzzlePage";
 import CartaPage from "./private/CartaPage";
+import MuseumPage from "./private/MuseumPage";
 
-type PrivatePage = "universo" | "galeria" | "carta" | "puzzle";
+type PrivatePage = "universo" | "galeria" | "carta" | "puzzle" | "museu";
 
 const PAGES = [
   { id: "universo", label: "O Universo", emblem: "❈", desc: "As tuas memórias, histórias e sonhos" },
   { id: "galeria", label: "Galeria Imersiva", emblem: "✦", desc: "Fotografias e vídeos sempre em movimento" },
   { id: "carta", label: "A Carta", emblem: "🌹", desc: "Uma carta especial, palavra por palavra" },
   { id: "puzzle", label: "Neural Puzzle", emblem: "⬡", desc: "O teu jogo de memória e cristal" },
+  { id: "museu", label: "O Museu", emblem: "🏛️", desc: "Três épocas do teu universo, como nasceram" },
 ];
 
 const SECTIONS = [
@@ -88,7 +90,7 @@ export default function PrivateArea({ onExit }: { onExit: () => void }) {
         ]}
         navigation={[
           "Para navegar na aplicação, podes simplesmente deslizar para baixo ou usar a barra de navegação no canto superior direito.",
-          "A aplicação está dividida em quatro páginas — o Universo (esta), a Galeria Imersiva, A Carta e o Neural Puzzle Pro — podes ir a qualquer uma delas pelos menus da barra de navegação.",
+          "A aplicação está dividida em cinco páginas — o Universo (esta), a Galeria Imersiva, A Carta, o Neural Puzzle Pro e O Museu — podes ir a qualquer uma delas pelos menus da barra de navegação.",
           "O Neural Puzzle Pro mudou muito: agora começa no nível básico, com 4 peças, e vai até ao nível final de 12×12. Encontrá-lo-ás na barra de navegação.",
         ]}
       />
@@ -154,6 +156,18 @@ export default function PrivateArea({ onExit }: { onExit: () => void }) {
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           >
             <CartaPage />
+          </motion.div>
+        )}
+
+        {page === "museu" && (
+          <motion.div
+            key="museu"
+            initial={{ opacity: 0, scale: 0.99 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, filter: "blur(6px)" }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <MuseumPage />
           </motion.div>
         )}
 
