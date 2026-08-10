@@ -229,3 +229,34 @@ Direção recebida do cliente — sobrepõe-se onde conflitar com as fases anter
 3. O livro-inline (RoyalLetter) foi removido: era lento e cobria os outros
    textos. As cartas da mãe e da Ruth mantêm-se como cartões, ao lado do
    convite para a carta especial.
+
+---
+
+## FASE 17 — Liquid Chrome, Vercel e Relíquias
+
+1. **LiquidChrome (React Bits/ogl)** chegou: fundo WebGL de crómio líquido no
+   Portal (base azul-oceano `[0.02,0.09,0.17]`, interativo), com pausa em modo
+   cinema e quadro único em `prefers-reduced-motion`.
+2. **Repositórios irmãos no Vercel** — links oficiais no portal:
+   🎬 Shell Memory Lane (`shell-memory-lane-cinema.vercel.app`) ·
+   🏛️ Projeto Shell 2024 (`projeto-shell-2024.vercel.app`).
+   O Museu embutido foi removido (só ficou o necessário para as Relíquias).
+3. **Relíquias de 2024** (página privada): O Cartão e A Explosão, fiéis ao
+   original em `public/arquivos/shell2024/`.
+4. O Projeto Shel 2026 não será migrado inteiro — apenas os seus melhores
+   componentes serão extraídos para cá (LiquidChrome foi o primeiro).
+
+## A VOZ DO AMÂNDIO (guia de escrita oficial)
+
+Modelo: a secção “4 frases lindas para 4 fotos lindas de uma Garota Linda”
+(Projeto Shell 2024, homepage_1). É assim que os textos devem ser escritos:
+
+- “Você é bonita de um jeito que ilumina tudo ao seu redor”
+- “Sua estranheza é o que te torna única e encantadora”
+- “Admiro sua mente inteligente e brilhante”
+- “Estaria mentindo se eu dissesse que não me apeguei, de tanto tempo que
+  fiquei olhando sua foto. Você ilumina todo mundo com sua beleza e seu sorriso.”
+
+**Regras da voz:** direta (você/te), uma qualidade por frase, curta e quente,
+com imagens concretas (“ilumina tudo ao seu redor”) — zero burocracia, zero
+clichés genéricos. Cada palavra é dita por ele, para ela.

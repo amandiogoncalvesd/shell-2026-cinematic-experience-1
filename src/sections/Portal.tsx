@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { CanvasParticles, Countdown, FilmGrain, LiquidBlobs } from "../components/effects";
+import LiquidChrome from "../components/LiquidChrome";
 import InstallBanner from "../components/InstallBanner";
 import { requestImmersiveFullscreen } from "../utils/fullscreen";
 import { universeQuote } from "../data/media2026";
@@ -41,8 +42,17 @@ export default function Portal({ onEnter }: { onEnter: (role: "guests" | "shelci
   return (
     <div className="relative flex min-h-screen w-full items-center justify-center overflow-hidden bg-[#03101f]">
       <div className="absolute inset-0">
-        <img src="/images/portal-bg.jpg" alt="" className="h-full w-full object-cover opacity-60" />
-        <div className="absolute inset-0 bg-gradient-to-b from-[#03101f]/40 via-[#03101f]/70 to-[#03101f]" />
+        <div className="absolute inset-0 opacity-60">
+          <LiquidChrome
+            baseColor={[0.02, 0.09, 0.17]}
+            speed={0.55}
+            amplitude={0.45}
+            frequencyX={2.2}
+            frequencyY={1.6}
+            interactive
+          />
+        </div>
+        <div className="absolute inset-0 bg-gradient-to-b from-[#03101f]/45 via-[#03101f]/70 to-[#03101f]" />
       </div>
       <LiquidBlobs />
       <CanvasParticles density={90} />
@@ -134,6 +144,28 @@ export default function Portal({ onEnter }: { onEnter: (role: "guests" | "shelci
 
             <motion.div variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}>
               <Countdown compact />
+            </motion.div>
+
+            <motion.div
+              variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}
+              className="flex flex-wrap items-center justify-center gap-3"
+            >
+              <a
+                href="https://shell-memory-lane-cinema.vercel.app/"
+                target="_blank"
+                rel="noreferrer"
+                className="glass rounded-full px-5 py-2.5 text-[10px] font-medium uppercase tracking-[0.25em] text-ocean-100/80 transition hover:bg-white/10 hover:text-white"
+              >
+                🎬 Visitar o Shell Memory Lane
+              </a>
+              <a
+                href="https://projeto-shell-2024.vercel.app/"
+                target="_blank"
+                rel="noreferrer"
+                className="glass rounded-full px-5 py-2.5 text-[10px] font-medium uppercase tracking-[0.25em] text-ocean-100/80 transition hover:bg-white/10 hover:text-white"
+              >
+                🏛️ Visitar o Projeto Shell 2024
+              </a>
             </motion.div>
 
             <motion.div
