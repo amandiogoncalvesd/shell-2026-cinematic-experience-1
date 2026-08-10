@@ -267,7 +267,7 @@ export default function Navbar({
                   <p className="mb-3 text-center text-[9px] uppercase tracking-[0.4em] text-shell-sky/50">
                     ✦ Viajar entre páginas ✦
                   </p>
-                  <div className="grid grid-cols-3 gap-2.5">
+                  <div className="grid grid-cols-2 gap-2.5">
                     {pages.map((p, i) => (
                       <motion.button
                         key={p.id}

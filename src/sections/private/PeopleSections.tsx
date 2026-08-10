@@ -2,7 +2,6 @@ import { Reveal } from "../../components/effects";
 import { MediaCarousel, SmartImg, VideoCard, openLightbox } from "../../components/media";
 import { SectionHeading } from "../../components/ui";
 import { closeFriends, friends, identity, momLetter } from "../../data/content";
-import RoyalLetter from "./RoyalLetter";
 import { ruthCeremony, ruthBackstage, ruthMoments } from "../../data/photos";
 import { fraseBiblicaPhoto, aniversarioMaePhoto } from "../../data/media2026";
 import { videoRuthCeremony, videoRuthMoments } from "../../data/videos";
@@ -57,19 +56,37 @@ export function FriendsSection() {
   );
 }
 
-export function LettersSection() {
+export function LettersSection({ onOpenCarta }: { onOpenCarta?: () => void }) {
   const ruth = friends[0];
   return (
     <section id="p-cartas" className="relative py-28">
       <div className="mx-auto max-w-4xl px-6">
         <SectionHeading kicker="Cartas" title="Cartas" align="center" />
 
-        {/* O livro — a carta original do Amândio */}
-        <div className="mt-14">
-          <RoyalLetter />
-        </div>
+        {/* Há uma carta especial à espera — abre-se numa página só dela */}
+        <Reveal className="mt-14">
+          <div className="glass-strong royal-frame shimmer-border relative overflow-hidden rounded-3xl px-8 py-12 text-center">
+            <div className="pointer-events-none absolute -right-12 -top-12 h-44 w-44 rounded-full bg-shell-rose/15 blur-3xl" />
+            <div className="pointer-events-none absolute -bottom-12 -left-12 h-44 w-44 rounded-full bg-shell-sky/15 blur-3xl" />
+            <span className="relative mx-auto grid h-14 w-14 place-items-center rounded-full border border-shell-rose/50 bg-shell-rose/10 text-2xl">
+              🌹
+            </span>
+            <h3 className="relative mt-5 font-display text-3xl font-semibold text-white">Uma carta especial</h3>
+            <p className="relative mt-2 text-sm text-[#b9d9ec]/60">
+              Escrita para ti, palavra por palavra — abre-a num lugar só teu.
+            </p>
+            {onOpenCarta && (
+              <button
+                onClick={onOpenCarta}
+                className="btn-royal relative mt-7 rounded-full px-8 py-3 text-xs font-bold uppercase tracking-[0.2em]"
+              >
+                Abrir a carta ✦
+              </button>
+            )}
+          </div>
+        </Reveal>
 
-        <div className="mt-16 space-y-6">
+        <div className="mt-12 space-y-6">
           <LetterCard title={momLetter.from} text={momLetter.text} highlight />
           <LetterCard title="Ruth Antónia Bongue Pereira" text={ruth.letter} />
           <LetterCard

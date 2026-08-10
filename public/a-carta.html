@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Para Shelcia ✦ — Shell 2026</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Great+Vibes&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red:    #DA8BA0;   /* rosa pétala */
+    --purple: #9F7CA9;   /* violeta suave */
+    --gold:   #D9B8E3;   /* lavanda suave */
+    --blue:   #87C3E3;   /* azul céu claro */
+    --orange: #5A75C2;   /* azul serenidade */
+    --cream:  #FFF8EE;
+    --dark:   #03101f;   /* noite oceano */
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    min-height: 100vh;
+    background: var(--dark);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Cormorant Garamond', serif;
+    overflow: hidden;
+    position: relative;
+  }
+
+  /* ── Background stars ── */
+  .stars {
+    position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  }
+  .star {
+    position: absolute;
+    border-radius: 50%;
+    animation: twinkle var(--d, 3s) var(--delay, 0s) infinite ease-in-out;
+    background: var(--c, #fff);
+    opacity: 0;
+  }
+  @keyframes twinkle {
+    0%,100% { opacity: 0; transform: scale(.6); }
+    50%      { opacity: 1; transform: scale(1); }
+  }
+
+  /* ── Floating petals ── */
+  .petal {
+    position: fixed;
+    width: 10px; height: 16px;
+    border-radius: 50% 0 50% 0;
+    opacity: .7;
+    animation: fall linear infinite;
+    pointer-events: none; z-index: 0;
+  }
+  @keyframes fall {
+    0%   { transform: translateY(-20px) rotate(0deg); opacity:.7; }
+    100% { transform: translateY(110vh) rotate(360deg); opacity:0; }
+  }
+
+  /* ── Scene wrapper ── */
+  .scene {
+    perspective: 1400px;
+    position: relative; z-index: 10;
+  }
+
+  /* ── Book ── */
+  .book {
+    width: 380px;
+    height: 480px;
+    position: relative;
+    transform-style: preserve-3d;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  /* Cover front */
+  .cover-front {
+    position: absolute; inset: 0;
+    border-radius: 4px 20px 20px 4px;
+    background: linear-gradient(135deg, var(--purple) 0%, var(--red) 50%, var(--orange) 100%);
+    transform-origin: left center;
+    transform-style: preserve-3d;
+    transition: transform 1.4s cubic-bezier(.7,0,.3,1);
+    box-shadow: 8px 8px 40px rgba(0,0,0,.7), inset -4px 0 12px rgba(0,0,0,.3);
+    z-index: 3;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    overflow: hidden;
+  }
+  .cover-front::before {
+    content: '';
+    position: absolute; inset: 12px;
+    border: 2px solid rgba(255,255,255,.25);
+    border-radius: 2px 14px 14px 2px;
+    pointer-events: none;
+  }
+  .cover-front::after {
+    content: '';
+    position: absolute; left: 0; top: 0; bottom: 0;
+    width: 24px;
+    background: linear-gradient(to right, rgba(0,0,0,.4), rgba(0,0,0,.1));
+    border-radius: 4px 0 0 4px;
+  }
+
+  .book.open .cover-front {
+    transform: rotateY(-162deg);
+  }
+
+  /* Cover decorative elements */
+  .cover-deco {
+    position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(circle at 20% 20%, rgba(242,159,5,.25) 0%, transparent 50%),
+      radial-gradient(circle at 80% 80%, rgba(28,86,222,.2) 0%, transparent 50%);
+  }
+  .cover-title {
+    text-align: center; z-index: 1; padding: 20px;
+  }
+  .cover-title h1 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 3.2rem;
+    color: #fff;
+    text-shadow: 0 2px 20px rgba(0,0,0,.4), 0 0 60px rgba(242,159,5,.5);
+    line-height: 1.1;
+  }
+  .cover-title p {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    color: rgba(255,255,255,.8);
+    font-size: 1.05rem;
+    margin-top: 10px;
+    letter-spacing: .15em;
+  }
+  .cover-rose {
+    font-size: 3.5rem;
+    margin-top: 18px;
+    animation: float 3s ease-in-out infinite;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,.3));
+  }
+  @keyframes float {
+    0%,100% { transform: translateY(0) rotate(-3deg); }
+    50%      { transform: translateY(-8px) rotate(3deg); }
+  }
+
+  /* Cover ornament ring */
+  .cover-ring {
+    position: absolute;
+    width: 220px; height: 220px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255,255,255,.2);
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    pointer-events: none;
+  }
+  .cover-ring::before {
+    content: '';
+    position: absolute; inset: 16px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,.12);
+  }
+
+  /* Spine */
+  .spine {
+    position: absolute;
+    left: 0; top: 0; bottom: 0; width: 24px;
+    background: linear-gradient(180deg, var(--purple), var(--red), var(--orange));
+    border-radius: 4px 0 0 4px;
+    transform: translateX(-20px);
+    box-shadow: -4px 0 16px rgba(0,0,0,.5);
+    z-index: 2;
+  }
+
+  /* Pages block */
+  .pages-block {
+    position: absolute; inset: 0;
+    border-radius: 4px 20px 20px 4px;
+    background: linear-gradient(to right, #e8e0d0 0%, #f5f0e8 4%, var(--cream) 8%);
+    box-shadow: 4px 4px 30px rgba(0,0,0,.5);
+    overflow: hidden;
+  }
+  /* Page lines illusion */
+  .pages-block::before {
+    content: '';
+    position: absolute; top: 0; bottom: 0; right: 0; left: 30px;
+    background: repeating-linear-gradient(
+      to bottom,
+      transparent 0px, transparent 27px,
+      rgba(0,0,0,.04) 27px, rgba(0,0,0,.04) 28px
+    );
+  }
+
+  /* Inner page (text) */
+  .page-inner {
+    position: absolute; inset: 0;
+    padding: 40px 36px 40px 48px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--gold) transparent;
+  }
+  .page-inner::-webkit-scrollbar { width: 4px; }
+  .page-inner::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 2px; }
+
+  .page-header {
+    text-align: center;
+    margin-bottom: 24px;
+    opacity: 0;
+    transform: translateY(-10px);
+    transition: opacity .6s, transform .6s;
+  }
+  .book.open .page-header {
+    opacity: 1; transform: translateY(0);
+    transition-delay: 1.2s;
+  }
+  .page-header h2 {
+    font-family: 'Great Vibes', cursive;
+    font-size: 2.4rem;
+    color: var(--purple);
+    text-shadow: 0 1px 8px rgba(151,4,191,.15);
+  }
+  .page-divider {
+    display: flex; align-items: center; gap: 8px;
+    margin: 8px 0 20px;
+    justify-content: center;
+  }
+  .page-divider span {
+    color: var(--gold); font-size: 1.1rem;
+  }
+  .page-divider::before, .page-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--gold), transparent);
+    max-width: 80px;
+  }
+
+  /* Typewriter text */
+  #typewriter-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.08rem;
+    line-height: 1.9;
+    color: #2a1a10;
+    white-space: pre-wrap;
+    min-height: 300px;
+    opacity: 0;
+    transition: opacity .4s;
+  }
+  .book.open #typewriter-text {
+    opacity: 1;
+    transition-delay: 1.6s;
+  }
+
+  .cursor {
+    display: inline-block;
+    width: 2px; height: 1.1em;
+    background: var(--red);
+    margin-left: 2px;
+    vertical-align: text-bottom;
+    animation: blink .7s infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+  /* Highlight special words */
+  .hl-gold   { color: var(--orange); font-style: italic; font-weight: 600; }
+  .hl-purple { color: var(--purple); font-weight: 600; }
+  .hl-red    { color: var(--red);    font-weight: 600; }
+  .hl-blue   { color: var(--blue);   font-style: italic; }
+
+  /* Corner flowers */
+  .corner {
+    position: absolute; font-size: 1.4rem;
+    opacity: .5; pointer-events: none;
+  }
+  .corner-tl { top: 14px; left: 40px; }
+  .corner-tr { top: 14px; right: 14px; }
+  .corner-bl { bottom: 14px; left: 40px; }
+  .corner-br { bottom: 14px; right: 14px; }
+
+  /* Ribbon bookmark */
+  .bookmark {
+    position: absolute;
+    top: 0; right: 40px;
+    width: 24px; height: 80px;
+    background: linear-gradient(180deg, var(--red), var(--orange));
+    clip-path: polygon(0 0, 100% 0, 100% 80%, 50% 100%, 0 80%);
+    box-shadow: 2px 2px 8px rgba(0,0,0,.3);
+    z-index: 4;
+  }
+
+  /* Hint text */
+  .hint {
+    position: fixed; bottom: 36px;
+    left: 50%; transform: translateX(-50%);
+    color: rgba(255,255,255,.55);
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1rem;
+    letter-spacing: .1em;
+    animation: pulse 2s ease-in-out infinite;
+    z-index: 20;
+    pointer-events: none;
+    text-align: center;
+  }
+  @keyframes pulse {
+    0%,100% { opacity: .55; }
+    50%      { opacity: 1; }
+  }
+  .hint.hidden { display: none; }
+
+  /* ── Particles burst on open ── */
+  .particle {
+    position: fixed;
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 50;
+    animation: burst var(--dur, 1.2s) ease-out forwards;
+  }
+  @keyframes burst {
+    0%   { opacity: 1; transform: translate(0,0) scale(1); }
+    100% { opacity: 0; transform: translate(var(--tx), var(--ty)) scale(0); }
+  }
+
+  /* ── Footer ── */
+  .footer-msg {
+    position: fixed; bottom: 12px; left: 50%; transform: translateX(-50%);
+    font-family: 'Great Vibes', cursive;
+    font-size: 1.4rem;
+    color: rgba(242,159,5,.6);
+    z-index: 5; pointer-events: none;
+    opacity: 0;
+    transition: opacity 1s;
+    white-space: nowrap;
+  }
+  .footer-msg.show { opacity: 1; transition-delay: 3s; }
+
+  /* ── Glowing orbs ── */
+  .orb {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(60px);
+    opacity: .12;
+    pointer-events: none;
+    z-index: 0;
+    animation: drift var(--d) ease-in-out infinite alternate;
+  }
+  @keyframes drift {
+    0%   { transform: translate(0, 0); }
+    100% { transform: translate(var(--mx, 30px), var(--my, 20px)); }
+  }
+</style>
+</head>
+<body>
+
+<!-- Stars -->
+<div class="stars" id="stars"></div>
+
+<!-- Glowing orbs -->
+<div class="orb" style="width:500px;height:500px;background:var(--purple);top:-100px;left:-150px;--d:8s;--mx:40px;--my:30px"></div>
+<div class="orb" style="width:400px;height:400px;background:var(--red);bottom:-80px;right:-100px;--d:10s;--mx:-30px;--my:-40px"></div>
+<div class="orb" style="width:300px;height:300px;background:var(--gold);top:50%;left:60%;--d:7s;--mx:20px;--my:-20px"></div>
+
+<!-- Book scene -->
+<div class="scene">
+  <div class="book" id="book" onclick="openBook()">
+
+    <!-- Spine -->
+    <div class="spine"></div>
+
+    <!-- Pages block (back) -->
+    <div class="pages-block">
+      <div class="page-inner">
+        <div class="page-header">
+          <h2>Para Shelcia</h2>
+          <div class="page-divider"><span>✦</span><span>🌸</span><span>✦</span></div>
+        </div>
+        <div id="typewriter-text"></div>
+      </div>
+      <span class="corner corner-tl">🌸</span>
+      <span class="corner corner-tr">✨</span>
+      <span class="corner corner-bl">✨</span>
+      <span class="corner corner-br">🌸</span>
+    </div>
+
+    <!-- Front cover -->
+    <div class="cover-front">
+      <div class="cover-deco"></div>
+      <div class="cover-ring"></div>
+      <div class="cover-title">
+        <h1>Para<br>Shelcia</h1>
+        <p>— uma carta especial —</p>
+        <div class="cover-rose">🌹</div>
+      </div>
+    </div>
+
+    <!-- Bookmark ribbon -->
+    <div class="bookmark"></div>
+
+  </div>
+</div>
+
+<!-- Hint -->
+<div class="hint" id="hint">✦ Clique no livro para abrir ✦</div>
+
+<!-- Footer message -->
+<div class="footer-msg" id="footer">Com amor, no seu dia especial 🎂</div>
+
+<script>
+/* ── Stars ── */
+const starsEl = document.getElementById('stars');
+const starColors = ['#fff','#D9B8E3','#9F7CA9','#87C3E3','#5A75C2'];
+for (let i = 0; i < 120; i++) {
+  const s = document.createElement('div');
+  const size = Math.random() * 3 + 1;
+  s.className = 'star';
+  s.style.cssText = `
+    width:${size}px; height:${size}px;
+    top:${Math.random()*100}%;
+    left:${Math.random()*100}%;
+    --c:${starColors[Math.floor(Math.random()*starColors.length)]};
+    --d:${(Math.random()*3+2).toFixed(1)}s;
+    --delay:${(Math.random()*4).toFixed(1)}s;
+  `;
+  starsEl.appendChild(s);
+}
+
+/* ── Petals ── */
+const petalColors = ['#DA8BA0','#9F7CA9','#D9B8E3','#87C3E3','#5A75C2'];
+for (let i = 0; i < 18; i++) {
+  const p = document.createElement('div');
+  p.className = 'petal';
+  p.style.cssText = `
+    left:${Math.random()*100}%;
+    background:${petalColors[Math.floor(Math.random()*petalColors.length)]};
+    width:${Math.random()*8+6}px;
+    height:${Math.random()*12+8}px;
+    animation-duration:${(Math.random()*8+6).toFixed(1)}s;
+    animation-delay:${(Math.random()*8).toFixed(1)}s;
+  `;
+  document.body.appendChild(p);
+}
+
+/* ── Typewriter text ── */
+const fullText = ' Olá, princesinha Shell.
+
+Neste dia tão especial, gostaria, primeiramente, de pedir ao Papai do Céu que continue cuidando de você e não permita que você deixe de ser essa menina inteligente, meiga, simpática, amorosa e, por mais incrível que pareça, extremamente, ridiculamente e absurdamente atraente. Não mais que a minha namorada, mas acho que uns 9,9/10.
+
+Só por segurança, caso ela mexa no meu computador sem querer. Não quero estragar a minha relação. 😂
+
+E, bom, continuando: você é uma garota muito especial para mim e, em nenhum plano do universo, eu deixaria de ser seu amigo. Repetindo: em nenhum plano do universo.
+
+Agora vamos entrar na parte das confissões. Começando.
+
+Quando eu conheci você, em 2023, confesso que eu quase me apaixonei. Tipo, quase. Só um pouquinho. Assim. Mas isso não aconteceu.
+
+Mesmo assim, de qualquer forma, eu acho você muito elegante, atraente, linda e incrível. E, sendo sincero, eu preferia ter você como minha amiga para todo... todo sempre.
+
+Além disso, eu acredito que você foi uma das minhas melhores motivações que já existiram.
+
+Bom, só no lado das garotas.
+
+Porque, quando eu conheci você, eu pensei mais ou menos o seguinte:
+
+“Não é possível existir uma garota tão perfeita assim. Ela deve ter algum defeito.”
+
+Então, fui logo correndo ver sua pauta. Mas daí eu pensei:
+
+“Poxa, afinal de contas, não sou o mais inteligente dessa escola.”
+
+Sem querer exagerar mais, a sua pauta estava brilhando de azul.
+
+E, desde aí, eu tive um novo foco: me tornar o melhor dos melhores daquela escola.
+
+Logo depois, quando você se foi, eu perguntei ao ChatGPT (eu já conhecia o GPT  desde 2021) o seguinte:
+
+“ChatGPT, eu conheci uma garota chamada Shelcia Fernanda Neves Van-Dúnem, blá-blá-blá, e quero que você me dê uma ideia de um presente que mais ninguém poderia oferecer para ela. Algo único, original e autêntico.”
+
+E ele me sugeriu várias opções. Uma delas foi criar um website para você, algo que mais ninguém daria.
+
+Mas, naquela época, eu não sabia nada, absolutamente nada, de programação. E o meu plano nem sequer era fazer informática.
+
+Naquela época, eu iria seguir eletrônica, ser engenheiro elétrico, fazer instalação de casas, empresas, mobílias e o resto.
+
+Mas daí eu peguei a visão e falei:
+
+“ChatGPT, ok, está fixe. Criar um website, cria você.”
+
+Mas o ChatGPT respondeu:
+
+“Infelizmente, sou um assistente de chat. Não posso, nem consigo, criar um site. Para criar um site, tens que aprender HTML, CSS, JavaScript...”
+
+Blá-blá-blá, blá-blá-blá.
+
+Eu me vi assim:
+
+“Ya 🤦‍♂️.”
+
+Depois disso, eu pensei:
+
+“Ok, já que é assim, vamos aprender HTML.”
+
+Entrei no YouTube, pesquisei vários vídeos e vídeos e vídeos sobre HTML, introdução, criação de sites. Estudei, estudei, estudei durante uma semana completa.
+
+Uma semana depois, consegui criar algumas tags básicas em HTML. Já conseguia criar, tipo, uma página em branco que dizia:
+
+“Olá, mundo.”
+
+Depois disso, fui continuando: escrevendo, escrevendo, escrevendo, estudando bastante.
+
+Acho que não fez um mês.
+
+Em menos de um mês, já estava a pegar a visão.
+
+Infelizmente, naquela época, o ChatGPT não tinha o poder computacional que tem agora. Não conseguiu ajudar muito nisso, mas eu me dediquei, e o bom de tudo foi que eu havia encontrado um site chamado DigiMedia.
+
+Nesse site, eles disponibilizavam vários e vários templates de aplicativos.
+
+O Projeto Shell de 2023 eu criei à base de um template que foi criado para uma empresa de lavanderia.
+
+Mas, como o design era rosa e branco, eu peguei o código, adaptei, mudei algumas coisas, e foi uma experiência incrível.
+
+Desde aquele momento, eu comecei a estudar, estudar, estudar, estudar, estudar, me apaixonei pela programação e estamos aqui.
+
+O grande Amândio Gonçalves, o  técnico de informática da família.
+
+Tudo graças a você Princesin. 🎂🌹`';
+
+let opened = false;
+let typingInterval = null;
+
+function openBook() {
+  if (opened) return;
+  opened = true;
+
+  const book = document.getElementById('book');
+  book.classList.add('open');
+  book.style.cursor = 'default';
+
+  document.getElementById('hint').classList.add('hidden');
+  document.getElementById('footer').classList.add('show');
+
+  burstParticles();
+
+  // Start typing after cover animation
+  setTimeout(startTyping, 2000);
+}
+
+function startTyping() {
+  const el = document.getElementById('typewriter-text');
+  const cursor = document.createElement('span');
+  cursor.className = 'cursor';
+  el.appendChild(cursor);
+
+  let i = 0;
+  const speed = 28; // ms per char
+
+  typingInterval = setInterval(() => {
+    if (i < fullText.length) {
+      const char = fullText[i];
+      cursor.insertAdjacentText('beforebegin', char);
+      i++;
+      // Auto-scroll
+      el.parentElement.scrollTop = el.parentElement.scrollHeight;
+    } else {
+      clearInterval(typingInterval);
+      // Remove cursor after finish
+      setTimeout(() => cursor.remove(), 1000);
+    }
+  }, speed);
+}
+
+/* ── Particle burst ── */
+function burstParticles() {
+  const colors = ['#DA8BA0','#9F7CA9','#D9B8E3','#87C3E3','#5A75C2','#fff'];
+  const cx = window.innerWidth / 2;
+  const cy = window.innerHeight / 2;
+  for (let i = 0; i < 60; i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const size = Math.random() * 10 + 4;
+    const angle = Math.random() * Math.PI * 2;
+    const dist  = Math.random() * 280 + 60;
+    p.style.cssText = `
+      width:${size}px; height:${size}px;
+      background:${colors[Math.floor(Math.random()*colors.length)]};
+      left:${cx}px; top:${cy}px;
+      --tx:${Math.cos(angle)*dist}px;
+      --ty:${Math.sin(angle)*dist}px;
+      --dur:${(Math.random()*.8+.8).toFixed(2)}s;
+    `;
+    document.body.appendChild(p);
+    setTimeout(() => p.remove(), 2000);
+  }
+}
+</script>
+</body>
+</html>

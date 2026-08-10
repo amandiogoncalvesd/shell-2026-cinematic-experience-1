@@ -13,12 +13,14 @@ import { CinemaSection, DreamsSection, SkySection, MusicSection } from "./privat
 import { NaturezaSection } from "./private/NatureSections";
 import ImmersiveGallery from "./private/ImmersiveGallery";
 import NeuralPuzzlePage from "./private/NeuralPuzzlePage";
+import CartaPage from "./private/CartaPage";
 
-type PrivatePage = "universo" | "galeria" | "puzzle";
+type PrivatePage = "universo" | "galeria" | "carta" | "puzzle";
 
 const PAGES = [
   { id: "universo", label: "O Universo", emblem: "❈", desc: "As tuas memórias, histórias e sonhos" },
   { id: "galeria", label: "Galeria Imersiva", emblem: "✦", desc: "Fotografias e vídeos sempre em movimento" },
+  { id: "carta", label: "A Carta", emblem: "🌹", desc: "Uma carta especial, palavra por palavra" },
   { id: "puzzle", label: "Neural Puzzle", emblem: "⬡", desc: "O teu jogo de memória e cristal" },
 ];
 
@@ -86,7 +88,7 @@ export default function PrivateArea({ onExit }: { onExit: () => void }) {
         ]}
         navigation={[
           "Para navegar na aplicação, podes simplesmente deslizar para baixo ou usar a barra de navegação no canto superior direito.",
-          "A aplicação está dividida em três páginas — o Universo (esta), a Galeria Imersiva e o Neural Puzzle Pro — podes ir a qualquer uma delas pelos menus da barra de navegação.",
+          "A aplicação está dividida em quatro páginas — o Universo (esta), a Galeria Imersiva, A Carta e o Neural Puzzle Pro — podes ir a qualquer uma delas pelos menus da barra de navegação.",
           "O Neural Puzzle Pro mudou muito: agora começa no nível básico, com 4 peças, e vai até ao nível final de 12×12. Encontrá-lo-ás na barra de navegação.",
         ]}
       />
@@ -120,7 +122,7 @@ export default function PrivateArea({ onExit }: { onExit: () => void }) {
             <MemoriesSection energy={energy} />
             <StoriesSection />
             <FriendsSection />
-            <LettersSection />
+            <LettersSection onOpenCarta={() => goPage("carta")} />
             <NaturezaSection energy={energy} />
             <LibrarySection />
             <ArtSection energy={energy} />
@@ -140,6 +142,18 @@ export default function PrivateArea({ onExit }: { onExit: () => void }) {
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           >
             <ImmersiveGallery />
+          </motion.div>
+        )}
+
+        {page === "carta" && (
+          <motion.div
+            key="carta"
+            initial={{ opacity: 0, scale: 0.99 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, filter: "blur(6px)" }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <CartaPage />
           </motion.div>
         )}
 

@@ -215,3 +215,17 @@ Direção recebida do cliente — sobrepõe-se onde conflitar com as fases anter
    retry, cache-busting e service worker renovado (v2).
 5. **PWA:** `id` + `scope` no manifest — com o app instalado, os links abrem
    sempre dentro dele.
+
+---
+
+## FASE 15 — A carta no seu lugar
+
+1. **A Carta vive numa página própria** (🌹 no menu), aberta pelo botão
+   “Abrir a carta ✦” na secção Cartas — nada quebra o desenho da aplicação.
+2. A experiência é **fielmente a do HTML original** (`public/a-carta.html`):
+   o mesmo livro, as mesmas estrelas e pétalas, a mesma máquina de escrever
+   ao mesmo ritmo — apenas a paleta foi adaptada ao universo (azul claro,
+   lavanda, rosa pétala).
+3. O livro-inline (RoyalLetter) foi removido: era lento e cobria os outros
+   textos. As cartas da mãe e da Ruth mantêm-se como cartões, ao lado do
+   convite para a carta especial.
