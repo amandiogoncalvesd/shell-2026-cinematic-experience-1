@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { photographFilm } from "../data/media2026";
 
 /* ─────────────────────────────────────────────────────────────
-   Boas-vindas reais: ao entrar numa área, um pergaminho de
-   vidro apresenta o universo, explica a navegação e recomenda
-   o Photograph 2026 + a instalação como aplicativo.
+   Cartão de boas-vindas — design exportado do Shell Memory Lane
+   (vidro de cristal, entrada com desfoque, lista "Como navegar"),
+   adaptado ao universo Shell 2026 com o download do Photograph.
    Aparece uma vez por sessão.
 ───────────────────────────────────────────────────────────── */
 export default function WelcomeModal({
@@ -20,10 +20,10 @@ export default function WelcomeModal({
   navigation: string[];
 }) {
   const [open, setOpen] = useState(false);
-  const [installEvt, setInstallEvt] = useState<any>(null);
-  const [isIos, setIsIos] = useState(false);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    setMounted(true);
     try {
       if (!sessionStorage.getItem(storageKey)) {
         const t = setTimeout(() => setOpen(true), 1300);
@@ -34,16 +34,6 @@ export default function WelcomeModal({
     }
   }, [storageKey]);
 
-  useEffect(() => {
-    const onPrompt = (e: Event) => {
-      e.preventDefault();
-      setInstallEvt(e);
-    };
-    window.addEventListener("beforeinstallprompt", onPrompt);
-    setIsIos(/iphone|ipad|ipod/i.test(navigator.userAgent));
-    return () => window.removeEventListener("beforeinstallprompt", onPrompt);
-  }, []);
-
   const close = () => {
     try {
       sessionStorage.setItem(storageKey, "1");
@@ -53,121 +43,106 @@ export default function WelcomeModal({
     setOpen(false);
   };
 
-  const install = async () => {
-    if (!installEvt) return;
-    installEvt.prompt();
-    try {
-      await installEvt.userChoice;
-    } catch {
-      /* fechado */
-    }
-    setInstallEvt(null);
-  };
+  if (!mounted) return null;
+
+  const icons = ["▶", "❈", "♪", "✦", "⬇", "❈"];
 
   return (
     <AnimatePresence>
       {open && (
         <motion.div
-          className="fixed inset-0 z-[150] flex items-center justify-center bg-[#02080f]/85 px-4 py-8"
+          className="fixed inset-0 z-[150] flex items-center justify-center p-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
-          onClick={close}
+          transition={{ duration: 0.4 }}
         >
+          <motion.div className="absolute inset-0 bg-black/60 backdrop-blur-xl" onClick={close} />
+
           <motion.div
-            initial={{ opacity: 0, scale: 0.94, y: 24 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.96, y: 10 }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-            className="glass-strong royal-frame relative max-h-full w-full max-w-xl overflow-y-auto rounded-3xl px-6 py-8 text-center sm:px-8"
-            onClick={(e) => e.stopPropagation()}
+            className="glass-strong royal-frame relative w-full max-w-lg select-none overflow-hidden rounded-3xl"
+            initial={{ opacity: 0, y: 30, scale: 0.95, filter: "blur(12px)" }}
+            animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
+            exit={{ opacity: 0, y: 20, scale: 0.97 }}
+            transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+            onContextMenu={(e) => e.preventDefault()}
           >
-            <span className="mx-auto grid h-12 w-12 place-items-center rounded-full border border-shell-sky/50 bg-shell-sky/10 text-xl text-shell-sky">
-              ❈
-            </span>
-            <h2 className="glow-shell mt-4 font-display text-2xl font-semibold sm:text-3xl">{title}</h2>
-
-            {/* Apresentação */}
-            <div className="mt-5 space-y-3 text-left">
-              {paragraphs.map((p, i) => (
-                <motion.p
-                  key={i}
-                  initial={{ opacity: 0, x: -10 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: 0.2 + i * 0.12, duration: 0.5 }}
-                  className="text-[13px] leading-relaxed text-[#cfe6f5]/85"
-                >
-                  {p}
-                </motion.p>
-              ))}
-            </div>
-
-            {/* Photograph 2026 */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.2 + paragraphs.length * 0.12 }}
-              className="mt-5 rounded-2xl border border-shell-sky/30 bg-shell-sky/10 px-4 py-4"
-            >
-              <p className="text-[10px] uppercase tracking-[0.3em] text-shell-sky">O melhor vídeo desta aplicação</p>
-              <p className="mt-1 font-display text-xl font-semibold text-white">Photograph 2026</p>
-              <p className="mt-1.5 text-[11px] leading-relaxed text-[#cfe6f5]/60">
-                Recomendamos descarregá-lo para a melhor experiência — com a qualidade 1080p, ele é pesado para
-                assistir diretamente no site.
-              </p>
-              <a
-                href={photographFilm.url}
-                download
-                target="_blank"
-                rel="noreferrer"
-                className="btn-royal mt-3 inline-block rounded-full px-6 py-2.5 text-[10px] font-bold uppercase tracking-[0.2em]"
+            <div className="max-h-[88vh] overflow-y-auto p-7 sm:p-9">
+              <button
+                onClick={close}
+                aria-label="Fechar"
+                className="absolute right-4 top-4 flex h-8 w-8 items-center justify-center rounded-full text-white/70 transition-colors hover:bg-white/10 hover:text-white"
               >
-                ⬇ Baixar Photograph 2026
-              </a>
-            </motion.div>
+                ✕
+              </button>
 
-            {/* Navegação */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.35 + paragraphs.length * 0.12 }}
-              className="mt-5 space-y-2 text-left"
-            >
-              {navigation.map((n, i) => (
-                <p key={i} className="flex gap-2.5 text-[12px] leading-relaxed text-[#b9d9ec]/70">
-                  <span className="mt-0.5 shrink-0 text-[9px] text-shell-sky">✦</span>
-                  {n}
+              {/* Cabeçalho */}
+              <div className="mb-3 flex items-center gap-2">
+                <span className="text-sm text-shell-lavender">✦</span>
+                <p className="text-[10px] uppercase tracking-[0.35em] text-shell-sky/80 sm:text-xs">
+                  {title}
                 </p>
-              ))}
-            </motion.div>
+              </div>
 
-            {/* Instalar como aplicativo */}
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ delay: 0.5 + paragraphs.length * 0.12 }}
-              className="mt-5 rounded-2xl border border-shell-lavender/25 bg-shell-lavender/[0.07] px-4 py-3"
-            >
-              <p className="text-[12px] leading-relaxed text-[#d9c9ec]/85">
-                📱 Instala o <span className="font-semibold text-white">Shell 2026</span> como aplicativo para a
-                melhor experiência —{" "}
-                {isIos
-                  ? "toca em Partilhar e escolhe “Adicionar ao ecrã principal”."
-                  : "abre sempre em tela cheia e carrega muito mais rápido."}
-              </p>
-              {installEvt && (
-                <button
-                  onClick={install}
-                  className="mt-2.5 rounded-full border border-shell-lavender/50 px-5 py-2 text-[10px] font-bold uppercase tracking-[0.2em] text-shell-lavender transition hover:bg-shell-lavender/15"
+              <h2 className="font-display text-3xl font-light leading-tight text-white sm:text-4xl">
+                Shell <span className="italic">2026</span> <span className="glow-shell font-semibold">✦</span>
+              </h2>
+
+              {/* Apresentação */}
+              <div className="mt-3 space-y-2.5">
+                {paragraphs.map((p, i) => (
+                  <p key={i} className="text-sm leading-relaxed text-[#dceefb]/85 sm:text-[15px]">
+                    {p}
+                  </p>
+                ))}
+              </div>
+
+              {/* Photograph 2026 */}
+              <div className="mt-6 rounded-2xl border border-shell-sky/30 bg-shell-sky/10 px-5 py-4 text-center">
+                <p className="text-[10px] uppercase tracking-[0.3em] text-shell-sky">
+                  O melhor vídeo desta aplicação
+                </p>
+                <p className="mt-1 font-display text-xl font-semibold text-white">Photograph 2026</p>
+                <p className="mt-1.5 text-[11px] leading-relaxed text-[#dceefb]/60">
+                  Recomendamos descarregá-lo para a melhor experiência — qualidade 1080p.
+                </p>
+                <a
+                  href={photographFilm.url}
+                  download
+                  target="_blank"
+                  rel="noreferrer"
+                  className="btn-royal mt-3 inline-flex items-center gap-2 rounded-full px-6 py-2.5 text-[10px] font-bold uppercase tracking-[0.2em]"
                 >
-                  Instalar agora ✦
-                </button>
-              )}
-            </motion.div>
+                  ⬇ Baixar o filme
+                </a>
+              </div>
 
-            <button onClick={close} className="btn-royal mt-6 rounded-full px-10 py-3 text-xs font-bold uppercase tracking-[0.2em]">
-              Entrar ✦
-            </button>
+              {/* Como navegar */}
+              <div className="mt-6 space-y-3">
+                <p className="text-[11px] uppercase tracking-[0.25em] text-shell-sky/70">Como navegar</p>
+                <ul className="space-y-2.5 text-sm text-[#dceefb]/90">
+                  {navigation.map((n, i) => (
+                    <li key={i} className="flex items-start gap-3">
+                      <span className="mt-0.5 shrink-0 text-xs text-shell-sky">{icons[i % icons.length]}</span>
+                      <span>{n}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              {/* Instalar */}
+              <p className="mt-5 text-center text-[11px] leading-relaxed text-shell-lavender/80">
+                📱 Instala o Shell 2026 como aplicativo — abre em tela cheia e carrega muito mais rápido.
+              </p>
+
+              <button
+                onClick={close}
+                className="btn-royal group mt-6 inline-flex w-full items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold tracking-wide"
+              >
+                Entrar na experiência
+                <span className="text-xs transition-transform duration-500 group-hover:rotate-12">✦</span>
+              </button>
+            </div>
           </motion.div>
         </motion.div>
       )}

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { CanvasParticles, LiquidBlobs, Reveal } from "../../components/effects";
 import { Framemation } from "../../components/cinema";
+import FlyingPosters from "../../components/FlyingPosters";
 import { LightboxHost, MediaCarousel, PhotoStage, VideoCard, openLightbox } from "../../components/media";
 import { GlassButton, Kicker, Chip } from "../../components/ui";
 import { useMusic } from "../../audio/MusicProvider";
@@ -35,7 +36,10 @@ import {
 } from "../../data/photos";
 import { videoRuthMoments, videoRuthCeremony, privateVideos } from "../../data/videos";
 
-type Module = "fotos" | "videos";
+type Module = "fotos" | "videos" | "voadora";
+
+// Posters que voam — os destaques e as flores, em 3D.
+const FLYING_ITEMS = [...destaque18Photos.slice(0, 10), ...naturezaFloresPhotos.slice(0, 6)];
 
 const PHOTO_CATS: { id: string; label: string; photos: string[] }[] = [
   { id: "destaques", label: "Destaques · 18 anos", photos: destaque18Photos },
@@ -99,11 +103,12 @@ export default function ImmersiveGallery() {
           </p>
 
           {/* ══════════ SELETOR DE MÓDULOS ══════════ */}
-          <div className="mx-auto mt-10 grid max-w-xl grid-cols-2 gap-4">
+          <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-3 sm:grid-cols-3">
             {(
               [
                 { id: "fotos", emblem: "✦", title: "Fotografias" },
                 { id: "videos", emblem: "▶", title: "Vídeos" },
+                { id: "voadora", emblem: "💫", title: "Posters Voadores" },
               ] as { id: Module; emblem: string; title: string }[]
             ).map((m) => (
               <motion.button
@@ -198,7 +203,7 @@ export default function ImmersiveGallery() {
               </AnimatePresence>
             </div>
           </motion.div>
-        ) : (
+        ) : module === "videos" ? (
           <motion.div
             key="videos"
             initial={{ opacity: 0, y: 30 }}
@@ -244,6 +249,32 @@ export default function ImmersiveGallery() {
                   </div>
                 </motion.div>
               </AnimatePresence>
+            </div>
+          </motion.div>
+        ) : (
+          /* ══════════ MÓDULO 3 · POSTERS VOADORES ══════════ */
+          <motion.div
+            key="voadora"
+            initial={{ opacity: 0, y: 30 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+            className="relative z-10 pb-28"
+          >
+            <div className="mx-auto max-w-7xl px-6">
+              <Reveal>
+                <Kicker>Posters voadores — desliza para os ver voar ✦</Kicker>
+              </Reveal>
+              <div className="royal-frame mt-6 overflow-hidden rounded-3xl p-2">
+                <div className="relative h-[70vh] overflow-hidden rounded-2xl bg-[#040f1e]">
+                  <FlyingPosters items={FLYING_ITEMS} planeWidth={300} planeHeight={400} distortion={3} />
+                  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#03101f] to-transparent" />
+                  <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-[#03101f] to-transparent" />
+                </div>
+              </div>
+              <p className="mt-4 text-center text-[10px] uppercase tracking-[0.3em] text-[#b9d9ec]/45">
+                roda do rato ou arrasta para navegar entre os posters
+              </p>
             </div>
           </motion.div>
         )}

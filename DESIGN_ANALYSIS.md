@@ -294,3 +294,15 @@ clichés genéricos. Cada palavra é dita por ele, para ela.
    Shelcia com a Ruth (ruthCeremony); “O jardim dela” removido.
 5. **Subtítulos de volta na voz quente do Amândio** (“cada foto aqui é um
    pedaço de você”, “este cantinho é todo seu”, “este é só o começo”).
+
+---
+
+## FASE 20 — Boas-vindas do Memory Lane & Posters Voadores
+
+1. **Cartão de boas-vindas:** o design elegante do Shell Memory Lane foi
+   exportado e adaptado (vidro de cristal, entrada com desfoque, lista
+   “Como navegar” com ícones, botão “Entrar na experiência ✦”) — com o
+   download do Photograph 2026 integrado. Sem dependências novas.
+2. **FlyingPosters (React Bits/ogl):** terceiro módulo da Galeria Imersiva —
+   posters 3D que voam com scroll/arrasto (destaques + flores).
+3. Regra de leveza: glifos nativos (✦ ❈ ♪ ▶ ⬇) em vez de bibliotecas de ícones.
