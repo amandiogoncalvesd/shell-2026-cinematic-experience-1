@@ -6,7 +6,8 @@ import { LightboxHost, MediaCarousel, PhotoStage, VideoCard, openLightbox } from
 import { GlassButton, Kicker, Chip } from "../../components/ui";
 import { useMusic } from "../../audio/MusicProvider";
 import {
-  destaquePhotos,
+  destaque18Photos,
+  destaque18Videos,
   arquiteturaSonhoPhotos,
   naturezaBosquesPhotos,
   naturezaFloresPhotos,
@@ -19,6 +20,7 @@ import {
   capitulos2023Videos,
   bastidoresTopVideos,
   aventurasAmigosVideos,
+  universeQuote,
 } from "../../data/media2026";
 import {
   familyFriends2026,
@@ -36,7 +38,7 @@ import { videoRuthMoments, videoRuthCeremony, privateVideos } from "../../data/v
 type Module = "fotos" | "videos";
 
 const PHOTO_CATS: { id: string; label: string; photos: string[] }[] = [
-  { id: "destaques", label: "Destaques", photos: destaquePhotos },
+  { id: "destaques", label: "Destaques · 18 anos", photos: destaque18Photos },
   { id: "bosques", label: "Bosques & Pôr do Sol", photos: naturezaBosquesPhotos },
   { id: "flores", label: "Flores", photos: naturezaFloresPhotos },
   { id: "paisagens", label: "Paisagens", photos: naturezaPaisagensPhotos },
@@ -50,7 +52,8 @@ const PHOTO_CATS: { id: string; label: string; photos: string[] }[] = [
 ];
 
 const VIDEO_CATS: { id: string; label: string; videos: string[] }[] = [
-  { id: "destaques", label: "Destaques", videos: destaqueVideos },
+  { id: "destaques", label: "Destaques · 18 anos", videos: destaque18Videos },
+  { id: "style", label: "Style", videos: destaqueVideos },
   { id: "irmaos", label: "Com os Irmãos", videos: irmaosVideos },
   { id: "infancia", label: "Infância", videos: infanciaVideos },
   { id: "capitulos", label: "Capítulos 2023 · 15 anos", videos: capitulos2023Videos },
@@ -79,7 +82,7 @@ export default function ImmersiveGallery() {
       <section className="relative overflow-hidden pb-10 pt-36">
         <div className="absolute inset-0 -z-10">
           <PhotoStage
-            photos={[...destaquePhotos.slice(0, 6), ...naturezaBosquesPhotos.slice(0, 6)]}
+            photos={[...destaque18Photos.slice(0, 8), ...naturezaBosquesPhotos.slice(0, 6)]}
             interval={6000}
             energy={energy}
             className="h-full w-full opacity-20"
@@ -89,11 +92,10 @@ export default function ImmersiveGallery() {
         </div>
 
         <div className="relative z-10 mx-auto max-w-3xl px-6 text-center">
-          <Kicker>Uma página só tua</Kicker>
-          <h1 className="glow-shell mt-4 font-display text-4xl font-semibold sm:text-6xl">Galeria Imersiva</h1>
-          <p className="mx-auto mt-5 max-w-xl text-sm leading-relaxed text-[#b9d9ec]/70 sm:text-base">
-            Construí esta galeria para mergulhares nas tuas memórias, Shelcia — dois módulos,
-            um só universo: as tuas fotografias e os teus vídeos, sempre em movimento.
+          <Kicker>Galeria Imersiva</Kicker>
+          <h1 className="glow-shell mt-4 font-display text-4xl font-semibold sm:text-6xl">Fotografias & Vídeos</h1>
+          <p className="mx-auto mt-5 max-w-xl text-sm italic leading-relaxed text-[#b9d9ec]/60 sm:text-base">
+            “{universeQuote.text}” — {universeQuote.author}
           </p>
 
           {/* ══════════ SELETOR DE MÓDULOS ══════════ */}

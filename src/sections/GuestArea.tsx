@@ -19,8 +19,8 @@ import { SectionHeading, GlassButton, Kicker } from "../components/ui";
 import { useMusic } from "../audio/MusicProvider";
 import { featured, familyFriends2026, ruthCeremony, ruthMoments, familyFriendsAlbum, memories } from "../data/photos";
 import {
-  destaquePhotos,
-  destaqueVideos,
+  destaque18Photos,
+  destaque18Videos,
   txtDestaqueVideos,
   naturezaBosquesPhotos,
   naturezaFloresPhotos,
@@ -30,7 +30,7 @@ import {
   bastidoresTopVideos,
 } from "../data/media2026";
 import { audioTracks, guestVideos } from "../data/videos";
-import { guestMessages, natureText } from "../data/content";
+import { natureText } from "../data/content";
 
 const SECTIONS = [
   { id: "g-hero", label: "Início" },
@@ -39,7 +39,6 @@ const SECTIONS = [
   { id: "g-familia", label: "Família" },
   { id: "g-natureza", label: "Natureza" },
   { id: "g-videos", label: "Cinema" },
-  { id: "g-cartas", label: "Mensagens" },
   { id: "g-shelcia", label: "Shelcia" },
 ];
 
@@ -69,7 +68,7 @@ export default function GuestArea({ onGoPrivate, onExitPortal }: { onGoPrivate: 
       {/* ═══════════ HERÓI — vídeo dentro das letras ═══════════ */}
       <section id="g-hero" ref={heroRef} className="relative flex min-h-screen items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
-          <PhotoStage photos={destaquePhotos.slice(0, 8)} interval={4200} energy={energy} className="h-full w-full" onClickOpen={false} />
+          <PhotoStage photos={destaque18Photos.slice(0, 10)} interval={4200} energy={energy} className="h-full w-full" onClickOpen={false} />
           <div className="absolute inset-0 bg-gradient-to-b from-[#03101f]/70 via-[#03101f]/55 to-[#03101f]" />
         </div>
         <LiquidBlobs />
@@ -89,8 +88,8 @@ export default function GuestArea({ onGoPrivate, onExitPortal }: { onGoPrivate: 
             transition={{ delay: 0.6, duration: 1 }}
             className="max-w-xl text-sm leading-relaxed text-[#b9d9ec]/75 sm:text-base"
           >
-            Bem-vindo à galeria de celebração de Shelcia Fernanda Neves Van-Dúnem. Uma coleção viva de
-            memórias, amizades e momentos que mereciam ser eternizados — nada aqui fica parado.
+            Uma coleção viva de memórias, amizades e momentos de Shelcia Fernanda Neves Van-Dúnem —
+            nada aqui fica parado.
           </motion.p>
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.85 }}>
             <Countdown />
@@ -103,24 +102,29 @@ export default function GuestArea({ onGoPrivate, onExitPortal }: { onGoPrivate: 
         </div>
       </section>
 
-      {/* ═══════════ CAPÍTULO I — DESTAQUES (framemations) ═══════════ */}
+      {/* ═══════════ CAPÍTULO I — DESTAQUES DOS 18 ANOS ═══════════ */}
       <section id="g-destaques" className="relative py-28">
         <div className="mx-auto max-w-7xl px-6">
           <SectionHeading
             kicker="Capítulo I"
-            title="Destaques de Shelcia"
-            subtitle="Molduras reais que balançam como num conto de fadas — e as fotografias lá dentro trocam sozinhas, sem pressa e sem distrações."
+            title="Destaques dos 18 Anos"
+            subtitle="Molduras que balançam; fotografias que trocam sozinhas."
           />
           <div className="mt-14">
-            <Framemation photos={destaquePhotos} frames={8} energy={energy} />
+            <Framemation photos={destaque18Photos} frames={8} energy={energy} />
           </div>
           <Reveal className="mt-12">
             <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-              {destaqueVideos.map((src, i) => (
-                <VideoCard key={src} src={src} playlist={destaqueVideos} index={i} className="aspect-[3/4]" />
+              {destaque18Videos.slice(0, 4).map((src, i) => (
+                <VideoCard key={src} src={src} playlist={destaque18Videos} index={i} className="aspect-[3/4]" />
               ))}
             </div>
           </Reveal>
+          <div className="mt-8 flex justify-center">
+            <GlassButton onClick={() => openLightbox(destaque18Videos.map((s) => ({ type: "video" as const, src: s })), 0)}>
+              Os {destaque18Videos.length} vídeos dos 18 anos ✦
+            </GlassButton>
+          </div>
         </div>
       </section>
 
@@ -130,7 +134,7 @@ export default function GuestArea({ onGoPrivate, onExitPortal }: { onGoPrivate: 
           <SectionHeading
             kicker="Capítulo II"
             title="Melhores Momentos de 2026"
-            subtitle="Risadas, cerimónias e instantes que só acontecem uma vez — Shelcia e Ruth, para sempre bestas."
+            subtitle="Shelcia e Ruth — para sempre bestas."
           />
         </div>
         <div className="mt-12 space-y-6">
@@ -148,7 +152,7 @@ export default function GuestArea({ onGoPrivate, onExitPortal }: { onGoPrivate: 
           <SectionHeading
             kicker="Capítulo III"
             title="Família & Amigos"
-            subtitle="As raízes e os laços que sustentam cada sorriso de Shelcia — e as aventuras que os amigos guardam."
+            subtitle="As raízes e os laços."
             align="center"
           />
         </div>
@@ -196,7 +200,7 @@ export default function GuestArea({ onGoPrivate, onExitPortal }: { onGoPrivate: 
           <SectionHeading
             kicker="Capítulo V"
             title="Cinema & Bastidores"
-            subtitle="Vídeos com pré-visualização que se reproduzem sozinhos quando entram em foco — só o vídeo em foco ganha vida."
+            subtitle="Vídeos que se reproduzem sozinhos ao entrar em foco."
             align="center"
           />
           <div className="mt-12 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
@@ -223,24 +227,6 @@ export default function GuestArea({ onGoPrivate, onExitPortal }: { onGoPrivate: 
         <MediaCarousel photos={memories} height="h-60" />
       </section>
 
-      {/* ═══════════ CAPÍTULO VI — MENSAGENS ═══════════ */}
-      <section id="g-cartas" className="relative py-28">
-        <div className="mx-auto max-w-5xl px-6">
-          <SectionHeading kicker="Capítulo VI" title="Mensagens Para Shelcia" align="center" />
-          <div className="mt-14 grid grid-cols-1 gap-6 md:grid-cols-3">
-            {guestMessages.map((m, i) => (
-              <Reveal key={m.name} delay={i * 0.15}>
-                <div className="glass royal-frame relative h-full rounded-2xl p-7">
-                  <span className="font-display text-4xl text-shell-sky/60">“</span>
-                  <p className="mt-2 text-sm leading-relaxed text-ocean-50/85">{m.text}</p>
-                  <p className="mt-6 text-xs uppercase tracking-widest text-shell-sky">— {m.name}</p>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ═══════════ CTA — ENTRADA PRIVADA ═══════════ */}
       <section id="g-shelcia" className="relative overflow-hidden py-32">
         <div className="absolute inset-0">
@@ -253,7 +239,7 @@ export default function GuestArea({ onGoPrivate, onExitPortal }: { onGoPrivate: 
             És a Shelcia? <span className="glow-shell">O teu universo espera.</span>
           </h2>
           <p className="mt-4 text-sm text-[#b9d9ec]/65">
-            Um espaço secreto, construído inteiramente para ti — memórias, histórias, sonhos, natureza e cartas guardadas.
+            Memórias, histórias, sonhos, natureza e cartas — um espaço só dela.
           </p>
           <div className="mt-8">
             <GlassButton variant="solid" onClick={onGoPrivate}>
@@ -264,7 +250,7 @@ export default function GuestArea({ onGoPrivate, onExitPortal }: { onGoPrivate: 
       </section>
 
       <footer className="border-t border-white/5 py-10 text-center text-xs uppercase tracking-[0.3em] text-shell-sky/45">
-        Shell 2026 · Shelcia Fernanda Neves Van-Dúnem · Feito com amor
+        Shell 2026 · Shelcia Fernanda Neves Van-Dúnem
       </footer>
     </div>
   );

@@ -16,13 +16,13 @@ import {
   chapters2023,
   artMagic,
 } from "../../data/photos";
-import { destaquePhotos, txtFraseVideo } from "../../data/media2026";
+import { destaque18Photos, destaquePhotos, txtFraseVideo } from "../../data/media2026";
 
 export function HomeSection({ energy }: { energy: number }) {
   return (
     <section id="p-home" className="relative flex min-h-screen items-center justify-center overflow-hidden">
       <div className="absolute inset-0">
-        <PhotoStage photos={[...destaquePhotos.slice(0, 12), ...backstage2026.slice(0, 8)]} interval={4000} energy={energy} className="h-full w-full" onClickOpen={false} />
+        <PhotoStage photos={[...destaque18Photos.slice(0, 14), ...backstage2026.slice(0, 6)]} interval={4000} energy={energy} className="h-full w-full" onClickOpen={false} />
         <div className="absolute inset-0 bg-gradient-to-b from-[#03101f]/70 via-[#03101f]/55 to-[#03101f]" />
       </div>
       <LiquidBlobs />
@@ -57,15 +57,6 @@ export function HomeSection({ energy }: { energy: number }) {
         >
           "{identity.verse.text}" — {identity.verse.ref}
         </motion.p>
-
-        <motion.p
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1.7 }}
-          className="text-[11px] uppercase tracking-[0.35em] text-shell-sky/70"
-        >
-          ✦ Construí este universo só para ti — Amândio ✦
-        </motion.p>
       </div>
     </section>
   );
@@ -78,8 +69,8 @@ export function MemoriesSection({ energy }: { energy: number }) {
         <img src={childhoodPublic[2]} className="h-full w-full object-cover blur-sm" alt="" />
       </Parallax>
       <div className="mx-auto max-w-7xl px-6">
-        <SectionHeading kicker="Memórias" title="As Tuas Fotos Que Eu Guardei" align="center"
-          subtitle="Estas foram as fotos tuas que achei mais interessantes — da infância aos teus 18 anos. Guardei cada uma com cuidado, e deixo-as trocar sozinhas, como memórias vivas." />
+        <SectionHeading kicker="Memórias" title="Uma Vida em Imagens" align="center"
+          subtitle="Da infância aos 18 anos — cada fase, um fragmento." />
         <div className="mt-14">
           <AutoMosaic photos={[...childhoodPublic, ...childhoodPrivate, ...generic2026]} tiles={20} energy={energy} />
         </div>
@@ -92,7 +83,7 @@ export function StoriesSection() {
   return (
     <section id="p-historias" className="relative py-28">
       <div className="mx-auto max-w-7xl px-6">
-        <SectionHeading kicker="Histórias" title="Capítulos da Tua Vida" subtitle="Escrevi cada capítulo a pensar em ti, Shelcia. Cada fotografia é uma frase da tua história — contada por mim, para ti." />
+        <SectionHeading kicker="Histórias" title="Capítulos de uma Vida" subtitle="Cada capítulo, uma emoção." />
       </div>
       <div className="mt-14 space-y-5 px-4 sm:px-6">
         {chapters.map((c, i) => (
@@ -115,14 +106,14 @@ export function StoriesSection() {
 }
 
 function ChapterRow({ chapter, reverse }: { chapter: (typeof chapters)[number]; reverse?: boolean }) {
-  // Cada capítulo mostra exatamente as imagens que o texto descreve.
+  // Cada capítulo mostra exatamente as imagens que o título descreve.
   const photosByChapter: Record<string, string[]> = {
     infancia: [...childhoodPublic, ...childhoodPrivate],
     amizade: [...ruthCeremony.slice(0, 12), ...ruthMoments.slice(0, 12)],
     familia: [...familyFriends2026, ...familyFriendsAlbum.slice(0, 10)],
     escola: [...chapters2023, ...backstage2026.slice(0, 8)],
     magia: artMagic,
-    celebracao: [...destaquePhotos.slice(0, 10), ...featured],
+    celebracao: [...destaque18Photos.slice(0, 14), ...destaquePhotos.slice(0, 6)],
   };
   const photos = photosByChapter[chapter.id] ?? featured;
   return (

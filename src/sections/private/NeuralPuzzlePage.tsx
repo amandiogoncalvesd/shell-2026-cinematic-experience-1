@@ -31,12 +31,11 @@ export default function NeuralPuzzlePage() {
 
       <section className="relative pb-6 pt-24">
         <div className="mx-auto max-w-3xl px-6 text-center">
-          <Kicker>Um desafio construído para ti</Kicker>
-          <h1 className="glow-shell mt-3 font-display text-3xl font-semibold sm:text-4xl">Neural Puzzle ✦</h1>
+          <Kicker>Neural Puzzle</Kicker>
+          <h1 className="glow-shell mt-3 font-display text-3xl font-semibold sm:text-4xl">O Jogo ✦</h1>
           <p className="mx-auto mt-3 max-w-xl text-xs leading-relaxed text-[#b9d9ec]/65 sm:text-sm">
-            Preparei este puzzle com as tuas fotografias — cada nível usa uma imagem diferente,
-            escolhida ao acaso entre centenas de memórias. O teu progresso fica guardado
-            automaticamente, para continuares sempre de onde paraste.
+            Onze níveis, do 2×2 ao 12×12. Centenas de imagens escolhidas ao acaso.
+            O progresso fica guardado automaticamente.
           </p>
         </div>
       </section>

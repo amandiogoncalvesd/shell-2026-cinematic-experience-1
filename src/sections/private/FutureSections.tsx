@@ -15,7 +15,7 @@ export function CinemaSection() {
   return (
     <section id="p-videos" className="relative py-28">
       <div className="mx-auto max-w-7xl px-6">
-        <SectionHeading kicker="Cinema" title="Os Teus Momentos em Movimento" subtitle="Escolhi cada vídeo a dedo para ti. Eles ganham vida sozinhos quando chegam ao centro do ecrã — só o que está em foco reproduz, os outros esperam pela sua vez." align="center" />
+        <SectionHeading kicker="Cinema" title="Momentos em Movimento" subtitle="Vídeos que ganham vida ao entrar em foco." align="center" />
 
         {/* Emocional — com os irmãos */}
         <Reveal className="mt-14">
@@ -75,7 +75,7 @@ export function DreamsSection({ energy = 0 }: { energy?: number }) {
       <div className="absolute inset-0 -z-10 bg-gradient-to-b from-[#03101f] via-[#03101f]/70 to-[#03101f]" />
 
       <div className="mx-auto max-w-6xl px-6">
-        <SectionHeading kicker="Sonhos" title="The Architect" subtitle="“Alguns sonhos começam como um desenho.” Disseste-me que sonhas ser uma arquiteta bem-sucedida e construir uma linda família — eu acredito nesse sonho, por isso desenhei este capítulo para ti." align="center" />
+        <SectionHeading kicker="Sonhos" title="The Architect" subtitle="“Alguns sonhos começam como um desenho.” — tornar-se arquiteta e construir uma linda família." align="center" />
 
         <div className="mt-16 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-5">
           {dreamChapters.map((d, i) => (
@@ -92,7 +92,7 @@ export function DreamsSection({ energy = 0 }: { energy?: number }) {
 
         {/* O sonho em imagens — molduras reais que respiram */}
         <Reveal className="mt-20 text-center">
-          <Kicker>Arquitetura · o teu sonho em imagens</Kicker>
+          <Kicker>Arquitetura · o sonho em imagens</Kicker>
         </Reveal>
         <div className="mt-8">
           <Framemation photos={arquiteturaSonhoPhotos} frames={7} energy={energy} />
@@ -141,11 +141,11 @@ export function MusicSection() {
   return (
     <section id="p-musica" className="relative py-28">
       <div className="mx-auto max-w-5xl px-6">
-        <SectionHeading kicker="Música" title="A Trilha Sonora Que Escolhi Para Ti" subtitle="Estas são as músicas que sei que te transportam para outro lugar — pop, gospel, clássica e instrumentais. Deixei-as aqui, à tua espera." align="center" />
+        <SectionHeading kicker="Música" title="A Trilha Sonora" subtitle="Pop, gospel, clássica e instrumentais — os sons dela." align="center" />
 
         <div className="mt-14 grid grid-cols-1 gap-8 md:grid-cols-2">
           <div className="glass rounded-2xl p-6">
-            <Kicker>As tuas músicas favoritas</Kicker>
+            <Kicker>As favoritas</Kicker>
             <ul className="mt-4 space-y-3">
               {playlist.map((p) => (
                 <li key={p.title} className="flex items-center justify-between gap-3 border-b border-white/5 pb-2 text-sm">
@@ -160,7 +160,7 @@ export function MusicSection() {
           </div>
 
           <div className="glass royal-frame rounded-2xl p-6">
-            <Kicker>O teu leitor — a tua playlist</Kicker>
+            <Kicker>A playlist</Kicker>
             <div className="mt-4 flex items-end gap-[3px]">
               {Array.from({ length: 24 }).map((_, i) => (
                 <span
@@ -214,9 +214,6 @@ export function MusicSection() {
               </GlassButton>
               <GlassButton onClick={next}>Próxima ❯❯</GlassButton>
             </div>
-            <p className="mt-3 text-center text-[9px] uppercase tracking-[0.25em] text-shell-sky/50">
-              ✦ a Experience toca primeiro — é a melodia que mais amas ✦
-            </p>
 
             <div className="mt-5 flex items-center gap-3">
               <span className="text-xs text-ocean-300/70" aria-hidden>🔈</span>

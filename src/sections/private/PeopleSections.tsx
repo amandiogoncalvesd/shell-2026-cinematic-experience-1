@@ -1,24 +1,24 @@
 import { Reveal } from "../../components/effects";
 import { MediaCarousel, SmartImg, VideoCard, openLightbox } from "../../components/media";
-import { SectionHeading, Kicker } from "../../components/ui";
-import { friends, guestMessages, identity } from "../../data/content";
+import { SectionHeading } from "../../components/ui";
+import { closeFriends, friends, identity, momLetter } from "../../data/content";
 import { ruthCeremony, ruthBackstage, ruthMoments } from "../../data/photos";
 import { fraseBiblicaPhoto, aniversarioMaePhoto } from "../../data/media2026";
 import { videoRuthCeremony, videoRuthMoments } from "../../data/videos";
 
 export function FriendsSection() {
-  const [ruth, ...others] = friends;
+  const ruth = friends[0];
   return (
     <section id="p-amigos" className="relative py-28">
       <div className="mx-auto max-w-7xl px-6">
-        <SectionHeading kicker="Amigos" title="Ruth — A Tua Melhor Amiga" subtitle={`${ruth.since} · dei-lhe o lugar que ela merece, porque sei o que ela significa para ti.`} />
+        <SectionHeading kicker="Amigos" title="Ruth — A Melhor Amiga" subtitle={ruth.since} />
 
         <div className="mt-12 grid grid-cols-1 gap-10 md:grid-cols-2 md:items-center">
           <Reveal>
             <div className="glass royal-frame rounded-3xl p-8">
               <p className="text-sm leading-relaxed text-ocean-50/85">{ruth.story}</p>
               <p className="mt-4 text-xs italic leading-relaxed text-shell-lavender/80">
-                “A Ruth é a única que conhece, entende e apoia — a única em quem eu realmente confio e que nunca me decepcionou.” — Shelcia
+                “É a única que conhece, entende e apoia — a única em quem eu realmente confio e que nunca me decepcionou.” — Shelcia
               </p>
               <div className="mt-6 flex items-center gap-3 text-xs uppercase tracking-widest text-shell-sky/70">
                 <span className="h-px w-8 bg-shell-sky/60" /> Agosto de 2024 · Festa do Pijama
@@ -34,28 +34,16 @@ export function FriendsSection() {
           </Reveal>
         </div>
 
-        {/* O círculo de confiança */}
-        <Reveal className="mt-14">
-          <Kicker>Os amigos que tu escolheste</Kicker>
+        {/* O círculo próximo */}
+        <Reveal className="mt-14 text-center">
+          <div className="flex flex-wrap items-center justify-center gap-3">
+            {closeFriends.map((n) => (
+              <span key={n} className="glass rounded-full px-6 py-2.5 font-display text-base text-white">
+                {n} <span className="text-xs text-shell-sky">✦</span>
+              </span>
+            ))}
+          </div>
         </Reveal>
-        <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2">
-          {others.map((f, i) => (
-            <Reveal key={f.name} delay={i * 0.1}>
-              <div className="glass rounded-2xl p-6 transition hover:-translate-y-1">
-                <div className="flex items-center gap-3">
-                  <span className="grid h-10 w-10 place-items-center rounded-full border border-shell-sky/40 bg-shell-sky/10 text-shell-sky">
-                    ✦
-                  </span>
-                  <div>
-                    <h3 className="font-display text-lg font-semibold text-white">{f.name}</h3>
-                    <p className="text-[11px] uppercase tracking-widest text-shell-sky/70">{f.role}</p>
-                  </div>
-                </div>
-                <p className="mt-4 text-sm leading-relaxed text-ocean-100/65">{f.story}</p>
-              </div>
-            </Reveal>
-          ))}
-        </div>
 
         <div className="mt-14 space-y-5">
           <MediaCarousel photos={ruthCeremony} height="h-64" />
@@ -72,16 +60,17 @@ export function LettersSection() {
   return (
     <section id="p-cartas" className="relative py-28">
       <div className="mx-auto max-w-4xl px-6">
-        <SectionHeading kicker="Cartas" title="Palavras Que Guardei Para Ti" align="center" subtitle="Reuni aqui as cartas e mensagens que te escreveram — guardei-as com cuidado, para que nunca esqueças o quanto és amada." />
+        <SectionHeading kicker="Cartas" title="Cartas" align="center" subtitle="Palavras reais, guardadas." />
 
         <div className="mt-14 space-y-6">
-          <LetterCard title="Ruth Antónia Bongue Pereira" text={ruth.letter} highlight />
+          <LetterCard title={momLetter.from} text={momLetter.text} highlight />
+          <LetterCard title="Ruth Antónia Bongue Pereira" text={ruth.letter} />
           <LetterCard
-            title={`Uma frase que carrego · ${identity.verse.ref}`}
+            title={`O versículo dela · ${identity.verse.ref}`}
             text={`"${identity.verse.text}"`}
           />
 
-          {/* Peças visuais que também são cartas */}
+          {/* Peças visuais */}
           <div className="grid grid-cols-1 gap-6 sm:grid-cols-2">
             <Reveal>
               <figure
@@ -101,15 +90,11 @@ export function LettersSection() {
               >
                 <SmartImg src={aniversarioMaePhoto} className="w-full rounded-xl object-cover" />
                 <figcaption className="px-2 py-3 text-center text-[10px] uppercase tracking-[0.3em] text-shell-rose/80">
-                  ✦ Para a mãe, com amor ✦
+                  Shelcia ✦
                 </figcaption>
               </figure>
             </Reveal>
           </div>
-
-          {guestMessages.map((m) => (
-            <LetterCard key={m.name} title={m.name} text={m.text} />
-          ))}
         </div>
       </div>
     </section>

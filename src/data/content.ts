@@ -52,25 +52,20 @@ export const friends = [
     role: "Melhor amiga",
     since: "6ª classe, Colégio Vladimir Edson",
     story:
-      "Ruth conheceu Shelcia na 6ª classe, no Colégio Vladimir Edson. Em agosto de 2024, numa festa do pijama em casa de Shelcia, por volta das 22h, decidiram aquecer uma pizza congelada. A pizza queimou por baixo, ficou amarga e era muito cara para o tamanho — mesmo assim, comeram tudo e riram a noite inteira. A própria Ruth diz: é difícil escolher uma memória, mas essa é uma das melhores.",
+      "Em agosto de 2024, numa festa do pijama em casa da Shelcia, por volta das 22h, tiveram a brilhante ideia de aquecer uma pizza congelada. A pizza queimou por baixo, ficou amarga e era muito cara para o tamanho — mesmo assim, comeram tudo e riram a noite inteira. Nas palavras da própria Ruth: é difícil escolher uma memória, mas essa é uma das melhores.",
     letter:
       "Quero que saibas o quanto sou grata a Deus por ter colocado-te na minha vida. És um presente, uma bênção que eu jamais poderia ter pedido, mas que Ele, na Sua infinita bondade, decidiu dar-me. Passamos por tantas coisas juntas — momentos bons, desafios, risos e lágrimas. Mas, apesar de tudo, nunca deixamos nada nos abalar. E espero, do fundo do coração, que nada nos afaste. Porém, se um dia a vida nos levar por caminhos diferentes, quero que saibas que és e sempre serás a minha melhor amiga. Nenhuma distância, nenhuma mudança, nada no mundo faria com que essa definição pertencesse a outra pessoa. A nossa amizade é única, e eu amo-te imensamente. Obrigada por seres quem és e por fazeres parte da minha vida.",
   },
-  {
-    name: "Miguel",
-    role: "Amigo próximo",
-    since: "Círculo de amizades da Shelcia",
-    story: "Um dos amigos mais próximos da Shelcia — presença constante no círculo de quem ela confia.",
-    letter: "",
-  },
-  {
-    name: "José",
-    role: "Amigo próximo",
-    since: "Círculo de amizades da Shelcia",
-    story: "Outro dos amigos queridos que fazem parte da história da Shelcia.",
-    letter: "",
-  },
 ];
+
+// O círculo próximo — nomes reais, ditos pela própria Shelcia.
+export const closeFriends = ["Ruth", "Miguel", "José"];
+
+// A carta original da mãe.
+export const momLetter = {
+  from: "A Mãe",
+  text: "Minha primogênita, minha princesa, hoje completas os teus 18 anos. Seja bem-vinda à idade adulta. Desejo tudo de bom para ti — que nessa nova caminhada seja com muita alegria, saúde, sabedoria e Deus sempre em primeiro lugar. Continue sempre a ser essa pessoa especial, linda por dentro e por fora, mana dos teus manos, filha responsável e muito madura. Deus te ilumine sempre. Te amo infinitamente. Feliz Aniversário.",
+};
 
 export const playlist = [
   { title: "Perfect", artist: "Ed Sheeran & Beyoncé", note: "A música preferida." },
@@ -87,39 +82,39 @@ export const musicStyles = ["Pop", "Gospel", "Trap Gospel", "Clássica", "Instru
 export const chapters = [
   {
     id: "infancia",
-    title: "A Tua Infância",
+    title: "A Infância",
     subtitle: "Onde tudo começou",
-    text: "Guardei estas tuas primeiras fotografias com todo o cuidado. Antes das câmaras profissionais e das cerimónias, existia esta menina de olhos grandes e coração pensativo — e eu escolhi as imagens que achei mais bonitas dessa tua primeira luz.",
+    text: "As primeiras memórias — antes das câmaras e das cerimónias, uma menina de olhos grandes a descobrir o mundo.",
   },
   {
     id: "amizade",
-    title: "Tu e a Ruth",
+    title: "Shelcia & Ruth",
     subtitle: "Bestas para sempre",
-    text: "Sei o quanto a Ruth é importante para ti — a única que te conhece, entende e apoia. Por isso separei estas fotos vossas: as cerimónias, as risadas, os momentos que mereciam um capítulo só vosso.",
+    text: "Uma amizade nascida na 6ª classe, no Colégio Vladimir Edson, que atravessa anos, festas do pijama, pizzas queimadas e risos intermináveis.",
   },
   {
     id: "familia",
-    title: "A Tua Família",
-    subtitle: "As tuas raízes",
-    text: "Estas foram as fotos em que apareces com a tua família e que eu achei mais especiais. São as tuas raízes — o alicerce sobre o qual constróis tudo, como a futura arquiteta que és.",
+    title: "Família",
+    subtitle: "As raízes",
+    text: "Abraços, celebrações, momentos com os irmãos — o alicerce sobre o qual tudo é construído.",
   },
   {
     id: "escola",
-    title: "Escola & Crescimento",
-    subtitle: "Os teus capítulos",
-    text: "Os teus Capítulos de 2023, o teu aniversário de 15 anos, os bastidores entre aulas e amigos — escolhi cada uma destas imagens para honrar a jovem em descoberta que eu tive o privilégio de ver crescer.",
+    title: "Escola",
+    subtitle: "Capítulos de crescimento",
+    text: "Os Capítulos de 2023, o aniversário de 15 anos e os bastidores de uma jovem em constante descoberta.",
   },
   {
     id: "magia",
-    title: "O Meu Toque de Magia",
-    subtitle: "Arte feita para ti",
-    text: "Peguei nas tuas fotografias e dei-lhes um toque de magia — luz, cor e transformação. Esta é a parte em que a tua imagem vira arte: cada edição foi feita a pensar em ti.",
+    title: "Toque de Magia",
+    subtitle: "Arte, luz e transformação",
+    text: "Retratos entre o real e o fantástico — entre a menina e a mulher em que Shelcia se está a tornar.",
   },
   {
     id: "celebracao",
-    title: "Os Teus 18 Anos",
+    title: "18 Anos",
     subtitle: "A Cinderela cresceu",
-    text: "E chegámos ao teu grande dia. Estas foram as fotos da celebração que achei mais extraordinárias — guardei-as para que nunca esqueças o dia em que a Cinderela cresceu.",
+    text: "Não é o fim de um conto de fadas — é o início de um novo capítulo.",
   },
 ];
 
@@ -138,28 +133,13 @@ export const essenceWords = [
 ];
 
 export const skyText = {
-  title: "O Céu Que Guarda O Que Sentes",
-  subtitle: "WHEN YOU LOOK AT THE SKY",
-  text: "Contaste-me que só fotografas o céu quando estás verdadeiramente feliz ou triste. Por isso guardei cada um desses céus aqui — para que saibas que até o teu silêncio merece ser lembrado.",
+  title: "O Céu",
+  subtitle: "WHEN SHE LOOKS AT THE SKY",
+  text: "“Só tiro fotos do céu quando estou verdadeiramente feliz ou triste.”",
 };
 
 export const natureText = {
-  title: "Onde a Tua Alma Respira",
-  subtitle: "A NATUREZA, COMO TU A AMAS",
-  text: "Disseste-me que amas a praia ao pôr do sol e os bosques — que qualquer paisagem natural te encanta. Por isso plantei este jardim só para ti: nenhuma flor fica parada, tal como tu.",
+  title: "A Natureza",
+  subtitle: "BOSQUES · PÔR DO SOL · FLORES",
+  text: "A praia ao pôr do sol, os bosques, as flores — cada paisagem viva, sempre em movimento.",
 };
-
-export const guestMessages = [
-  {
-    name: "Ruth A. B. Pereira",
-    text: "Obrigada, Deus, por teres colocado a Shelcia na minha vida. Ela é um presente, uma bênção. Para sempre a minha melhor amiga.",
-  },
-  {
-    name: "Família Van-Dúnem",
-    text: "Vimos-te crescer com os olhos cheios de sonhos e o coração cheio de bondade. Hoje celebramos a mulher em que te tornaste.",
-  },
-  {
-    name: "Amigos de sempre",
-    text: "18 anos de risadas, memórias e momentos que vamos guardar para sempre. Feliz vida, Shelcia!",
-  },
-];

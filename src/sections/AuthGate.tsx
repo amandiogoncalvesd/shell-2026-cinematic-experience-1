@@ -52,9 +52,8 @@ export default function AuthGate({ onSuccess, onBack }: { onSuccess: () => void;
         </div>
         <h1 className="mt-6 font-display text-3xl font-semibold text-white">Entrada Privada</h1>
         <p className="mt-2 text-sm text-ocean-100/60">
-          Construí este espaço só para ti, Shelcia. Introduz a chave de acesso para revelares o universo que preparei para ti.
+          Este espaço pertence a Shelcia. Introduz a chave de acesso para entrar.
         </p>
-        <p className="mt-1 text-[11px] uppercase tracking-[0.3em] text-shell-sky/60">— Amândio</p>
 
         <input
           type="password"

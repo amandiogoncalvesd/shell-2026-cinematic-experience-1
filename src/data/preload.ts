@@ -18,6 +18,7 @@ const local = [
 // Heróis & molduras reais — resolução completa.
 const fullRes = [
   ...P.featured,
+  ...M.destaque18Photos.slice(0, 24),
   ...M.destaquePhotos,
   ...M.arquiteturaSonhoPhotos,
   ...M.naturezaPaisagensPhotos,
@@ -32,6 +33,7 @@ const fullRes = [
 
 // Carrosséis & mosaicos — a mesma resolução (w_600) com que aparecem.
 const carousels = [
+  ...M.destaque18Photos.slice(24, 44).map((s) => thumb(s, 600)),
   ...P.familyFriends2026,
   ...P.ruthCeremony.slice(0, 14),
   ...P.ruthMoments.slice(0, 24),
@@ -45,8 +47,11 @@ const carousels = [
 ].map((s) => thumb(s, 600));
 
 // Cartazes dos vídeos mais vistos.
-const posters = [...videoRuthMoments.slice(0, 6), ...videoBackstage2026, ...videoTop.slice(0, 4)].map((s) =>
-  videoPoster(s)
-).filter(Boolean);
+const posters = [
+  ...M.destaque18Videos.slice(0, 6),
+  ...videoRuthMoments.slice(0, 6),
+  ...videoBackstage2026,
+  ...videoTop.slice(0, 4),
+].map((s) => videoPoster(s)).filter(Boolean);
 
 export const preloadImages: string[] = [...local, ...fullRes, ...carousels, ...posters];

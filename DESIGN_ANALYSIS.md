@@ -160,3 +160,18 @@ Direção recebida do cliente — sobrepõe-se onde conflitar com as fases anter
    nas visitas seguintes carrega muito mais depressa e o que já foi visto abre
    mesmo sem internet. Antes de entrar, aparece o convite real de instalação
    (`InstallBanner`, com instruções próprias para iPhone).
+
+---
+
+## FASE 12 — Onda 7: estilo Disney+ (as imagens falam por si)
+
+1. **O Shell 2026 é uma galeria, não uma carta.** Todas as declarações
+   (“construí para ti”, “escolhi a pensar em ti”, assinaturas) foram removidas.
+   Ficam apenas rótulos curtos e descritivos dos elementos — como faz a Disney+.
+2. **A única frase poética do universo:** “A fotografia é a história que não consigo
+   contar com palavras.” — Destin Sparks (Galeria Imersiva + rodapé privado).
+3. **Conteúdo 100% real:** só existem três palavras guardadas — a carta original da Ruth,
+   a carta original da mãe e o versículo da própria Shelcia. Tudo o que era inventado
+   foi apagado.
+4. **Destaque principal:** o arquivo “Destaque dos seus 18 anos” (56 fotos + 36 vídeos)
+   é a face da aplicação — heróis, galeria e Capítulo I.

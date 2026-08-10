@@ -148,8 +148,13 @@ export default function PrivateArea({ onExit }: { onExit: () => void }) {
         )}
       </AnimatePresence>
 
-      <footer className="border-t border-white/5 py-10 text-center text-xs uppercase tracking-[0.3em] text-shell-sky/45">
-        Shell 2026 · Construí este universo só para ti, Shelcia — Amândio ✦
+      <footer className="border-t border-white/5 py-10 text-center">
+        <p className="font-display text-xs italic text-[#b9d9ec]/50">
+          “A fotografia é a história que não consigo contar com palavras.” — Destin Sparks
+        </p>
+        <p className="mt-3 text-xs uppercase tracking-[0.3em] text-shell-sky/45">
+          Shell 2026 · Shelcia Fernanda Neves Van-Dúnem
+        </p>
       </footer>
     </div>
   );

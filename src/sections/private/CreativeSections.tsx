@@ -24,8 +24,8 @@ export function LibrarySection() {
       <div className="mx-auto max-w-7xl px-6">
         <SectionHeading
           kicker="Biblioteca"
-          title="Os Teus Pequenos Universos"
-          subtitle="Sei que cada interesse teu é um mundo à parte, Shelcia — leitora, poetisa, filósofa, mitóloga. Por isso construí esta biblioteca com todos eles, um por um."
+          title="Pequenos Universos"
+          subtitle="Leitora, poetisa, filósofa, mitóloga — cada interesse, um mundo."
           align="center"
         />
 
@@ -44,7 +44,7 @@ export function LibrarySection() {
         <div className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2">
             <Reveal>
               <div className="glass rounded-2xl p-8">
-                <Kicker>Os instrumentos que tu aprecias</Kicker>
+                <Kicker>Instrumentos que aprecia</Kicker>
               <div className="mt-4 flex flex-wrap gap-2">
                 {instruments.map((i) => (
                   <span key={i} className="rounded-full border border-white/10 px-4 py-1.5 text-xs text-ocean-100/80">
@@ -56,7 +56,7 @@ export function LibrarySection() {
           </Reveal>
             <Reveal delay={0.1}>
               <div className="glass rounded-2xl p-8">
-                <Kicker>Os estilos que tu ouves</Kicker>
+                <Kicker>Estilos que ouve</Kicker>
               <div className="mt-4 flex flex-wrap gap-2">
                 {musicStyles.map((i) => (
                   <span key={i} className="rounded-full border border-white/10 px-4 py-1.5 text-xs text-ocean-100/80">
@@ -76,7 +76,7 @@ export function ArtSection({ energy }: { energy: number }) {
   return (
     <section id="p-arte" className="relative py-28">
       <div className="mx-auto max-w-7xl px-6">
-        <SectionHeading kicker="Arte · Toque de Magia" title="Onde Dei Magia às Tuas Fotos" subtitle="Peguei nas tuas fotografias e transformei-as em pequenas obras — luz, cor e alma. Cada edição foi feita a pensar em ti." align="center" />
+        <SectionHeading kicker="Arte" title="Toque de Magia" subtitle="Retratos entre o real e o fantástico." align="center" />
         <div className="mt-14">
           <AutoMosaic photos={artMagic} tiles={16} energy={energy} />
         </div>
@@ -91,7 +91,7 @@ export function ArtSection({ energy }: { energy: number }) {
 
         {/* Arte & texto — palavras que ela transforma em imagem */}
         <Reveal className="mt-20 text-center">
-          <Kicker>Arte & texto · as tuas palavras em imagem</Kicker>
+          <Kicker>Arte & texto</Kicker>
         </Reveal>
         <div className="mt-8">
           <Framemation photos={artTxtPhotos} frames={7} energy={energy} aspect="aspect-square" />
@@ -99,7 +99,7 @@ export function ArtSection({ energy }: { energy: number }) {
 
         {/* Frases da série que ela ama — Bridgerton */}
         <Reveal className="mt-20 text-center">
-          <Kicker>As declarações da série que tu amas · Bridgerton</Kicker>
+          <Kicker>Frases da série favorita · Bridgerton</Kicker>
         </Reveal>
         <div className="mt-8">
           <MediaCarousel photos={frasesSeriePhotos} height="h-72" />
