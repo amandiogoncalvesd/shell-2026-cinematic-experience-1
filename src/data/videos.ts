@@ -256,11 +256,39 @@ export const privateVideos = [
   ...videoBackstageClassic, ...videoChapters2023, ...videoArtMagic, ...videoGeneric2026,
 ];
 
-// Trilha sonora — atualmente uma única música, escolhida para a Shelcia.
-// (Futuramente o Amândio enviará mais faixas, que serão adicionadas aqui.)
+// Trilha sonora da Shelcia — playlist oficial.
+// A PRIMEIRA faixa é a melodia que ela mais ama (Experience) e é a que toca
+// automaticamente ao abrir a aplicação; as restantes seguem em ordem.
 export const audioTracks = [
+  {
+    title: "Experience — Ludovico Einaudi",
+    src: "https://res.cloudinary.com/deeki0eou/video/upload/v1786345235/Shelcia-Fernanda_Musica_Ludovico_Einaudi_Experience_row3kd.mp4",
+    note: "A melodia favorita dela — música principal",
+  },
   {
     title: "Photograph — Ed Sheeran",
     src: "https://res.cloudinary.com/deeki0eou/video/upload/v1786010540/Ed_Sheeran_Photograph_Official_Music_Video_xps4ep.mp4",
+  },
+  {
+    title: "Perfect — Ed Sheeran",
+    src: "https://res.cloudinary.com/deeki0eou/video/upload/v1786345235/Shelcia-Fernanda_Musica_Ed_Sheeran_Perfect_Official_Music_Video_jogfan.mp4",
+    note: "A música preferida dela",
+  },
+  {
+    title: "Golden Hour — JVKE",
+    src: "https://res.cloudinary.com/deeki0eou/video/upload/v1786345225/Shelcia-Fernanda_Musica_JVKE_golden_hour_official_music_video_r68r7b.mp4",
+  },
+  {
+    title: "Wicked Game — Chris Isaak",
+    src: "https://res.cloudinary.com/deeki0eou/video/upload/v1786345225/Shelcia-Fernanda_Musica_Isaak_Wicked_Game_Lyrics_yaagr8.mp4",
+    note: "“Parece que me teletransporta.”",
+  },
+  {
+    title: "Interstellar (Piano) — Hans Zimmer",
+    src: "https://res.cloudinary.com/deeki0eou/video/upload/v1786345236/Shelcia-Fernanda_Musica_Hans_Zimmer_Interstellar_Main_Theme_Piano_Version_Sheet_Music_dqzepa.mp4",
+  },
+  {
+    title: "Solas — Jamie Duffy",
+    src: "https://res.cloudinary.com/deeki0eou/video/upload/v1786345227/Shelcia-Fernanda_Musica_Jamie_Duffy_Solas_Official_Video_gxhkmu.mp4",
   },
 ];

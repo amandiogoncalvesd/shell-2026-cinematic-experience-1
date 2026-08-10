@@ -4,7 +4,7 @@ import { useMusic } from "../audio/MusicProvider";
 
 /* Botão flutuante de música — jóia de vidro líquido que pulsa com a melodia. */
 export default function FloatingMusic() {
-  const { isPlaying, toggle, currentTrack } = useMusic();
+  const { isPlaying, toggle, next, currentTrack } = useMusic();
   const [hover, setHover] = useState(false);
 
   if (!currentTrack) return null;
@@ -61,6 +61,26 @@ export default function FloatingMusic() {
             </motion.span>
           )}
         </AnimatePresence>
+        {hover && (
+          <span
+            role="button"
+            tabIndex={0}
+            aria-label="Próxima música"
+            onClick={(e) => {
+              e.stopPropagation();
+              next();
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.stopPropagation();
+                next();
+              }
+            }}
+            className="shrink-0 rounded-full border border-shell-sky/30 px-2 py-1 text-[10px] text-shell-sky transition hover:bg-shell-sky/20"
+          >
+            ❯❯
+          </span>
+        )}
       </motion.button>
     </motion.div>
   );

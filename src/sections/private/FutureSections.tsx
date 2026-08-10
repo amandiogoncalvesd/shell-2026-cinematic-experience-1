@@ -136,7 +136,7 @@ export function SkySection({ energy }: { energy: number }) {
 }
 
 export function MusicSection() {
-  const { play, currentTrack, isPlaying, toggle, energy, volume, setVolume } = useMusic();
+  const { play, currentTrack, isPlaying, toggle, next, energy, volume, setVolume } = useMusic();
   const track = audioTracks[0];
   return (
     <section id="p-musica" className="relative py-28">
@@ -160,7 +160,7 @@ export function MusicSection() {
           </div>
 
           <div className="glass royal-frame rounded-2xl p-6">
-            <Kicker>A música do teu universo</Kicker>
+            <Kicker>O teu leitor — a tua playlist</Kicker>
             <div className="mt-4 flex items-end gap-[3px]">
               {Array.from({ length: 24 }).map((_, i) => (
                 <span
@@ -174,20 +174,49 @@ export function MusicSection() {
               ))}
             </div>
 
-            <div className="mt-6 rounded-xl border border-shell-sky/25 bg-shell-sky/5 px-4 py-3">
-              <p className="font-display text-lg font-semibold text-white">{track.title}</p>
-              <p className="mt-0.5 text-[10px] uppercase tracking-[0.3em] text-shell-sky/60">
-                ✦ toca automaticamente quando abres a tua página ✦
-              </p>
+            <div className="mt-5 max-h-56 space-y-1 overflow-y-auto pr-2">
+              {audioTracks.map((t) => {
+                const isCurrent = currentTrack?.src === t.src;
+                return (
+                  <button
+                    key={t.src}
+                    onClick={() => (isCurrent ? toggle() : play(t))}
+                    className={`flex w-full items-center gap-3 rounded-xl border px-3 py-2 text-left transition ${
+                      isCurrent
+                        ? "border-shell-sky/60 bg-shell-sky/15"
+                        : "border-transparent hover:border-white/10 hover:bg-white/5"
+                    }`}
+                  >
+                    <span className={`grid h-7 w-7 shrink-0 place-items-center rounded-full text-[10px] ${isCurrent ? "bg-shell-sky text-[#0a2540]" : "bg-white/5 text-shell-sky/70"}`}>
+                      {isCurrent && isPlaying ? "❚❚" : "▶"}
+                    </span>
+                    <span className="min-w-0">
+                      <span className={`block truncate text-xs font-medium ${isCurrent ? "text-white" : "text-[#dceefb]/75"}`}>
+                        {t.title}
+                      </span>
+                      {t.note && (
+                        <span className="block truncate text-[9px] italic text-shell-lavender/60">{t.note}</span>
+                      )}
+                    </span>
+                    {isCurrent && <span className="ml-auto text-[9px] text-shell-sky">✦ a tocar</span>}
+                  </button>
+                );
+              })}
             </div>
 
-            <GlassButton
-              className="mt-4 w-full"
-              variant="solid"
-              onClick={() => (currentTrack ? toggle() : play(track))}
-            >
-              {isPlaying ? "Pausar" : "Reproduzir"}
-            </GlassButton>
+            <div className="mt-4 flex gap-3">
+              <GlassButton
+                className="flex-1"
+                variant="solid"
+                onClick={() => (currentTrack ? toggle() : play(track))}
+              >
+                {isPlaying ? "Pausar" : "Reproduzir"}
+              </GlassButton>
+              <GlassButton onClick={next}>Próxima ❯❯</GlassButton>
+            </div>
+            <p className="mt-3 text-center text-[9px] uppercase tracking-[0.25em] text-shell-sky/50">
+              ✦ a Experience toca primeiro — é a melodia que mais amas ✦
+            </p>
 
             <div className="mt-5 flex items-center gap-3">
               <span className="text-xs text-ocean-300/70" aria-hidden>🔈</span>

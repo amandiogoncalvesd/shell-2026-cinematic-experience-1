@@ -1,9 +1,11 @@
 import { createContext, useCallback, useContext, useEffect, useRef, useState } from "react";
 import type { ReactNode } from "react";
+import { audioTracks } from "../data/videos";
 
 interface Track {
   title: string;
   src: string;
+  note?: string;
 }
 
 interface MusicContextValue {
@@ -14,6 +16,7 @@ interface MusicContextValue {
   play: (track: Track) => void;
   toggle: () => void;
   stop: () => void;
+  next: () => void;
   setVolume: (v: number) => void;
 }
 
@@ -26,6 +29,7 @@ export function MusicProvider({ children }: { children: ReactNode }) {
   const sourceRef = useRef<MediaElementAudioSourceNode | null>(null);
   const rafRef = useRef<number | null>(null);
   const dataRef = useRef<Uint8Array | null>(null);
+  const nextRef = useRef<(() => void) | null>(null);
 
   const [currentTrack, setCurrentTrack] = useState<Track | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -34,9 +38,10 @@ export function MusicProvider({ children }: { children: ReactNode }) {
 
   useEffect(() => {
     const audio = new Audio();
-    audio.loop = true;
     audio.crossOrigin = "anonymous";
     audio.volume = volume;
+    // Quando uma faixa termina, a playlist continua sozinha.
+    audio.onended = () => nextRef.current?.();
     audioRef.current = audio;
     return () => {
       audio.pause();
@@ -117,6 +122,18 @@ export function MusicProvider({ children }: { children: ReactNode }) {
     }
   }, [currentTrack, isPlaying, play]);
 
+  // Segue para a próxima faixa da playlist (e recomeça ao chegar ao fim).
+  const next = useCallback(() => {
+    const list = audioTracks;
+    if (!list.length) return;
+    const idx = list.findIndex((t) => t.src === currentTrack?.src);
+    play(list[(idx + 1) % list.length]);
+  }, [currentTrack, play]);
+
+  useEffect(() => {
+    nextRef.current = next;
+  }, [next]);
+
   const stop = useCallback(() => {
     audioRef.current?.pause();
     setIsPlaying(false);
@@ -129,7 +146,7 @@ export function MusicProvider({ children }: { children: ReactNode }) {
 
   return (
     <MusicContext.Provider
-      value={{ currentTrack, isPlaying, energy, volume, play, toggle, stop, setVolume }}
+      value={{ currentTrack, isPlaying, energy, volume, play, toggle, stop, next, setVolume }}
     >
       {children}
     </MusicContext.Provider>

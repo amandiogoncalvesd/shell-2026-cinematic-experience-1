@@ -104,7 +104,7 @@ export function LightboxHost() {
   return createPortal(
     <AnimatePresence>
       <motion.div
-        className="fixed inset-0 z-[200] flex items-center justify-center bg-[#040f1e]/92 backdrop-blur-2xl"
+        className="fixed inset-0 z-[200] flex items-center justify-center bg-[#02080f]/97"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         exit={{ opacity: 0 }}
@@ -146,26 +146,19 @@ export function LightboxHost() {
         )}
         <motion.div
           key={state.index}
-          className="relative mx-6 max-h-[85vh] max-w-5xl overflow-hidden rounded-2xl shimmer-border"
-          initial={{ opacity: 0, scale: 0.96 }}
+          className={`relative mx-6 max-h-[85vh] max-w-5xl overflow-hidden rounded-2xl ${
+            current.type === "photo" ? "shimmer-border" : "bg-black"
+          }`}
+          initial={{ opacity: 0, scale: 0.97 }}
           animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.98 }}
-          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          exit={{ opacity: 0 }}
+          transition={{ opacity: { duration: 0.4 }, scale: { duration: 0.4, ease: [0.22, 1, 0.36, 1] } }}
           onClick={(e) => e.stopPropagation()}
         >
           {current.type === "photo" ? (
             <img src={current.src} alt="" className="max-h-[85vh] w-auto object-contain" draggable={false} />
           ) : (
-            <video
-              src={current.src}
-              poster={videoPoster(current.src, 0.6, 1280) || undefined}
-              className="max-h-[85vh] w-auto"
-              controls
-              autoPlay
-              muted
-              playsInline
-              loop
-            />
+            <LightboxVideo src={current.src} />
           )}
           {current.caption && (
             <div className="absolute bottom-0 w-full bg-gradient-to-t from-black/70 to-transparent p-4 text-sm text-ocean-100">
@@ -176,6 +169,40 @@ export function LightboxHost() {
       </motion.div>
     </AnimatePresence>,
     document.body
+  );
+}
+
+/* ---------------------------------------------------------
+   LightboxVideo — reprodução fluida, sem efeitos pesados,
+   sempre COM SOM. O fundo sólido (sem blur) liberta o GPU
+   para o vídeo correr sem travamentos.
+--------------------------------------------------------- */
+function LightboxVideo({ src }: { src: string }) {
+  const ref = useRef<HTMLVideoElement | null>(null);
+
+  useEffect(() => {
+    const v = ref.current;
+    if (!v) return;
+    // Reprodução imediata e com som (o clique que abriu conta como gesto).
+    v.volume = 1;
+    const tryPlay = () => v.play().catch(() => {});
+    tryPlay();
+    v.addEventListener("canplay", tryPlay);
+    return () => v.removeEventListener("canplay", tryPlay);
+  }, [src]);
+
+  return (
+    <video
+      ref={ref}
+      src={src}
+      poster={videoPoster(src, 0.6, 1280) || undefined}
+      className="max-h-[85vh] w-auto"
+      controls
+      autoPlay
+      playsInline
+      loop
+      preload="auto"
+    />
   );
 }
 

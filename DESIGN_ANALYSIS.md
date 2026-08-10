@@ -124,3 +124,21 @@ Direção recebida do cliente — sobrepõe-se onde conflitar com as fases anter
    594 URLs carregadas aleatoriamente (excluindo sempre a sessão Toque de Magia),
    progresso guardado automaticamente (nível, concluídos, recordes, imagem atual)
    com retoma ao reabrir.
+
+---
+
+## FASE 10 — Onda 5: playlist, navbar real, fullscreen e vídeo fluido
+
+1. **Playlist oficial** em `data/videos.ts → audioTracks`: Experience (Ludovico Einaudi) é a
+   faixa principal — a melodia que ela mais ama — e toca automaticamente ao abrir; seguem-se
+   Photograph, Perfect, Golden Hour, Wicked Game, Interstellar (piano) e Solas.
+   Ao terminar uma faixa, a seguinte começa sozinha (`next()` no MusicProvider).
+2. **Navbar real (estilo Disney):** barra fina de cristal; capítulos da mesma página numa
+   fita discreta ao centro; páginas diferentes num “espelho mágico” (dropdown com emblema,
+   nome e descrição). Elementos pequenos e elegantes — nunca listas verticais de links.
+3. **Fullscreen imersivo:** entrar como convidado ou como Shelcia pede tela cheia
+   (`utils/fullscreen.ts`, melhor esforço — falha em silêncio onde não é suportado).
+4. **Reprodução de vídeo fluida e COM SOM:** o lightbox usa fundo sólido (sem
+   backdrop-blur, que é o maior peso de GPU), moldura sem shimmer em vídeo,
+   preload="auto" e play() explícito com som. As pré-visualizações em grelha
+   continuam mudas (padrão de galeria; vários vídeos com som em simultâneo seria caos).

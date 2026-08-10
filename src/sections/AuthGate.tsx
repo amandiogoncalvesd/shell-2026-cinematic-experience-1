@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { CanvasParticles, LiquidBlobs } from "../components/effects";
+import { requestImmersiveFullscreen } from "../utils/fullscreen";
 
 const VALID = ["10082026", "10/08", "1008", "shelcia18", "cinderela", "shelcia", "18082026"];
 
@@ -15,6 +16,8 @@ export default function AuthGate({ onSuccess, onBack }: { onSuccess: () => void;
     setChecking(true);
     setTimeout(() => {
       if (VALID.includes(normalized)) {
+        // O universo dela abre em tela cheia, sem distrações.
+        requestImmersiveFullscreen();
         onSuccess();
       } else {
         setError(true);

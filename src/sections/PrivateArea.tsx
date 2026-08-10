@@ -17,9 +17,9 @@ import NeuralPuzzlePage from "./private/NeuralPuzzlePage";
 type PrivatePage = "universo" | "galeria" | "puzzle";
 
 const PAGES = [
-  { id: "universo", label: "O Universo", emblem: "❈" },
-  { id: "galeria", label: "Galeria Imersiva", emblem: "✦" },
-  { id: "puzzle", label: "Neural Puzzle", emblem: "⬡" },
+  { id: "universo", label: "O Universo", emblem: "❈", desc: "As tuas memórias, histórias e sonhos" },
+  { id: "galeria", label: "Galeria Imersiva", emblem: "✦", desc: "Fotografias e vídeos sempre em movimento" },
+  { id: "puzzle", label: "Neural Puzzle", emblem: "⬡", desc: "O teu jogo de memória e cristal" },
 ];
 
 const SECTIONS = [

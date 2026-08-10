@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { CanvasParticles, Countdown, FilmGrain, LiquidBlobs } from "../components/effects";
+import { requestImmersiveFullscreen } from "../utils/fullscreen";
 
 export default function Portal({ onEnter }: { onEnter: (role: "guests" | "shelcia") => void }) {
   const [phase, setPhase] = useState<"loading" | "portal" | "leaving">("loading");
@@ -27,6 +28,8 @@ export default function Portal({ onEnter }: { onEnter: (role: "guests" | "shelci
   };
 
   const choose = (role: "guests" | "shelcia") => {
+    // O portal abre em tela cheia — sem barras nem distrações.
+    requestImmersiveFullscreen();
     setLeavingTo(role);
     setPhase("leaving");
     setTimeout(() => onEnter(role), 1400);
