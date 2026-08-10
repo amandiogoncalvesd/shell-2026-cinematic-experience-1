@@ -229,7 +229,11 @@ const MAX_LEVEL   = LEVEL_GRIDS.length - 1;
 // ════════════════ POOL (594 imagens, aleatório) ════════════════
 const ALL_IMGS = (window.PUZZLE_POOL && window.PUZZLE_POOL.length)
   ? window.PUZZLE_POOL
-  : ['https://res.cloudinary.com/deeki0eou/image/upload/w_1000,q_auto,f_auto/v1785928939/shelcia-fernanda-imagens-de-destaque-01_kbz8qc.jpg'];
+  : [
+      'https://res.cloudinary.com/deeki0eou/image/upload/w_1000,q_auto,f_auto/v1785928939/shelcia-fernanda-imagens-de-destaque-01_kbz8qc.jpg',
+      'https://res.cloudinary.com/deeki0eou/image/upload/w_1000,q_auto,f_auto/v1785928941/shelcia-fernanda-imagens-de-destaque-02_n6ze54.jpg',
+      'https://res.cloudinary.com/deeki0eou/image/upload/w_1000,q_auto,f_auto/v1785928940/shelcia-fernanda-imagens-de-destaque-92_sajo2r.jpg',
+    ];
 
 // Paleta da Shelcia
 const COL={r:'#DA8BA0',p:'#D9B8E3',a:'#87C3E3',b:'#87C3E3',o:'#5A75C2'};
@@ -385,18 +389,18 @@ function loadImageWithUrl(url){
   tryUrl(url,false,()=>loadImage(false));
 }
 function tryNextImg(sameLevel){
-  if(loadAttempts>=6){ showLoadError(); return; }
+  if(loadAttempts>=8){ showLoadError(); return; }
   tryUrl(nextImg(),sameLevel,()=>{ loadAttempts++; tryNextImg(sameLevel); });
 }
 function tryUrl(url,sameLevel,onFail){
   loadAttempts++;
-  if(loadAttempts>6){ showLoadError(); return; }
+  if(loadAttempts>8){ showLoadError(); return; }
   usedImgUrl=url;
   showLoading(true);
   document.getElementById('ld-txt').textContent='CARREGANDO MEMÓRIA '+loadAttempts+'...';
   const im=new Image();
   let done=false;
-  const timer=setTimeout(()=>{ if(!done){ done=true; onFail(); } },12000);
+  const timer=setTimeout(()=>{ if(!done){ done=true; onFail(); } },20000);
   im.onload=()=>{
     if(done)return; done=true; clearTimeout(timer);
     image=im;

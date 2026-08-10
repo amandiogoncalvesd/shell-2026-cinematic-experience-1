@@ -1,7 +1,8 @@
 import { Reveal } from "../../components/effects";
 import { MediaCarousel, SmartImg, VideoCard, openLightbox } from "../../components/media";
 import { SectionHeading } from "../../components/ui";
-import { closeFriends, friends, identity, momLetter, amandioLetter } from "../../data/content";
+import { closeFriends, friends, identity, momLetter } from "../../data/content";
+import RoyalLetter from "./RoyalLetter";
 import { ruthCeremony, ruthBackstage, ruthMoments } from "../../data/photos";
 import { fraseBiblicaPhoto, aniversarioMaePhoto } from "../../data/media2026";
 import { videoRuthCeremony, videoRuthMoments } from "../../data/videos";
@@ -63,9 +64,13 @@ export function LettersSection() {
       <div className="mx-auto max-w-4xl px-6">
         <SectionHeading kicker="Cartas" title="Cartas" align="center" />
 
-        <div className="mt-14 space-y-6">
+        {/* O livro — a carta original do Amândio */}
+        <div className="mt-14">
+          <RoyalLetter />
+        </div>
+
+        <div className="mt-16 space-y-6">
           <LetterCard title={momLetter.from} text={momLetter.text} highlight />
-          <LetterCard title={amandioLetter.from} text={amandioLetter.text} highlight />
           <LetterCard title="Ruth Antónia Bongue Pereira" text={ruth.letter} />
           <LetterCard
             title={`O versículo dela · ${identity.verse.ref}`}

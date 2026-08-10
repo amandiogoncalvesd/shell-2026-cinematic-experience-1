@@ -78,12 +78,16 @@ export default function PrivateArea({ onExit }: { onExit: () => void }) {
       <LightboxHost />
       <WelcomeModal
         storageKey="shell2026-welcome-private"
-        title="Bem-vinda, Princesinha Shell ✦"
-        mentionPhotograph
-        lines={[
-          "Este universo é teu. As fotografias trocam sozinhas e os vídeos ganham vida quando chegam ao centro do ecrã.",
-          "A música espera por ti — toca no botão flutuante quando quiseres.",
-          "Na Galeria Imersiva tens todas as tuas fotos e vídeos; no Neural Puzzle, um desafio com as tuas memórias.",
+        title="Bem-vinda, Princesinha ✦"
+        paragraphs={[
+          "Este espaço foi criado completamente a pensar em ti — o teu universo aguarda por ti.",
+          "A parte mais incrível desta aplicação é o filme digno da Disney criado para ti: o Photograph 2026.",
+          "Espero que gostes desta aplicação tanto quanto eu gostei de criá-la para ti.",
+        ]}
+        navigation={[
+          "Para navegar na aplicação, podes simplesmente deslizar para baixo ou usar a barra de navegação no canto superior direito.",
+          "A aplicação está dividida em três páginas — o Universo (esta), a Galeria Imersiva e o Neural Puzzle Pro — podes ir a qualquer uma delas pelos menus da barra de navegação.",
+          "O Neural Puzzle Pro mudou muito: agora começa no nível básico, com 4 peças, e vai até ao nível final de 12×12. Encontrá-lo-ás na barra de navegação.",
         ]}
       />
       {page === "universo" && <ScrollProgress />}

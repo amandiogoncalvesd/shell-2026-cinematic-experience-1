@@ -3,6 +3,7 @@
   "short_name": "SHELL 2026",
   "description": "Um universo digital cinematográfico construído só para Shelcia Fernanda Neves Van-Dúnem.",
   "lang": "pt",
+  "id": "/",
   "start_url": "/",
   "scope": "/",
   "display": "fullscreen",

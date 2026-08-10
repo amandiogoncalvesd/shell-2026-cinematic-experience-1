@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { CanvasParticles, LiquidBlobs } from "../components/effects";
 import { requestImmersiveFullscreen } from "../utils/fullscreen";
 
-const VALID = ["10082026", "10/08", "1008", "shelcia18", "cinderela", "shelcia", "18082026"];
+const VALID = ["cinderella", "cinderella2026"];
 
 export default function AuthGate({ onSuccess, onBack }: { onSuccess: () => void; onBack: () => void }) {
   const [value, setValue] = useState("");
@@ -12,6 +12,7 @@ export default function AuthGate({ onSuccess, onBack }: { onSuccess: () => void;
 
   const submit = (e: React.FormEvent) => {
     e.preventDefault();
+    // A palavra-passe é secreta — aceita qualquer combinação de maiúsculas/minúsculas.
     const normalized = value.trim().toLowerCase().replace(/\s+/g, "");
     setChecking(true);
     setTimeout(() => {
@@ -59,16 +60,13 @@ export default function AuthGate({ onSuccess, onBack }: { onSuccess: () => void;
           type="password"
           value={value}
           onChange={(e) => setValue(e.target.value)}
-          placeholder="Chave de acesso"
+          placeholder="Palavra-passe"
           className="mt-8 w-full rounded-full border border-white/15 bg-white/5 px-5 py-3 text-center text-sm tracking-widest text-white placeholder:text-ocean-200/40 outline-none focus:border-ocean-300/70"
         />
-        <p className="mt-3 text-[11px] uppercase tracking-widest text-ocean-300/40">
-          dica: a data do teu aniversário
-        </p>
 
         {error && (
           <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-3 text-xs text-rose-300">
-            Chave incorreta. Tenta novamente, princesa.
+            Palavra-passe incorreta. Tenta novamente, princesa.
           </motion.p>
         )}
 

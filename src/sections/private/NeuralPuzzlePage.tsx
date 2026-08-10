@@ -37,7 +37,7 @@ export default function NeuralPuzzlePage() {
         <div className="royal-frame overflow-hidden rounded-3xl p-2">
           <div className="relative overflow-hidden rounded-2xl">
             <iframe
-              src="/neural-puzzle.html"
+              src="/neural-puzzle.html?v=omega"
               title="Neural Puzzle — Shell 2026"
               className="h-[82vh] w-full border-0"
               allow="fullscreen"

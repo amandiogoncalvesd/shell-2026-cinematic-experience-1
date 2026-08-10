@@ -198,3 +198,20 @@ Direção recebida do cliente — sobrepõe-se onde conflitar com as fases anter
    carregamento com 6 tentativas + timeout de 12 s + ecrã de retry; interface da
    página limpa (sem botões desnecessários).
 8. **Rodapé oficial:** “Designer by Amândio Gonçalves”.
+
+---
+
+## FASE 14 — A despedida
+
+1. **A carta original do Amândio** substituiu a adaptação: vive num livro
+   encantado (`RoyalLetter`) que se abre e escreve sozinho, palavra por palavra —
+   tipografia Great Vibes + Cormorant Garamond, tinta azul-céu sobre vidro noite.
+2. **Palavra-passe secreta:** a única chave é `Cinderella` (ou `Cinderella2026`),
+   sem distinção de maiúsculas — sem dicas, porque segredos não se sugerem.
+3. **Apresentações oficiais:** modais de boas-vindas com a navegação explicada,
+   o Photograph 2026 recomendado para download (1080p é pesado para streaming)
+   e o convite para instalar como aplicativo.
+4. **Neural Puzzle à prova de falha:** 8 tentativas, timeout de 20 s, ecrã de
+   retry, cache-busting e service worker renovado (v2).
+5. **PWA:** `id` + `scope` no manifest — com o app instalado, os links abrem
+   sempre dentro dele.

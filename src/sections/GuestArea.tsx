@@ -56,12 +56,14 @@ export default function GuestArea({ onGoPrivate, onExitPortal }: { onGoPrivate: 
       <LightboxHost />
       <WelcomeModal
         storageKey="shell2026-welcome-guest"
-        title="Bem-vindos à celebração ✦"
-        mentionPhotograph
-        lines={[
-          "Esta galeria celebra os 18 anos de Shelcia Fernanda — criada para a família e os amigos.",
-          "As fotografias nunca ficam paradas e os vídeos reproduzem-se sozinhos quando chegam ao centro do ecrã.",
-          "A música espera por vocês — toca no botão flutuante quando quiserem.",
+        title="Bem-vindo(a) ✦"
+        paragraphs={[
+          "Bem-vindo(a) ao universo de Shelcia Fernanda Neves Van-Dúnem. Se estás aqui, é porque és uma pessoa importante para ela — obrigado por fazeres parte da vida desta rapariga interestelar.",
+          "Este espaço foi criado para nos ajudares a celebrar os 18 anos de Shelcia Fernanda Neves Van-Dúnem.",
+        ]}
+        navigation={[
+          "Para te locomoveres na aplicação, podes simplesmente deslizar para baixo ou navegar usando a barra de navegação no canto superior direito.",
+          "As fotografias nunca ficam paradas e os vídeos reproduzem-se sozinhos quando chegam ao centro do ecrã — a música espera por ti no botão flutuante.",
         ]}
       />
       <ScrollProgress />
