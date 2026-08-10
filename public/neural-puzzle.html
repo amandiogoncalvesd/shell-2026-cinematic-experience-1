@@ -4,124 +4,134 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
 <title>NEURAL PUZZLE — SHELL 2026</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Share+Tech+Mono&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;800;900&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 html,body{width:100%;height:100%;overflow:hidden;background:#03101f}
 body{font-family:'Orbitron',monospace;display:flex;flex-direction:column}
 body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:997;
-  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.05) 3px,rgba(0,0,0,0.05) 4px)}
+  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.06) 3px,rgba(0,0,0,0.06) 4px)}
 
-/* ══ HUD — cristal azul ══ */
+/* ══ HUD ══ */
 #hud{flex-shrink:0;height:56px;display:flex;align-items:center;gap:12px;padding:0 12px;
-  background:rgba(6,21,39,0.96);border-bottom:1px solid rgba(135,195,227,0.22);
+  background:rgba(4,14,28,0.97);border-bottom:1px solid rgba(135,195,227,0.2);
   position:relative;z-index:20;overflow:hidden}
 #hud::after{content:'';position:absolute;bottom:-1px;left:0;right:0;height:1px;
-  background:linear-gradient(90deg,transparent,#87C3E3 25%,#D9B8E3 55%,#DA8BA0 85%,transparent)}
+  background:linear-gradient(90deg,transparent,#87C3E3 20%,#9F7CA9 50%,#DA8BA0 80%,transparent)}
 
-.logo{font-family:'Playfair Display',serif;font-size:14px;font-weight:800;letter-spacing:2px;white-space:nowrap;flex-shrink:0;
-  color:#87C3E3;text-shadow:0 0 14px rgba(135,195,227,.6)}
-.logo small{display:block;font-family:'Share Tech Mono',monospace;font-size:6px;letter-spacing:4px;color:rgba(217,184,227,.6)}
+.logo{font-size:12px;font-weight:900;letter-spacing:2.5px;white-space:nowrap;flex-shrink:0;
+  background:linear-gradient(135deg,#87C3E3,#9F7CA9 50%,#DA8BA0);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 
-.hud-sep{width:1px;height:30px;background:rgba(135,195,227,0.25);flex-shrink:0}
+.hud-sep{width:1px;height:30px;background:rgba(135,195,227,0.3);flex-shrink:0}
 
 .level-info{display:flex;flex-direction:column;justify-content:center;flex-shrink:0}
-.level-tag{font-size:7px;letter-spacing:3px;color:rgba(217,184,227,0.75);line-height:1}
-.level-name{font-size:11px;font-weight:800;letter-spacing:2px;color:#87C3E3;
-  text-shadow:0 0 10px rgba(135,195,227,0.6);line-height:1.4}
-.grid-tag{font-family:'Share Tech Mono',monospace;font-size:9px;color:rgba(217,184,227,0.6);line-height:1}
+.level-tag{font-size:7px;letter-spacing:3px;color:rgba(218,139,160,0.8);line-height:1}
+.level-name{font-size:11px;font-weight:800;letter-spacing:2px;color:#DA8BA0;
+  text-shadow:0 0 10px rgba(218,139,160,0.6);line-height:1.4}
+.grid-tag{font-family:'Share Tech Mono',monospace;font-size:9px;color:rgba(217,184,227,0.7);line-height:1}
 
 .hud-stats{display:flex;gap:14px;align-items:center}
 .stat{text-align:center;min-width:46px}
-.stat-l{font-family:'Share Tech Mono',monospace;font-size:6px;color:rgba(180,215,240,0.4);letter-spacing:2px}
+.stat-l{font-family:'Share Tech Mono',monospace;font-size:6px;color:rgba(185,217,236,0.4);letter-spacing:2px}
 .stat-v{font-family:'Share Tech Mono',monospace;font-size:13px;font-weight:700;
-  color:#D9B8E3;text-shadow:0 0 8px rgba(217,184,227,0.55)}
+  color:#D9B8E3;text-shadow:0 0 8px rgba(217,184,227,0.6)}
 
 .hud-btns{display:flex;gap:5px;margin-left:auto;flex-shrink:0}
 .btn{font-family:'Orbitron',monospace;font-size:6.5px;font-weight:700;letter-spacing:1.2px;
-  padding:5px 9px;border:1px solid;cursor:pointer;background:transparent;border-radius:6px;
+  padding:5px 9px;border:1px solid;cursor:pointer;background:transparent;
   transition:all .15s;white-space:nowrap;line-height:1}
 .b-blue{border-color:#87C3E3;color:#87C3E3}
-.b-blue:hover{background:#87C3E3;color:#0a2540;box-shadow:0 0 14px rgba(135,195,227,.8)}
-.b-purple{border-color:#D9B8E3;color:#D9B8E3}
-.b-purple:hover{background:#D9B8E3;color:#3E4E90;box-shadow:0 0 14px rgba(217,184,227,.8)}
-.b-rose{border-color:#DA8BA0;color:#DA8BA0}
-.b-rose:hover{background:#DA8BA0;color:#3E1524;box-shadow:0 0 14px rgba(218,139,160,.8)}
-.b-amber{border-color:#5A75C2;color:#9fb4e8}
-.b-amber:hover{background:#5A75C2;color:#fff;box-shadow:0 0 14px rgba(90,117,194,.8)}
-.b-green{border-color:#87C3E3;color:#bfe4f7}
-.b-green:hover{background:#bfe4f7;color:#0a2540;box-shadow:0 0 14px rgba(191,228,247,.8)}
+.b-blue:hover{background:#87C3E3;color:#fff;box-shadow:0 0 12px rgba(135,195,227,.8)}
+.b-purple{border-color:#9F7CA9;color:#9F7CA9}
+.b-purple:hover{background:#9F7CA9;color:#fff;box-shadow:0 0 12px rgba(159,124,169,.8)}
+.b-red{border-color:#DA8BA0;color:#DA8BA0}
+.b-red:hover{background:#DA8BA0;color:#fff;box-shadow:0 0 12px rgba(218,139,160,.8)}
+.b-amber{border-color:#5A75C2;color:#5A75C2}
+.b-amber:hover{background:#5A75C2;color:#000;box-shadow:0 0 12px rgba(90,117,194,.8)}
+.b-green{border-color:#04d98b;color:#04d98b}
+.b-green:hover{background:#04d98b;color:#000;box-shadow:0 0 12px rgba(4,217,139,.8)}
 
+/* level progress dots */
 #lvl-bar{flex-shrink:0;display:flex;gap:4px;align-items:center}
-.lvl-dot{width:7px;height:7px;border:1px solid rgba(135,195,227,0.35);border-radius:50%;
+.lvl-dot{width:7px;height:7px;border:1px solid rgba(135,195,227,0.3);border-radius:50%;
   transition:all .3s;cursor:default;flex-shrink:0}
 .lvl-dot.done{background:#87C3E3;border-color:#87C3E3;box-shadow:0 0 6px #87C3E3}
 .lvl-dot.current{background:transparent;border-color:#D9B8E3;box-shadow:0 0 6px #D9B8E3;animation:pulse-dot 1s ease-in-out infinite alternate}
 @keyframes pulse-dot{from{box-shadow:0 0 4px #D9B8E3}to{box-shadow:0 0 12px #D9B8E3,0 0 20px #D9B8E3}}
 
-/* ══ ÁREA DE JOGO ══ */
+/* ══ GAME AREA ══ */
 #gameArea{flex:1;position:relative;overflow:hidden}
 #c{display:block}
 
-/* ══ PROGRESSO ══ */
+/* ══ PROGRESS ══ */
 #prog-wrap{flex-shrink:0;height:3px;background:rgba(255,255,255,0.04)}
-#prog-bar{height:100%;width:0%;background:linear-gradient(90deg,#5A75C2,#87C3E3,#D9B8E3);
-  box-shadow:0 0 8px #87C3E3;transition:width .4s}
+#prog-bar{height:100%;width:0%;background:linear-gradient(90deg,#87C3E3,#9F7CA9,#DA8BA0);
+  box-shadow:0 0 8px #9F7CA9;transition:width .4s}
 
 /* ══ LOADING ══ */
 #loading{position:fixed;inset:0;z-index:1000;background:#03101f;
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;transition:opacity .5s}
 #loading.out{opacity:0;pointer-events:none}
-.ld-logo{font-family:'Playfair Display',serif;font-size:26px;font-weight:800;letter-spacing:5px;text-align:center;line-height:1.4;
-  color:#87C3E3;text-shadow:0 0 24px rgba(135,195,227,.65)}
+.ld-logo{font-size:24px;font-weight:900;letter-spacing:5px;text-align:center;line-height:1.4;
+  background:linear-gradient(135deg,#87C3E3,#9F7CA9,#DA8BA0);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
 .ld-grid{width:54px;height:54px;display:grid;grid-template-columns:repeat(3,1fr);gap:3px;animation:rot 3s linear infinite}
 @keyframes rot{to{transform:rotate(360deg)}}
-.ld-cell{border:1px solid;animation:cc 1.5s ease-in-out infinite alternate;border-radius:2px}
-.ld-cell:nth-child(1){border-color:#87C3E3;animation-delay:0s}
-.ld-cell:nth-child(2){border-color:#D9B8E3;animation-delay:.15s}
-.ld-cell:nth-child(3){border-color:#DA8BA0;animation-delay:.3s}
-.ld-cell:nth-child(4){border-color:#5A75C2;animation-delay:.45s}
-.ld-cell:nth-child(5){border-color:#9F7CA9;animation-delay:.6s}
-.ld-cell:nth-child(6){border-color:#87C3E3;animation-delay:.75s}
-.ld-cell:nth-child(7){border-color:#D9B8E3;animation-delay:.9s}
-.ld-cell:nth-child(8){border-color:#DA8BA0;animation-delay:1.05s}
-.ld-cell:nth-child(9){border-color:#3E4E90;animation-delay:1.2s}
+.ld-cell{border:1px solid;animation:cc 1.5s ease-in-out infinite alternate}
+.ld-cell:nth-child(1){border-color:#DA8BA0;animation-delay:0s}
+.ld-cell:nth-child(2){border-color:#9F7CA9;animation-delay:.15s}
+.ld-cell:nth-child(3){border-color:#D9B8E3;animation-delay:.3s}
+.ld-cell:nth-child(4){border-color:#87C3E3;animation-delay:.45s}
+.ld-cell:nth-child(5){border-color:#5A75C2;animation-delay:.6s}
+.ld-cell:nth-child(6){border-color:#DA8BA0;animation-delay:.75s}
+.ld-cell:nth-child(7){border-color:#9F7CA9;animation-delay:.9s}
+.ld-cell:nth-child(8){border-color:#D9B8E3;animation-delay:1.05s}
+.ld-cell:nth-child(9){border-color:#87C3E3;animation-delay:1.2s}
 @keyframes cc{from{opacity:.15}to{opacity:1}}
 .ld-txt{font-family:'Share Tech Mono',monospace;font-size:9px;letter-spacing:4px;color:#87C3E3;animation:blink 1.2s step-end infinite}
 @keyframes blink{50%{opacity:0}}
-.ld-bar{width:180px;height:1px;background:rgba(135,195,227,.12);position:relative;overflow:hidden}
+.ld-bar{width:180px;height:1px;background:rgba(135,195,227,.1);position:relative;overflow:hidden}
 .ld-bar::after{content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;
-  background:linear-gradient(90deg,transparent,#87C3E3,#D9B8E3,transparent);animation:la 1.4s linear infinite}
+  background:linear-gradient(90deg,transparent,#87C3E3,#9F7CA9,transparent);animation:la 1.4s linear infinite}
 @keyframes la{to{left:100%}}
-.ld-level{font-family:'Share Tech Mono',monospace;font-size:11px;color:#D9B8E3;letter-spacing:3px;text-shadow:0 0 10px rgba(217,184,227,.7)}
+.ld-level{font-family:'Share Tech Mono',monospace;font-size:11px;color:#D9B8E3;letter-spacing:3px;text-shadow:0 0 10px #D9B8E3}
 
-/* ══ PRÉVIA ══ */
-#prev-ov{position:fixed;inset:0;z-index:500;background:rgba(3,16,31,0.92);
+/* ══ PREVIEW ══ */
+#prev-ov{position:fixed;inset:0;z-index:500;background:rgba(0,0,0,0.9);
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;
   opacity:0;pointer-events:none;transition:opacity .3s}
 #prev-ov.show{opacity:1;pointer-events:auto}
-#prev-ov img{max-width:70vw;max-height:70vh;border:1px solid #87C3E3;border-radius:8px;
-  box-shadow:0 0 30px rgba(135,195,227,.5),0 0 80px rgba(90,117,194,.2)}
-.prev-l{font-size:8px;letter-spacing:3px;color:rgba(135,195,227,.65)}
+#prev-ov img{max-width:70vw;max-height:70vh;border:1px solid #9F7CA9;
+  box-shadow:0 0 30px rgba(159,124,169,.5),0 0 80px rgba(159,124,169,.15)}
+.prev-l{font-size:8px;letter-spacing:3px;color:rgba(159,124,169,.6)}
 
-/* ══ VITÓRIA ══ */
-#win-ov{position:fixed;inset:0;z-index:600;background:rgba(3,16,31,0.94);
+/* ══ WIN ══ */
+#win-ov{position:fixed;inset:0;z-index:600;background:rgba(0,0,0,0.93);
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
   opacity:0;pointer-events:none;transition:opacity .5s}
 #win-ov.show{opacity:1;pointer-events:auto}
-.win-t{font-family:'Playfair Display',serif;font-size:30px;font-weight:800;letter-spacing:3px;text-align:center;
-  color:#bfe4f7;text-shadow:0 0 30px rgba(135,195,227,.75);
+.win-t{font-size:28px;font-weight:900;letter-spacing:4px;text-align:center;
+  background:linear-gradient(135deg,#D9B8E3,#5A75C2,#DA8BA0);
+  -webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;
   animation:gp 1s ease-in-out infinite alternate}
-@keyframes gp{from{filter:brightness(1)}to{filter:brightness(1.35) drop-shadow(0 0 20px rgba(135,195,227,.9))}}
-.win-lvl{font-size:11px;letter-spacing:4px;color:#D9B8E3;text-shadow:0 0 12px rgba(217,184,227,.8)}
-.win-s{font-family:'Share Tech Mono',monospace;font-size:12px;color:#87C3E3;
+@keyframes gp{from{filter:brightness(1)}to{filter:brightness(1.6) drop-shadow(0 0 20px #D9B8E3)}}
+.win-lvl{font-size:11px;letter-spacing:4px;color:#9F7CA9;text-shadow:0 0 12px #9F7CA9}
+.win-s{font-family:'Share Tech Mono',monospace;font-size:12px;color:#D9B8E3;
   text-align:center;line-height:2.3;letter-spacing:1.5px}
-.win-dec{width:180px;height:1px;background:linear-gradient(90deg,transparent,#87C3E3,transparent);box-shadow:0 0 6px rgba(135,195,227,.8)}
+.win-dec{width:180px;height:1px;background:linear-gradient(90deg,transparent,#D9B8E3,transparent);box-shadow:0 0 6px #D9B8E3}
 .win-btns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
 .win-btn{font-family:'Orbitron',monospace;font-size:9px;font-weight:700;letter-spacing:2px;
-  padding:10px 22px;border:1px solid;cursor:pointer;background:transparent;border-radius:8px;transition:all .15s}
+  padding:10px 22px;border:1px solid;cursor:pointer;background:transparent;transition:all .15s}
 
-/* ══ RETOMAR PROGRESSO ══ */
+/* ══ STARS ══ */
+.stars{display:flex;gap:8px;font-size:20px}
+
+/* ══ MAX LEVEL ══ */
+.max-badge{font-size:13px;letter-spacing:4px;padding:6px 18px;border:2px solid #D9B8E3;
+  color:#D9B8E3;text-shadow:0 0 15px #D9B8E3;box-shadow:0 0 20px rgba(217,184,227,.3);
+  animation:gp 1.5s ease-in-out infinite alternate}
+
 #resume-ov{position:fixed;inset:0;z-index:900;background:rgba(3,16,31,0.96);
   display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;
   opacity:0;pointer-events:none;transition:opacity .5s}
@@ -130,14 +140,6 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:997;
   text-shadow:0 0 24px rgba(135,195,227,.7)}
 .resume-s{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:2px;color:#D9B8E3;text-align:center;line-height:2}
 .resume-btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
-
-.stars{display:flex;gap:8px;font-size:20px;color:#D9B8E3;text-shadow:0 0 12px rgba(217,184,227,.8)}
-
-.max-badge{font-size:13px;letter-spacing:4px;padding:6px 18px;border:2px solid #87C3E3;border-radius:8px;
-  color:#bfe4f7;text-shadow:0 0 15px #87C3E3;box-shadow:0 0 20px rgba(135,195,227,.3);
-  animation:gp 1.5s ease-in-out infinite alternate}
-
-/* toast de guardado */
 #save-toast{position:fixed;bottom:14px;right:14px;z-index:950;font-family:'Share Tech Mono',monospace;
   font-size:9px;letter-spacing:2px;color:#0a2540;background:#87C3E3;padding:6px 12px;border-radius:20px;
   box-shadow:0 0 18px rgba(135,195,227,.7);opacity:0;transform:translateY(10px);transition:all .4s;pointer-events:none}
@@ -153,25 +155,15 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:997;
     <div class="ld-cell"></div><div class="ld-cell"></div><div class="ld-cell"></div>
     <div class="ld-cell"></div><div class="ld-cell"></div><div class="ld-cell"></div>
   </div>
-  <div class="ld-logo">NEURAL<br>PUZZLE ✦</div>
+  <div class="ld-logo">NEURAL<br>PUZZLE PRO</div>
   <div class="ld-level" id="ld-lvl">NÍVEL 1 — TUTORIAL</div>
   <div class="ld-txt" id="ld-txt">CARREGANDO IMAGEM...</div>
   <div class="ld-bar"></div>
 </div>
 
-<!-- RETOMAR -->
-<div id="resume-ov">
-  <div class="resume-t">✦ Progresso Encontrado ✦</div>
-  <div class="resume-s" id="resume-info"></div>
-  <div class="resume-btns">
-    <button class="win-btn" id="btn-resume" style="border-color:#87C3E3;color:#87C3E3">▶ CONTINUAR</button>
-    <button class="win-btn" id="btn-fresh" style="border-color:#DA8BA0;color:#DA8BA0">↩ RECOMEÇAR</button>
-  </div>
-</div>
-
 <!-- HUD -->
 <div id="hud">
-  <div class="logo">✦ NEURAL PUZZLE<small>SHELL 2026 · SHELCIA</small></div>
+  <div class="logo">◈ NEURAL PUZZLE</div>
   <div class="hud-sep"></div>
   <div class="level-info">
     <div class="level-tag" id="lv-tag">NÍVEL 1</div>
@@ -190,18 +182,17 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:997;
     <button class="btn b-purple" id="btn-prev">◉ PRÉVIA</button>
     <button class="btn b-amber" id="btn-hint">◎ DICA</button>
     <button class="btn b-blue" id="btn-shuf">⟳ BARALHAR</button>
-    <button class="btn b-green" id="btn-photo">✦ NOVA FOTO</button>
-    <button class="btn b-rose" id="btn-reset">↩ REINICIAR</button>
+    <button class="btn b-green" id="btn-photo">📷 FOTO</button>
+    <button class="btn b-red" id="btn-reset">↩ REINICIAR</button>
   </div>
 </div>
 
 <div id="gameArea"><canvas id="c"></canvas></div>
 <div id="prog-wrap"><div id="prog-bar"></div></div>
-<div id="save-toast">✦ PROGRESSO GUARDADO</div>
 
 <!-- PREVIEW -->
 <div id="prev-ov" onclick="hidePrev()">
-  <div class="prev-l">✦ CLIQUE PARA FECHAR ✦</div>
+  <div class="prev-l">◈ CLIQUE PARA FECHAR ◈</div>
   <img id="prev-img" src="" alt="">
   <div class="prev-l">ESTUDE BEM A IMAGEM!</div>
 </div>
@@ -209,8 +200,8 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:997;
 <!-- WIN -->
 <div id="win-ov">
   <div class="win-lvl" id="win-lvl-txt">NÍVEL 1 CONCLUÍDO</div>
-  <div class="win-t" id="win-title">✦ EXCELENTE! ✦</div>
-  <div class="stars" id="win-stars">✦✦✦</div>
+  <div class="win-t" id="win-title">◈ EXCELENTE! ◈</div>
+  <div class="stars" id="win-stars">⭐⭐⭐</div>
   <div class="win-dec"></div>
   <div class="win-s" id="win-stats"></div>
   <div class="win-dec"></div>
@@ -221,24 +212,31 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:997;
 <script>
 'use strict';
 
-// ════════════════ NÍVEIS ════════════════
+// ════════════════════════════════════════════════
+//  LEVELS
+// ════════════════════════════════════════════════
 const LEVEL_GRIDS = [2,3,4,5,6,7,8,9,10,11,12];
 const LEVEL_NAMES = ['TUTORIAL','FÁCIL','MÉDIO','DIFÍCIL','AVANÇADO','EXPERT','MESTRE','LENDÁRIO','ÉPICO','ABSURDO','DEUS'];
-const MAX_LEVEL   = LEVEL_GRIDS.length - 1;
+const MAX_LEVEL   = LEVEL_GRIDS.length - 1; // index 10 = 12x12
 
-// ════════════════ POOL (594 imagens, aleatório) ════════════════
+// ════════════════════════════════════════════════
+//  ALL 203 IMAGES
+// ════════════════════════════════════════════════
 const ALL_IMGS = (window.PUZZLE_POOL && window.PUZZLE_POOL.length)
   ? window.PUZZLE_POOL
   : [
-      'https://res.cloudinary.com/deeki0eou/image/upload/w_1000,q_auto,f_auto/v1785928939/shelcia-fernanda-imagens-de-destaque-01_kbz8qc.jpg',
-      'https://res.cloudinary.com/deeki0eou/image/upload/w_1000,q_auto,f_auto/v1785928941/shelcia-fernanda-imagens-de-destaque-02_n6ze54.jpg',
-      'https://res.cloudinary.com/deeki0eou/image/upload/w_1000,q_auto,f_auto/v1785928940/shelcia-fernanda-imagens-de-destaque-92_sajo2r.jpg',
-    ];
+    'https://res.cloudinary.com/deeki0eou/image/upload/v1772028316/Bastidores-63_bfgkyq.webp',
+    'https://res.cloudinary.com/deeki0eou/image/upload/v1772028309/Bastidores-27_chskfj.webp',
+    'https://res.cloudinary.com/deeki0eou/image/upload/v1772028308/Bastidores-08_ro2vgq.webp',
+    'https://res.cloudinary.com/deeki0eou/image/upload/v1772028307/Bastidores-03_r3tvmz.webp',
+    'https://res.cloudinary.com/deeki0eou/image/upload/v1772028307/Bastidores-48_cgbgmr.webp',
+  ];
 
-// Paleta da Shelcia
-const COL={r:'#DA8BA0',p:'#D9B8E3',a:'#87C3E3',b:'#87C3E3',o:'#5A75C2'};
+const COL={r:'#DA8BA0',p:'#9F7CA9',a:'#D9B8E3',b:'#87C3E3',o:'#5A75C2'};
 
-// ════════════════ ESTADO ════════════════
+// ════════════════════════════════════════════════
+//  STATE
+// ════════════════════════════════════════════════
 let cv,ctx;
 let level=0, grid=2, TAB=0.30, SNAP_T=0.38;
 let image=null, pieces=[], hEdges=[], vEdges=[];
@@ -249,34 +247,10 @@ let snaps=[],particles=[],pulses=[];
 let imgPool=[],usedImgUrl='';
 let frame=0,bgStars=[];
 let completedLevels=[];
-let bestRecords={}; // {nivel: {stars, score, time, moves}}
 
-// ════════════════ PROGRESSO — GUARDAR/RETOMAR ════════════════
-const SAVE_KEY='shell2026-neural-puzzle-v2';
-function saveProgress(showToast){
-  try{
-    localStorage.setItem(SAVE_KEY,JSON.stringify({
-      level, completed:completedLevels, best:bestRecords, img:usedImgUrl, at:Date.now()
-    }));
-    if(showToast){
-      const t=document.getElementById('save-toast');
-      t.classList.add('show');
-      setTimeout(()=>t.classList.remove('show'),1600);
-    }
-  }catch(e){}
-}
-function loadProgress(){
-  try{
-    const raw=localStorage.getItem(SAVE_KEY);
-    if(!raw) return null;
-    return JSON.parse(raw);
-  }catch(e){ return null; }
-}
-function clearProgress(){
-  try{ localStorage.removeItem(SAVE_KEY); }catch(e){}
-}
-
-// ════════════════ POOL ════════════════
+// ════════════════════════════════════════════════
+//  IMAGE POOL
+// ════════════════════════════════════════════════
 function shufflePool(){
   imgPool=[...ALL_IMGS];
   for(let i=imgPool.length-1;i>0;i--){
@@ -286,14 +260,38 @@ function shufflePool(){
 }
 function nextImg(){
   if(!imgPool.length) shufflePool();
+  // Avoid immediate repeat
   if(imgPool.length>1&&imgPool[imgPool.length-1]===usedImgUrl) imgPool.unshift(imgPool.pop());
   return imgPool.pop();
 }
 
-// ════════════════ INIT ════════════════
-let inited=false;
-function initGame(){
-  if(inited)return; inited=true;
+
+// ════════════════════════════════════════════════
+//  PROGRESSO — guardar / retomar
+// ════════════════════════════════════════════════
+const SAVE_KEY='shell2026-neural-puzzle-v3';
+let bestRecords={};
+function saveProgress(showToast){
+  try{
+    localStorage.setItem(SAVE_KEY,JSON.stringify({
+      level, completed:completedLevels, best:bestRecords, img:usedImgUrl, at:Date.now()
+    }));
+    if(showToast){
+      const t=document.getElementById('save-toast');
+      if(t){ t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1600); }
+    }
+  }catch(e){}
+}
+function loadProgress(){
+  try{ const raw=localStorage.getItem(SAVE_KEY); return raw?JSON.parse(raw):null; }
+  catch(e){ return null; }
+}
+function clearProgress(){ try{ localStorage.removeItem(SAVE_KEY); }catch(e){} }
+
+// ════════════════════════════════════════════════
+//  INIT
+// ════════════════════════════════════════════════
+window.addEventListener('load',()=>{
   cv=document.getElementById('c');
   ctx=cv.getContext('2d');
   resize(); window.addEventListener('resize',resize);
@@ -313,20 +311,20 @@ function initGame(){
   document.getElementById('btn-photo').onclick=()=>loadImage(false);
   document.getElementById('btn-reset').onclick=()=>{ if(confirm('Recomeçar do nível 1? O progresso guardado será apagado.')) resetGame(); };
 
-  // Retomar progresso guardado?
   const save=loadProgress();
   if(save && (save.level>0 || (save.completed&&save.completed.length))){
     level=Math.min(save.level||0,MAX_LEVEL);
     completedLevels=save.completed||[];
     bestRecords=save.best||{};
+    updateLevelBar();
     document.getElementById('resume-info').innerHTML=
-      `NÍVEL ATUAL → ${level+1} · ${LEVEL_NAMES[level]}<br>`+
-      `CONCLUÍDOS → ${completedLevels.length}/${LEVEL_GRIDS.length}<br>`+
-      `✦ O teu progresso está seguro ✦`;
+      'NÍVEL ATUAL → '+(level+1)+' · '+LEVEL_NAMES[level]+'<br>'+
+      'CONCLUÍDOS → '+completedLevels.length+'/'+LEVEL_GRIDS.length+'<br>'+
+      '✦ O teu progresso está seguro ✦';
     document.getElementById('resume-ov').classList.add('show');
     document.getElementById('btn-resume').onclick=()=>{
       document.getElementById('resume-ov').classList.remove('show');
-      loadImageWithUrl(save.img);
+      loadImageWithUrl(save.img,false);
     };
     document.getElementById('btn-fresh').onclick=()=>{
       clearProgress();
@@ -339,14 +337,7 @@ function initGame(){
     loadImage(false);
   }
   requestAnimationFrame(loop);
-}
-// Arranque robusto: não depende de um único evento do browser.
-if(document.readyState==='complete'||document.readyState==='interactive'){
-  setTimeout(initGame,0);
-}else{
-  window.addEventListener('DOMContentLoaded',initGame);
-  window.addEventListener('load',initGame);
-}
+});
 
 function resize(){
   const a=document.getElementById('gameArea');
@@ -377,16 +368,18 @@ function updateLevelBar(){
   });
 }
 
-// ════════════════ CARREGAR IMAGEM (com tentativas e tempo limite) ════════════════
+// ════════════════════════════════════════════════
+//  IMAGE LOADING
+// ════════════════════════════════════════════════
 let loadAttempts=0;
 function loadImage(sameLevel=false){
   loadAttempts=0;
   tryNextImg(sameLevel);
 }
-function loadImageWithUrl(url){
+function loadImageWithUrl(url,sameLevel){
   if(!url){ loadImage(false); return; }
   loadAttempts=0;
-  tryUrl(url,false,()=>loadImage(false));
+  tryUrl(url,sameLevel===true,()=>loadImage(false));
 }
 function tryNextImg(sameLevel){
   if(loadAttempts>=8){ showLoadError(); return; }
@@ -405,7 +398,7 @@ function tryUrl(url,sameLevel,onFail){
     if(done)return; done=true; clearTimeout(timer);
     image=im;
     document.getElementById('prev-img').src=url;
-    saveProgress(false); // guarda a imagem atual para poder retomar
+    saveProgress(false);
     setTimeout(()=>{hideLoading(); startGame(sameLevel);},700);
   };
   im.onerror=()=>{ if(done)return; done=true; clearTimeout(timer); onFail(); };
@@ -429,9 +422,12 @@ function hideLoading(){
   document.getElementById('loading').classList.add('out');
 }
 
-// ════════════════ INÍCIO ════════════════
+// ════════════════════════════════════════════════
+//  GAME START
+// ════════════════════════════════════════════════
 function startGame(keepLevel=false){
   grid=LEVEL_GRIDS[level];
+  // Dynamic tab & snap
   if(grid<=3)      {TAB=0.30;SNAP_T=0.42;}
   else if(grid<=6) {TAB=0.26;SNAP_T=0.40;}
   else if(grid<=9) {TAB=0.22;SNAP_T=0.38;}
@@ -450,13 +446,14 @@ function startGame(keepLevel=false){
 }
 
 function resetGame(){
-  level=0; completedLevels=[]; bestRecords={};
-  clearProgress();
+  level=0; completedLevels=[]; bestRecords={}; clearProgress();
   shufflePool(); updateLevelBar();
   loadImage(false);
 }
 
-// ════════════════ TABULEIRO ════════════════
+// ════════════════════════════════════════════════
+//  BOARD
+// ════════════════════════════════════════════════
 function recalcBoard(){
   const cw=cv.width,ch=cv.height;
   const TW=Math.min(cw*0.32,260);
@@ -472,7 +469,9 @@ function repoPlaced(){
   pieces.forEach(p=>{if(p.placed){p.x=board.x+p.c*pw;p.y=board.y+p.r*ph;}});
 }
 
-// ════════════════ PEÇAS ════════════════
+// ════════════════════════════════════════════════
+//  EDGES
+// ════════════════════════════════════════════════
 function genEdges(){
   hEdges=Array.from({length:grid-1},()=>Array.from({length:grid},()=>Math.random()>.5?1:-1));
   vEdges=Array.from({length:grid},()=>Array.from({length:grid-1},()=>Math.random()>.5?1:-1));
@@ -492,6 +491,9 @@ function genPieces(){
       pieces.push({r,c,x:0,y:0,edges:getE(r,c),placed:false,dragging:false,snap:0});
 }
 
+// ════════════════════════════════════════════════
+//  SCATTER
+// ════════════════════════════════════════════════
 function doShuffle(){
   pieces.forEach(p=>p.placed=false);
   placed=0; updateHUD();
@@ -515,7 +517,9 @@ function doHint(){
   setTimeout(()=>ov.classList.remove('show'),3000);
 }
 
-// ════════════════ DESENHO ════════════════
+// ════════════════════════════════════════════════
+//  JIGSAW PATH
+// ════════════════════════════════════════════════
 function piecePath(px,py,W,H,e){
   ctx.beginPath(); ctx.moveTo(px,py);
   drawEdge(px,py,px+W,py,e.top);
@@ -540,6 +544,9 @@ function drawEdge(x1,y1,x2,y2,dir){
   ctx.lineTo(x2,y2);
 }
 
+// ════════════════════════════════════════════════
+//  RENDER LOOP
+// ════════════════════════════════════════════════
 function loop(){frame++;drawAll();requestAnimationFrame(loop);}
 function drawAll(){
   const cw=cv.width,ch=cv.height;
@@ -550,7 +557,7 @@ function drawAll(){
 
 function drawBg(cw,ch){
   ctx.fillStyle='#03101f';ctx.fillRect(0,0,cw,ch);
-  ctx.fillStyle='rgba(135,195,227,0.07)';
+  ctx.fillStyle='rgba(135,195,227,0.08)';
   for(let x=0;x<cw;x+=30)for(let y=0;y<ch;y+=30){
     ctx.beginPath();ctx.arc(x,y,.8,0,6.28);ctx.fill();
   }
@@ -565,39 +572,46 @@ function drawBg(cw,ch){
 function drawTray(cw,ch){
   const TW=board.x-18;
   ctx.fillStyle='rgba(6,21,39,0.92)';ctx.fillRect(0,0,TW,ch);
+  // Divider rainbow
   const g=ctx.createLinearGradient(TW-1,0,TW+1,0);
-  g.addColorStop(0,`rgba(90,117,194,.75)`);g.addColorStop(.5,`rgba(135,195,227,.75)`);g.addColorStop(1,`rgba(217,184,227,.75)`);
+  g.addColorStop(0,`rgba(135,195,227,.7)`);g.addColorStop(.5,`rgba(159,124,169,.7)`);g.addColorStop(1,`rgba(218,139,160,.7)`);
   ctx.fillStyle=g;ctx.fillRect(TW-1,0,2,ch);
+  // Label
   ctx.save();ctx.translate(12,ch/2);ctx.rotate(-Math.PI/2);
   ctx.font='700 7px Orbitron,monospace';
-  ctx.fillStyle='rgba(135,195,227,.25)';ctx.textAlign='center';
-  ctx.fillText('✦ PEÇAS DISPONÍVEIS ✦',0,0);ctx.restore();
+  ctx.fillStyle='rgba(135,195,227,.22)';ctx.textAlign='center';
+  ctx.fillText('⬡ PEÇAS DISPONÍVEIS ⬡',0,0);ctx.restore();
+  // Remaining count
   const rem=pieces.filter(p=>!p.placed).length;
   const total=grid*grid;
   ctx.font=`700 ${grid<=4?12:grid<=7?10:8}px Share Tech Mono,monospace`;
-  ctx.fillStyle='rgba(217,184,227,.6)';ctx.textAlign='center';
+  ctx.fillStyle='rgba(90,117,194,.55)';ctx.textAlign='center';
   ctx.fillText(rem+'/'+total+' restantes',TW/2,ch-12);
 }
 
 function drawBoard(){
   if(!image)return;
   const{x,y,w,h}=board;
-  ctx.globalAlpha=0.07;ctx.drawImage(image,x,y,w,h);ctx.globalAlpha=1;
-  ctx.save();ctx.strokeStyle='rgba(135,195,227,.2)';ctx.lineWidth=1;ctx.setLineDash([2,5]);
+  ctx.globalAlpha=0.06;ctx.drawImage(image,x,y,w,h);ctx.globalAlpha=1;
+  // Grid dashes
+  ctx.save();ctx.strokeStyle='rgba(135,195,227,.18)';ctx.lineWidth=1;ctx.setLineDash([2,5]);
   for(let r=0;r<=grid;r++){ctx.beginPath();ctx.moveTo(x,y+r*ph);ctx.lineTo(x+w,y+r*ph);ctx.stroke();}
   for(let c=0;c<=grid;c++){ctx.beginPath();ctx.moveTo(x+c*pw,y);ctx.lineTo(x+c*pw,y+h);ctx.stroke();}
   ctx.setLineDash([]);ctx.restore();
-  ctx.strokeStyle='rgba(135,195,227,.45)';ctx.lineWidth=1.5;
+  // Board glow
+  ctx.strokeStyle='rgba(135,195,227,.4)';ctx.lineWidth=1.5;
   ctx.shadowColor=COL.b;ctx.shadowBlur=14;ctx.strokeRect(x,y,w,h);ctx.shadowBlur=0;
-  const CC=[COL.b,COL.r,COL.p,COL.o];
+  // Corners
+  const CC=[COL.b,COL.r,COL.p,COL.a];
   [[x,y],[x+w,y],[x,y+h],[x+w,y+h]].forEach(([cx,cy],i)=>{
     const ox=cx===x?1:-1,oy=cy===y?1:-1,s=12;
     ctx.strokeStyle=CC[i];ctx.lineWidth=2;ctx.shadowColor=CC[i];ctx.shadowBlur=8;
     ctx.beginPath();ctx.moveTo(cx+ox*(s+1),cy);ctx.lineTo(cx,cy);ctx.lineTo(cx,cy+oy*(s+1));
     ctx.stroke();ctx.shadowBlur=0;
   });
+  // Level watermark
   ctx.font=`700 ${Math.max(10,Math.min(18,pw*.5))}px Orbitron,monospace`;
-  ctx.fillStyle='rgba(135,195,227,0.07)';ctx.textAlign='center';
+  ctx.fillStyle='rgba(135,195,227,0.06)';ctx.textAlign='center';
   ctx.fillText(LEVEL_NAMES[level],x+w/2,y+h/2+6);
 }
 
@@ -609,6 +623,7 @@ function drawPieces(){
   });
   const scX=pw/(image.width/grid), scY=ph/(image.height/grid);
   sorted.forEach(p=>{
+    // Shadow for lifted pieces
     if(p.dragging||p===hov){
       ctx.save();
       ctx.translate(p.x+(p.dragging?5:2),p.y+(p.dragging?7:3));
@@ -620,23 +635,24 @@ function drawPieces(){
     ctx.save();ctx.translate(p.x,p.y);
     piecePath(0,0,pw,ph,p.edges);ctx.clip();
     ctx.drawImage(image,-p.c*pw,-p.r*ph,image.width*scX,image.height*scY);
-    if(p.dragging){ctx.fillStyle='rgba(135,195,227,.16)';ctx.fill();}
-    else if(p===hov){ctx.fillStyle='rgba(135,195,227,.08)';ctx.fill();}
+    if(p.dragging){ctx.fillStyle='rgba(135,195,227,.15)';ctx.fill();}
+    else if(p===hov){ctx.fillStyle='rgba(135,195,227,.07)';ctx.fill();}
     ctx.restore();
+    // Outline
     ctx.save();ctx.translate(p.x,p.y);
     piecePath(0,0,pw,ph,p.edges);
     if(p.snap>0){
       ctx.strokeStyle=`rgba(217,184,227,${p.snap})`;ctx.lineWidth=2.5;
-      ctx.shadowColor=COL.p;ctx.shadowBlur=12*p.snap;
+      ctx.shadowColor=COL.a;ctx.shadowBlur=12*p.snap;
       p.snap=Math.max(0,p.snap-.02);
     } else if(p.placed){
-      ctx.strokeStyle='rgba(135,195,227,.22)';ctx.lineWidth=Math.max(.5,1-grid*.04);
+      ctx.strokeStyle='rgba(217,184,227,.2)';ctx.lineWidth=Math.max(.5,1-grid*.04);
     } else if(p.dragging){
       ctx.strokeStyle=COL.b;ctx.lineWidth=1.8;ctx.shadowColor=COL.b;ctx.shadowBlur=10;
     } else if(p===hov){
-      ctx.strokeStyle='rgba(135,195,227,.85)';ctx.lineWidth=1.4;ctx.shadowColor=COL.b;ctx.shadowBlur=7;
+      ctx.strokeStyle='rgba(135,195,227,.8)';ctx.lineWidth=1.4;ctx.shadowColor=COL.b;ctx.shadowBlur=7;
     } else {
-      ctx.strokeStyle='rgba(135,195,227,.3)';ctx.lineWidth=Math.max(.4,.8-grid*.04);
+      ctx.strokeStyle='rgba(135,195,227,.28)';ctx.lineWidth=Math.max(.4,.8-grid*.04);
     }
     ctx.stroke();ctx.shadowBlur=0;ctx.restore();
   });
@@ -648,9 +664,9 @@ function drawSnaps(){
     const a=1-s.t;
     ctx.beginPath();ctx.arc(s.x,s.y,50*s.t,0,6.28);
     ctx.strokeStyle=`rgba(217,184,227,${a*.8})`;ctx.lineWidth=2;
-    ctx.shadowColor=COL.p;ctx.shadowBlur=8;ctx.stroke();ctx.shadowBlur=0;
+    ctx.shadowColor=COL.a;ctx.shadowBlur=8;ctx.stroke();ctx.shadowBlur=0;
     ctx.beginPath();ctx.arc(s.x,s.y,25*s.t,0,6.28);
-    ctx.strokeStyle=`rgba(218,139,160,${a*.5})`;ctx.lineWidth=1.5;ctx.stroke();
+    ctx.strokeStyle=`rgba(90,117,194,${a*.5})`;ctx.lineWidth=1.5;ctx.stroke();
     s.t+=0.05;
   });
 }
@@ -672,7 +688,9 @@ function drawParticles(){
   ctx.globalAlpha=1;
 }
 
-// ════════════════ INTERAÇÃO ════════════════
+// ════════════════════════════════════════════════
+//  INTERACTION
+// ════════════════════════════════════════════════
 function getPos(e){
   const r=cv.getBoundingClientRect();
   return{x:(e.clientX-r.left)*(cv.width/r.width),y:(e.clientY-r.top)*(cv.height/r.height)};
@@ -691,6 +709,9 @@ function onTS(e){e.preventDefault();const t=e.touches[0],{x,y}=getPos(t);const p
 function onTM(e){e.preventDefault();if(!drag)return;const t=e.touches[0],{x,y}=getPos(t);drag.x=x-dox;drag.y=y-doy;}
 function onTE(){if(!drag)return;drag.dragging=false;moves++;trySnap(drag);drag=null;updateHUD();}
 
+// ════════════════════════════════════════════════
+//  SNAP
+// ════════════════════════════════════════════════
 function trySnap(p){
   const tx=board.x+p.c*pw,ty=board.y+p.r*ph;
   const thr=Math.min(pw,ph)*SNAP_T;
@@ -702,55 +723,52 @@ function trySnap(p){
   }
 }
 
-// ════════════════ VITÓRIA ════════════════
+// ════════════════════════════════════════════════
+//  WIN
+// ════════════════════════════════════════════════
 function doWin(){
   active=false;clearInterval(tid);
-  if(!completedLevels.includes(level)) completedLevels.push(level);
+  completedLevels.push(level);
   const el=(Date.now()-t0)/1000|0;
   const mm=String((el/60)|0).padStart(2,'0'),ss=String(el%60).padStart(2,'0');
   const total=grid*grid;
   const isMax=level>=MAX_LEVEL;
+  // Star rating
   const perfect=moves<=total+2&&el<30;
   const great=moves<=total*1.5&&el<90;
   const good=moves<=total*2.5&&el<300;
-  const stars=perfect?3:great?2:good?1:0;
-  const starTxt='✦'.repeat(stars)+'✧'.repeat(3-stars);
+  const stars=perfect?'★★★':great?'★★☆':good?'★☆☆':'☆☆☆';
+  // Score
   const score=Math.max(0,Math.round(10000-moves*15-el*3+(level*500)));
-
-  // Guarda o melhor resultado do nível
-  const prev=bestRecords[level];
-  if(!prev||score>prev.score){
-    bestRecords[level]={stars, score, time:`${mm}:${ss}`, moves};
-  }
-  saveProgress(true);
-
-  const titles=['BEM FEITO!','MUITO BOM!','EXCELENTE!','INCRÍVEL!','FANTÁSTICO!','PERFEITO!','ÉPICO!','LENDÁRIO!','ABSURDO!','MESTRE!','✦ DEUSA DOS PUZZLES ✦'];
+  // Win title
+  const titles=['BEM FEITO!','MUITO BOM!','EXCELENTE!','INCRÍVEL!','FANTÁSTICO!','PERFEITO!','ÉPICO!','LENDÁRIO!','ABSURDO!','MESTRE!','◈ DEUS DOS PUZZLES ◈'];
   document.getElementById('win-lvl-txt').textContent=`NÍVEL ${level+1} — ${LEVEL_NAMES[level]} — ${grid}×${grid}`;
-  document.getElementById('win-title').textContent='✦ '+(titles[level]||'INCRÍVEL!')+' ✦';
-  document.getElementById('win-stars').textContent=starTxt;
+  document.getElementById('win-title').textContent='◈ '+(titles[level]||'INCRÍVEL!')+' ◈';
+  document.getElementById('win-stars').textContent=stars;
   document.getElementById('win-stats').innerHTML=
     `TEMPO &nbsp;&nbsp;&nbsp;&nbsp; → ${mm}:${ss}<br>`+
     `MOVIMENTOS → ${moves}<br>`+
     `PEÇAS &nbsp;&nbsp;&nbsp;&nbsp; → ${total}/${total}<br>`+
     `PONTUAÇÃO → ${score.toLocaleString()}<br>`+
-    `RECORDE &nbsp;&nbsp; → ${(bestRecords[level]||{score}).score.toLocaleString()} PTS`;
+    `GRID &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; → ${grid}×${grid}`;
 
+  // Buttons
   const btns=document.getElementById('win-btns');
   btns.innerHTML='';
   if(!isMax){
     const nb=document.createElement('button');
-    nb.className='win-btn';nb.style.cssText='border-color:#87C3E3;color:#87C3E3';
+    nb.className='win-btn';nb.style.cssText='border-color:#04d98b;color:#04d98b';
     nb.textContent=`NÍVEL ${level+2}: ${LEVEL_NAMES[level+1]} (${LEVEL_GRIDS[level+1]}×${LEVEL_GRIDS[level+1]}) →`;
-    nb.onclick=()=>{level++;document.getElementById('win-ov').classList.remove('show');saveProgress(false);loadImage(false);};
+    nb.onclick=()=>{level++;document.getElementById('win-ov').classList.remove('show');loadImage(false);};
     btns.appendChild(nb);
   } else {
     const mb=document.createElement('div');
-    mb.className='max-badge';mb.textContent='✦ NÍVEL MÁXIMO — LENDA! ✦';
+    mb.className='max-badge';mb.textContent='◈ NÍVEL MÁXIMO ATINGIDO — LENDA! ◈';
     btns.appendChild(mb);
   }
   const pb=document.createElement('button');
-  pb.className='win-btn';pb.style.cssText='border-color:#D9B8E3;color:#D9B8E3';
-  pb.textContent='✦ MESMA GRADE — NOVA FOTO';
+  pb.className='win-btn b-blue';pb.style.cssText='border-color:#87C3E3;color:#87C3E3';
+  pb.textContent='📷 MESMA GRADE — NOVA FOTO';
   pb.onclick=()=>{document.getElementById('win-ov').classList.remove('show');loadImage(false);};
   btns.appendChild(pb);
   const rb=document.createElement('button');
@@ -760,6 +778,12 @@ function doWin(){
   btns.appendChild(rb);
 
   document.getElementById('win-ov').classList.add('show');
+  try{
+    const rec={score, moves, time:mm+':'+ss, stars};
+    if(!bestRecords[level]||score>bestRecords[level].score) bestRecords[level]=rec;
+    saveProgress(true);
+  }catch(e){}
+  // Particles burst
   const cx=board.x+board.w/2,cy=board.y+board.h/2;
   [[cx,cy],[board.x,board.y],[board.x+board.w,board.y],
    [board.x,board.y+board.h],[board.x+board.w,board.y+board.h]].forEach(([px,py],i)=>{
@@ -768,7 +792,7 @@ function doWin(){
 }
 
 function spawnBurst(cx,cy,n=60){
-  const cols=[COL.r,COL.p,COL.a,'#ffffff','#bfe4f7','#5A75C2'];
+  const cols=[COL.r,COL.p,COL.a,COL.b,COL.o,'#ffffff','#00ffcc'];
   for(let i=0;i<n;i++){
     const ang=Math.random()*Math.PI*2,sp=3+Math.random()*10;
     const life=40+(Math.random()*40)|0;
@@ -777,7 +801,9 @@ function spawnBurst(cx,cy,n=60){
   }
 }
 
-// ════════════════ HUD ════════════════
+// ════════════════════════════════════════════════
+//  HUD
+// ════════════════════════════════════════════════
 function updateHUD(){
   const total=grid*grid;
   document.getElementById('s-moves').textContent=moves;
@@ -796,5 +822,16 @@ function tickTimer(){
 }
 function hidePrev(){document.getElementById('prev-ov').classList.remove('show');}
 </script>
+
+<!-- RETOMAR PROGRESSO -->
+<div id="resume-ov">
+  <div class="resume-t">✦ Progresso Encontrado ✦</div>
+  <div class="resume-s" id="resume-info"></div>
+  <div class="resume-btns">
+    <button class="win-btn" id="btn-resume" style="border-color:#87C3E3;color:#87C3E3">▶ CONTINUAR</button>
+    <button class="win-btn" id="btn-fresh" style="border-color:#DA8BA0;color:#DA8BA0">↩ RECOMEÇAR</button>
+  </div>
+</div>
+<div id="save-toast">✦ PROGRESSO GUARDADO</div>
 </body>
 </html>

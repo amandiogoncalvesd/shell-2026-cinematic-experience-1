@@ -36,13 +36,21 @@ export default function NeuralPuzzlePage() {
       >
         <div className="royal-frame overflow-hidden rounded-3xl p-2">
           <div className="relative overflow-hidden rounded-2xl">
-            <iframe
-              src="/neural-puzzle.html?v=omega"
-              title="Neural Puzzle — Shell 2026"
-              className="h-[82vh] w-full border-0"
-              allow="fullscreen"
-            />
-          </div>
+          <iframe
+            src="/neural-puzzle.html?v=omega"
+            title="Neural Puzzle — Shell 2026"
+            className="h-[82vh] w-full border-0"
+            allow="fullscreen"
+          />
+        </div>
+        <div className="mt-3 text-center">
+          <a
+            href="/neural-puzzle.html"
+            className="text-[10px] uppercase tracking-[0.25em] text-shell-sky/50 underline-offset-4 transition hover:text-shell-sky hover:underline"
+          >
+            Abrir em página completa ↗
+          </a>
+        </div>
         </div>
       </motion.section>
     </div>
