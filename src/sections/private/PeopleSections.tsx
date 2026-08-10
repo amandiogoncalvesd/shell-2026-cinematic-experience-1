@@ -19,7 +19,7 @@ export function FriendsSection() {
             <div className="glass royal-frame rounded-3xl p-8">
               <p className="text-sm leading-relaxed text-ocean-50/85">{ruth.story}</p>
               <p className="mt-4 text-xs italic leading-relaxed text-shell-lavender/80">
-                “É a única que conhece, entende e apoia — a única em quem eu realmente confio e que nunca me decepcionou.” — Shelcia
+                “É a única que conhece, entende e apoia — a única em quem eu realmente confio e que nunca me decepcionou.” — De Shelcia para Ruth
               </p>
               <div className="mt-6 flex items-center gap-3 text-xs uppercase tracking-widest text-shell-sky/70">
                 <span className="h-px w-8 bg-shell-sky/60" /> Agosto de 2024 · Festa do Pijama
