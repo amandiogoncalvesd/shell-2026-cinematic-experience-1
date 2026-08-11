@@ -355,3 +355,22 @@ convidados** — nunca no portal.
 4. **Serpentes de volta à página da Shelcia** com fronteiras suaves:
    explosão limitada (240+speed·50), repulsão de burst reduzida (2.2×) e
    clamp de posição (margem 140px) — afastam-se, mas voltam sempre depressa.
+
+---
+
+## FASE 24 — Progresso real, pré-carga total e Safari/iPhone
+
+1. **Neural Puzzle:** botão “📷 NOVA FOTO” destacado (fundo azul-céu, visível
+   e com wrap em telemóvel) — troca a foto em tempo real mantendo o nível;
+   ecrã de carregamento agora tem **barra de progresso real com percentagem**
+   (fetch streaming com content-length; fallbacks em cascata se falhar).
+2. **Pré-carregamento total:** o PreloadGate carrega também os **módulos da
+   aplicação** — o pack completo dos posters voadores e o documento do puzzle —
+   além das mídias. Contagem passa a “módulos e memórias”.
+3. **Entrar sem carregar = aviso:** se o utilizador toca em “Entrar sem esperar”
+   antes dos 100%, aparece um aviso elegante (“a experiência pode não funcionar
+   corretamente — queres continuar mesmo assim?”) com as duas opções.
+4. **Compatibilidade Safari/iPhone (iOS 26):** alturas `100svh` para
+   min-h-screen/h-screen (elimina cortes/distorções da barra dinâmica),
+   `touch-action: manipulation` (sem zoom de duplo toque), fallbacks estáticos
+   para as cores `oklch` do ElectricBorder, `-webkit-text-size-adjust`.

@@ -1,12 +1,13 @@
 // SHELL 2026 — Pool de pré-carregamento.
-// ~55% de todas as mídias da aplicação (principalmente imagens) são
-// descarregadas ANTES da experiência abrir, para que tudo apareça
-// instantaneamente. Os URLs são exatamente os mesmos que os componentes
-// mostram depois (mesma resolução), para o browser usar a cache.
+// Carrega ANTES da experiência abrir: as mídias principais E os módulos
+// da aplicação (posters voadores completos, página do puzzle…), para que
+// tudo apareça instantaneamente e a visualização seja impecável.
+// Os URLs são exatamente os mesmos que os componentes mostram depois.
 import * as P from "./photos";
 import * as M from "./media2026";
 import { videoPoster, videoRuthMoments, videoBackstage2026, videoTop } from "./videos";
 import { thumb } from "../utils/cloudinary";
+import { FLYING_ITEMS } from "./flyingPool";
 
 const local = [
   "/images/portal-bg.jpg",
@@ -54,4 +55,10 @@ const posters = [
   ...videoTop.slice(0, 4),
 ].map((s) => videoPoster(s)).filter(Boolean);
 
-export const preloadImages: string[] = [...local, ...fullRes, ...carousels, ...posters];
+// Posters voadores — pré-carregados por completo para o voo começar cheio.
+const flying = FLYING_ITEMS.map((u) => thumb(u, 400));
+
+// Documentos dos módulos (ficam na cache do navegador).
+export const preloadDocs: string[] = ["/neural-puzzle.html"];
+
+export const preloadImages: string[] = [...local, ...fullRes, ...carousels, ...posters, ...flying];

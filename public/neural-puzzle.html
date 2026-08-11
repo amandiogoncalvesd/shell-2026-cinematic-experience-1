@@ -131,6 +131,18 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:997;
 .max-badge{font-size:13px;letter-spacing:4px;padding:6px 18px;border:2px solid #D9B8E3;
   color:#D9B8E3;text-shadow:0 0 15px #D9B8E3;box-shadow:0 0 20px rgba(217,184,227,.3);
   animation:gp 1.5s ease-in-out infinite alternate}
+
+/* ── Melhorias de interface (mobile + progresso) ── */
+.hud-btns{flex-wrap:wrap;justify-content:flex-end;row-gap:4px}
+#btn-photo{background:#87C3E3;color:#0a2540;border-color:#87C3E3;font-weight:800;box-shadow:0 0 14px rgba(135,195,227,.55)}
+#btn-photo:hover{background:#bfe4f7;color:#0a2540;box-shadow:0 0 20px rgba(135,195,227,.8)}
+.ld-progress{width:230px;height:4px;border-radius:99px;background:rgba(135,195,227,.12);overflow:hidden;margin-top:2px}
+.ld-progress-fill{height:100%;width:0%;border-radius:99px;background:linear-gradient(90deg,#87C3E3,#D9B8E3);box-shadow:0 0 10px rgba(135,195,227,.7);transition:width .25s ease}
+.ld-pct{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:3px;color:#D9B8E3;text-shadow:0 0 10px rgba(217,184,227,.6)}
+@media (max-width:640px){
+  #hud{height:auto;min-height:56px;flex-wrap:wrap;padding:8px 10px}
+  .hud-stats{gap:10px}
+}
 </style>
 </head>
 <body>
@@ -146,6 +158,8 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:997;
   <div class="ld-level" id="ld-lvl">NÍVEL 1 — TUTORIAL</div>
   <div class="ld-txt" id="ld-txt">CARREGANDO IMAGEM...</div>
   <div class="ld-bar"></div>
+  <div class="ld-progress"><div class="ld-progress-fill" id="ld-fill"></div></div>
+  <div class="ld-pct" id="ld-pct">0%</div>
 </div>
 
 <!-- HUD -->
@@ -465,22 +479,63 @@ function updateLevelBar(){
 // ════════════════════════════════════════════════
 //  IMAGE LOADING
 // ════════════════════════════════════════════════
+function setLoadProgress(p){
+  const fill=document.getElementById('ld-fill');
+  const pct=document.getElementById('ld-pct');
+  if(fill) fill.style.width=p+'%';
+  if(pct) pct.textContent=p+'%';
+}
+
+function fetchWithProgress(url, onProgress){
+  return fetch(url).then(function(res){
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const total=parseInt(res.headers.get('content-length')||'0',10);
+    if(!res.body || !total) return res.blob();
+    const reader=res.body.getReader();
+    let received=0; const chunks=[];
+    function pump(){
+      return reader.read().then(function(r){
+        if(r.done) return;
+        chunks.push(r.value); received+=r.value.length;
+        onProgress(Math.min(100, Math.round(received/total*100)));
+        return pump();
+      });
+    }
+    return pump().then(function(){ return new Blob(chunks); });
+  }).then(function(blob){ return URL.createObjectURL(blob); });
+}
+
+function finishLoad(src, origUrl, sameLevel){
+  const im=new Image();
+  im.onload=function(){
+    image=im;
+    document.getElementById('prev-img').src=origUrl;
+    setLoadProgress(100);
+    setTimeout(function(){ hideLoading(); startGame(sameLevel); },500);
+  };
+  im.onerror=function(){ loadImage(sameLevel); };
+  im.src=src;
+}
+
 function loadImage(sameLevel=false){
   const url=nextImg();
   usedImgUrl=url;
   showLoading(true);
-  const im=new Image();
-  im.onload=()=>{
-    image=im;
-    document.getElementById('prev-img').src=url;
-    setTimeout(()=>{hideLoading(); startGame(sameLevel);},700);
-  };
-  im.onerror=()=>{
-    const fallback=nextImg();
-    usedImgUrl=fallback;
-    im.src=fallback;
-  };
-  im.src=url;
+  setLoadProgress(0);
+  fetchWithProgress(url, setLoadProgress)
+    .then(function(blobUrl){ finishLoad(blobUrl, url, sameLevel); })
+    .catch(function(){
+      const fallback=nextImg();
+      usedImgUrl=fallback;
+      fetchWithProgress(fallback, setLoadProgress)
+        .then(function(blobUrl){ finishLoad(blobUrl, fallback, sameLevel); })
+        .catch(function(){
+          const im=new Image();
+          im.onload=function(){ finishLoad(url, url, sameLevel); };
+          im.onerror=function(){ loadImage(sameLevel); };
+          im.src=url;
+        });
+    });
 }
 
 function showLoading(visible){

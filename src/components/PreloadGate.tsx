@@ -1,26 +1,28 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { CanvasParticles, FilmGrain, LiquidBlobs } from "./effects";
-import { preloadImages } from "../data/preload";
+import { preloadImages, preloadDocs } from "../data/preload";
 
 const MESSAGES = [
   "A abrir o portal de cristal…",
   "A polir cada memória com luz…",
   "A guardar as tuas fotos num cofre de estrelas…",
+  "A preparar os posters voadores…",
   "A Cinderela merece perfeição — quase lá…",
 ];
 
 export default function PreloadGate({ onDone }: { onDone: () => void }) {
-  const total = preloadImages.length;
+  const total = useMemo(() => preloadImages.length + preloadDocs.length, []);
   const [done, setDone] = useState(0);
   const [msgIndex, setMsgIndex] = useState(0);
   const [leaving, setLeaving] = useState(false);
   const [canSkip, setCanSkip] = useState(false);
+  const [warnSkip, setWarnSkip] = useState(false);
   const finishedRef = useRef(false);
+  const doneRef = useRef(0);
 
   useEffect(() => {
-    let loaded = 0;
-    let cursor = 0;
+    doneRef.current = 0;
 
     const finish = () => {
       if (finishedRef.current) return;
@@ -28,23 +30,35 @@ export default function PreloadGate({ onDone }: { onDone: () => void }) {
       setTimeout(() => setLeaving(true), 500);
     };
 
+    const tick = () => {
+      doneRef.current += 1;
+      setDone(doneRef.current);
+      if (doneRef.current >= total) finish();
+    };
+
+    // Imagens.
+    let cursor = 0;
     const step = () => {
-      if (cursor >= total) return;
+      if (cursor >= preloadImages.length) return;
       const src = preloadImages[cursor++];
       const img = new Image();
       const next = () => {
-        loaded += 1;
-        setDone(loaded);
-        if (loaded >= total) finish();
-        else step();
+        tick();
+        step();
       };
       img.onload = next;
       img.onerror = next;
       img.src = src;
     };
-
     // Oito descargas em paralelo — rápido sem sufocar a rede.
     for (let i = 0; i < 8; i++) step();
+
+    // Documentos dos módulos (puzzle, etc.) — ficam na cache.
+    preloadDocs.forEach((doc) => {
+      fetch(doc, { cache: "force-cache" })
+        .then(() => tick())
+        .catch(() => tick());
+    });
 
     const msgTimer = setInterval(() => setMsgIndex((m) => (m + 1) % MESSAGES.length), 2600);
     const skipTimer = setTimeout(() => setCanSkip(true), 9000);
@@ -61,6 +75,15 @@ export default function PreloadGate({ onDone }: { onDone: () => void }) {
   }, [leaving, onDone]);
 
   const percent = Math.min(100, Math.round((done / total) * 100));
+
+  const trySkip = () => {
+    if (percent >= 100) {
+      finishedRef.current = true;
+      setLeaving(true);
+    } else {
+      setWarnSkip(true);
+    }
+  };
 
   return (
     <motion.div
@@ -113,7 +136,7 @@ export default function PreloadGate({ onDone }: { onDone: () => void }) {
         </div>
 
         <p className="text-[11px] uppercase tracking-[0.35em] text-ocean-200/60">
-          {done} de {total} memórias carregadas
+          {done} de {total} módulos e memórias carregados
         </p>
 
         <div className="h-6">
@@ -135,16 +158,64 @@ export default function PreloadGate({ onDone }: { onDone: () => void }) {
           <motion.button
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
-            onClick={() => {
-              finishedRef.current = true;
-              setLeaving(true);
-            }}
+            onClick={trySkip}
             className="text-[10px] uppercase tracking-[0.3em] text-ocean-200/40 transition hover:text-white"
           >
             Entrar sem esperar ✦
           </motion.button>
         )}
       </div>
+
+      {/* Aviso ao entrar sem carregar tudo */}
+      <AnimatePresence>
+        {warnSkip && (
+          <motion.div
+            className="fixed inset-0 z-[160] flex items-center justify-center bg-black/70 px-5 backdrop-blur-md"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.94, y: 16 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.96 }}
+              transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
+              className="glass-strong royal-frame w-full max-w-md rounded-3xl px-7 py-8 text-center"
+            >
+              <span className="mx-auto grid h-12 w-12 place-items-center rounded-full border border-shell-lavender/50 bg-shell-lavender/10 text-xl">
+                ⚠️
+              </span>
+              <h3 className="mt-4 font-display text-2xl font-semibold text-white">Espera um instante ✦</h3>
+              <p className="mt-3 text-sm leading-relaxed text-[#dceefb]/80">
+                Ainda faltam <span className="font-semibold text-shell-sky">{100 - percent}%</span> das mídias e dos
+                módulos da aplicação. Se continuares agora, a experiência pode não funcionar corretamente — fotos em
+                falta e galerias incompletas.
+              </p>
+              <p className="mt-2 font-display text-sm italic text-shell-lavender/80">
+                Queres continuar mesmo assim?
+              </p>
+              <div className="mt-6 flex flex-wrap items-center justify-center gap-3">
+                <button
+                  onClick={() => setWarnSkip(false)}
+                  className="btn-royal rounded-full px-6 py-2.5 text-[11px] font-bold uppercase tracking-[0.2em]"
+                >
+                  Aguardar carregamento
+                </button>
+                <button
+                  onClick={() => {
+                    setWarnSkip(false);
+                    finishedRef.current = true;
+                    setLeaving(true);
+                  }}
+                  className="rounded-full border border-white/15 px-6 py-2.5 text-[11px] uppercase tracking-[0.2em] text-[#dceefb]/70 transition hover:border-shell-rose/50 hover:text-white"
+                >
+                  Continuar mesmo assim
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 }

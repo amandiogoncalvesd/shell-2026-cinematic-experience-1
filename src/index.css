@@ -27,6 +27,8 @@
 
 html {
   scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
 }
 
 body {
@@ -34,6 +36,30 @@ body {
   background: #061527;
   color: #eaf6ff;
   overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Toque mais rápido e sem zoom acidental no iPhone */
+button,
+a {
+  touch-action: manipulation;
+}
+
+/* ── Safari/iPhone: alturas de ecrã reais (barra dinâmica) ──
+   As classes min-h-screen/h-screen passam a usar 100svh quando
+   suportado — elimina cortes e distorções no iOS. */
+@supports (height: 100svh) {
+  .min-h-screen {
+    min-height: 100svh;
+  }
+  .h-screen {
+    height: 100svh;
+  }
+}
+
+/* Safari: prefere sempre a melhor qualidade de imagem */
+img {
+  image-rendering: auto;
 }
 
 ::-webkit-scrollbar {
