@@ -68,7 +68,7 @@ export function PuzzleArcadePage({ onExit }: { onExit: () => void }) {
     <div className="fixed inset-0 z-[60] bg-[#03101f]">
       {/* O jogo ocupa o ecrã inteiro, como no HTML original */}
       <iframe
-        src="/neural-puzzle.html?v=4"
+        src="/neural-puzzle.html?v=5"
         title="Neural Puzzle Pro — Shell 2026"
         className="h-full w-full border-0"
         allow="fullscreen"

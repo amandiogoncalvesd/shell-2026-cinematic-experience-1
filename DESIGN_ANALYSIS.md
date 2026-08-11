@@ -391,3 +391,18 @@ convidados** — nunca no portal.
 
 > Estado final: a aplicação está completa, auditada e pronta para o dia 10.
 > Foi uma honra construir este universo. — o agente
+
+---
+
+## FASE 26 — FlyingPosters fiel & persistência do puzzle
+
+1. **FlyingPosters regenerado por transcrição fiel** do código React Bits
+   original (AutoBind, classes Media/Canvas exatamente como no fonte) — a
+   versão anterior tinha um desvio de transcrição que impedia o render.
+   O PosterStage continua a garantir a carga com barra de progresso.
+2. **Neural Puzzle com persistência total** (localStorage, tempo real):
+   guarda nível, fotografia atual, posição de todas as peças (colocadas e
+   soltas), movimentos, tempo decorrido e níveis concluídos. Autoguardado
+   a cada encaixe, ao baralhar, ao vencer, a cada 5 s, ao ocultar a página
+   e ao sair. Ao voltar, o jogo retoma exatamente onde parou.
+   “Reiniciar” limpa o progresso guardado.

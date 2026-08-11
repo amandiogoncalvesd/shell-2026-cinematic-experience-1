@@ -468,7 +468,23 @@ window.addEventListener('load',()=>{
   document.getElementById('btn-photo').onclick=()=>loadImage(true); // troca a foto em tempo real, mantendo o nível
   document.getElementById('btn-reset').onclick=resetGame;
 
-  loadImage(false);
+  // Restaurar sessão anterior (nível, foto, peças, tempo)?
+  const saved=loadSave();
+  if(saved && saved.pieces && saved.pieces.length){
+    pendingRestore=saved;
+    level=Math.min(saved.level||0, MAX_LEVEL);
+    completedLevels=saved.completed||[];
+    updateLevelBar();
+    loadImageWithUrl(saved.usedImgUrl);
+  } else {
+    loadImage(false);
+  }
+
+  // Autoguardado em tempo real (a cada 5s, ao sair e ao ocultar a página)
+  setInterval(function(){ if(active) saveNow(); }, 5000);
+  window.addEventListener('beforeunload', function(){ if(active) saveNow(); });
+  document.addEventListener('visibilitychange', function(){ if(document.hidden && active) saveNow(); });
+
   requestAnimationFrame(loop);
 });
 
@@ -536,10 +552,95 @@ function finishLoad(src, origUrl, sameLevel){
     image=im;
     document.getElementById('prev-img').src=origUrl;
     setLoadProgress(100);
-    setTimeout(function(){ hideLoading(); startGame(sameLevel); },500);
+    setTimeout(function(){
+      hideLoading();
+      if(pendingRestore){
+        const sv=pendingRestore; pendingRestore=null;
+        restoreGame(sv);
+        saveNow();
+      } else {
+        startGame(sameLevel);
+      }
+    },500);
   };
   im.onerror=function(){ loadImage(sameLevel); };
   im.src=src;
+}
+
+// ── PERSISTÊNCIA: guarda tudo, em tempo real, no armazenamento do navegador ──
+const SAVE_KEY='shell2026-neural-puzzle-save-v1';
+let pendingRestore=null;
+
+function saveNow(){
+  try{
+    const data={
+      v:1,
+      level: level,
+      usedImgUrl: usedImgUrl,
+      placedCount: placed,
+      moves: moves,
+      elapsed: t0 ? Math.max(0, Math.floor((Date.now()-t0)/1000)) : 0,
+      pieces: pieces.map(function(p){ return {r:p.r, c:p.c, placed:p.placed, x:p.x, y:p.y}; }),
+      hEdges: hEdges,
+      vEdges: vEdges,
+      completed: completedLevels,
+      savedAt: Date.now()
+    };
+    localStorage.setItem(SAVE_KEY, JSON.stringify(data));
+  }catch(e){}
+}
+function loadSave(){
+  try{
+    const raw=localStorage.getItem(SAVE_KEY);
+    return raw ? JSON.parse(raw) : null;
+  }catch(e){ return null; }
+}
+function clearSave(){
+  try{ localStorage.removeItem(SAVE_KEY); }catch(e){}
+}
+
+function loadImageWithUrl(url){
+  if(!url){ loadImage(false); return; }
+  usedImgUrl=url;
+  showLoading(true);
+  setLoadProgress(0);
+  fetchWithProgress(url, setLoadProgress)
+    .then(function(blobUrl){ finishLoad(blobUrl, url, true); })
+    .catch(function(){
+      const fb=nextImg(); usedImgUrl=fb;
+      fetchWithProgress(fb, setLoadProgress)
+        .then(function(b){ finishLoad(b, fb, true); })
+        .catch(function(){ loadImage(false); });
+    });
+}
+
+function restoreGame(sv){
+  grid=LEVEL_GRIDS[level];
+  if(sv.hEdges && sv.vEdges){ hEdges=sv.hEdges; vEdges=sv.vEdges; } else { genEdges(); }
+  pieces=[];
+  for(let r=0;r<grid;r++)for(let c=0;c<grid;c++){
+    pieces.push({r:r,c:c,x:0,y:0,edges:getE(r,c),placed:false,dragging:false,snap:0});
+  }
+  recalcBoard();
+  const W=(window.innerWidth||800), H=(window.innerHeight||600);
+  (sv.pieces||[]).forEach(function(sp){
+    const p=pieces.find(function(q){ return q.r===sp.r && q.c===sp.c; });
+    if(!p) return;
+    if(sp.placed){
+      p.placed=true;
+      p.x=board.x+p.c*pw;
+      p.y=board.y+p.r*ph;
+    } else {
+      p.x=Math.max(2, Math.min(sp.x||2, Math.max(2, W-pw-2)));
+      p.y=Math.max(2, Math.min(sp.y||2, Math.max(2, H-ph-2)));
+    }
+  });
+  placed=pieces.filter(function(p){ return p.placed; }).length;
+  moves=sv.moves||0;
+  t0=Date.now()-(sv.elapsed||0)*1000;
+  clearInterval(tid); tid=setInterval(tickTimer,1000);
+  active=true;
+  updateHUD();
 }
 
 function loadImage(sameLevel=false){
@@ -599,6 +700,7 @@ function startGame(keepLevel=false){
 
 function resetGame(){
   level=0; completedLevels=[];
+  clearSave();
   shufflePool(); updateLevelBar();
   loadImage(false);
 }
@@ -662,6 +764,7 @@ function doShuffle(){
     p.x=Math.max(2,Math.min(p.x,TW-pw-2));
     p.y=Math.max(2,Math.min(p.y,cv.height-ph-2));
   });
+  saveNow();
 }
 function doHint(){
   const ov=document.getElementById('prev-ov');
@@ -871,6 +974,7 @@ function trySnap(p){
     p.x=tx;p.y=ty;p.placed=true;p.snap=1;placed++;
     snaps.push({x:tx+pw/2,y:ty+ph/2,t:0});
     pulses.push({x:tx+pw/2,y:ty+ph/2,t:0});
+    saveNow();
     if(placed===grid*grid)setTimeout(doWin,500);
   }
 }
@@ -881,6 +985,7 @@ function trySnap(p){
 function doWin(){
   active=false;clearInterval(tid);
   completedLevels.push(level);
+  saveNow();
   const el=(Date.now()-t0)/1000|0;
   const mm=String((el/60)|0).padStart(2,'0'),ss=String(el%60).padStart(2,'0');
   const total=grid*grid;
