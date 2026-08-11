@@ -1,12 +1,17 @@
 import { useEffect, useRef } from "react";
 import type { ReactNode, CSSProperties } from "react";
 import { Renderer, Program, Mesh, Geometry, Triangle, RenderTarget } from "ogl";
+import { isCinema, onCinema } from "./cinemaLock";
 
 import "./SwarmCursor.css";
 
 /* ─────────────────────────────────────────────────────────────
    SwarmCursor (React Bits) — enxame de luz líquido que orbita
    o cursor, funde-se como gosma luminosa e dispersa ao clicar.
+
+   overlay=true → camada fixa sobre a página inteira: segue o
+   cursor via window, não bloqueia cliques e descansa em modo
+   cinema. É assim que vive nas páginas da Shelcia e convidados.
 ───────────────────────────────────────────────────────────── */
 
 const FIELD_VERT = `
@@ -157,6 +162,7 @@ interface SwarmCursorProps {
   trail?: number;
   scatterOnClick?: boolean;
   enabled?: boolean;
+  overlay?: boolean;
   children?: ReactNode;
   className?: string;
   style?: CSSProperties;
@@ -177,6 +183,7 @@ const SwarmCursor = ({
   trail = 0.75,
   scatterOnClick = true,
   enabled = true,
+  overlay = false,
   children,
   className = "",
   style,
@@ -198,6 +205,7 @@ const SwarmCursor = ({
     trail,
     scatterOnClick,
     enabled,
+    overlay,
   };
 
   useEffect(() => {
@@ -323,10 +331,21 @@ const SwarmCursor = ({
     let burst = 0;
     let activeCount = Math.max(1, Math.min(MAX, Math.round((propsRef.current.count as number) || 1)));
 
+    const overlayMode = !!(propsRef.current.overlay as boolean);
+    let cinema = isCinema();
+    const offCinema = onCinema((on) => {
+      cinema = on;
+    });
+
     const onMove = (e: PointerEvent) => {
-      const r = container.getBoundingClientRect();
-      cursor.x = e.clientX - r.left;
-      cursor.y = e.clientY - r.top;
+      if (overlayMode) {
+        cursor.x = e.clientX;
+        cursor.y = e.clientY;
+      } else {
+        const r = container.getBoundingClientRect();
+        cursor.x = e.clientX - r.left;
+        cursor.y = e.clientY - r.top;
+      }
       cursor.has = true;
     };
     const onLeave = () => {
@@ -334,7 +353,7 @@ const SwarmCursor = ({
     };
     const onDown = (e: PointerEvent) => {
       if (!propsRef.current.scatterOnClick || !propsRef.current.enabled) return;
-      const r = container.getBoundingClientRect();
+      const r = overlayMode ? { left: 0, top: 0 } : container.getBoundingClientRect();
       const cx = e.clientX - r.left;
       const cy = e.clientY - r.top;
       const escape = 620 + (propsRef.current.speed as number) * 130;
@@ -354,10 +373,15 @@ const SwarmCursor = ({
       }
       burst = 1;
     };
-    container.addEventListener("pointermove", onMove, { passive: true });
-    container.addEventListener("pointerenter", onMove, { passive: true });
-    container.addEventListener("pointerleave", onLeave);
-    container.addEventListener("pointerdown", onDown);
+    const listenTarget: Window | HTMLElement = overlayMode ? window : container;
+    const onMoveListener = onMove as EventListener;
+    const onDownListener = onDown as EventListener;
+    listenTarget.addEventListener("pointermove", onMoveListener, { passive: true });
+    if (!overlayMode) {
+      container.addEventListener("pointerenter", onMoveListener, { passive: true });
+      container.addEventListener("pointerleave", onLeave);
+    }
+    listenTarget.addEventListener("pointerdown", onDownListener);
 
     let raf = 0;
     let last = performance.now();
@@ -368,7 +392,7 @@ const SwarmCursor = ({
       const dt = Math.min((now - last) / 1000, 0.05);
       last = now;
 
-      if (!p.enabled || reduceMotion) {
+      if (!p.enabled || reduceMotion || cinema) {
         renderer.render({ scene: compMesh });
         return;
       }
@@ -579,10 +603,13 @@ const SwarmCursor = ({
     return () => {
       cancelAnimationFrame(raf);
       ro.disconnect();
-      container.removeEventListener("pointermove", onMove);
-      container.removeEventListener("pointerenter", onMove);
-      container.removeEventListener("pointerleave", onLeave);
-      container.removeEventListener("pointerdown", onDown);
+      offCinema();
+      listenTarget.removeEventListener("pointermove", onMoveListener);
+      if (!overlayMode) {
+        container.removeEventListener("pointerenter", onMoveListener);
+        container.removeEventListener("pointerleave", onLeave);
+      }
+      listenTarget.removeEventListener("pointerdown", onDownListener);
       if (gl.canvas.parentElement === container) container.removeChild(gl.canvas);
       const lose = gl.getExtension("WEBGL_lose_context");
       if (lose) lose.loseContext();
@@ -591,7 +618,12 @@ const SwarmCursor = ({
   }, []);
 
   return (
-    <div ref={containerRef} className={`swarm-cursor ${className}`.trim()} style={style}>
+    <div
+      ref={containerRef}
+      aria-hidden
+      className={`swarm-cursor ${overlay ? "swarm-cursor--overlay" : ""} ${className}`.trim()}
+      style={style}
+    >
       {children ? <div className="swarm-cursor__content">{children}</div> : null}
     </div>
   );

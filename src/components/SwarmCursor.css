@@ -23,3 +23,10 @@
   justify-content: center;
   pointer-events: auto;
 }
+
+/* Modo overlay: camada fixa sobre a página inteira, nunca bloqueia cliques */
+.swarm-cursor--overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+}

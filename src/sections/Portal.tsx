@@ -3,7 +3,6 @@ import { AnimatePresence, motion } from "framer-motion";
 import { CanvasParticles, Countdown, FilmGrain, LiquidBlobs } from "../components/effects";
 import LiquidChrome from "../components/LiquidChrome";
 import ElectricBorder from "../components/ElectricBorder";
-import SwarmCursor from "../components/SwarmCursor";
 import InstallBanner from "../components/InstallBanner";
 import { requestImmersiveFullscreen } from "../utils/fullscreen";
 import { universeQuote } from "../data/media2026";

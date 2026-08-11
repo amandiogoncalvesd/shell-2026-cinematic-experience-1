@@ -311,9 +311,12 @@ clichés genéricos. Cada palavra é dita por ele, para ela.
 
 ## FASE 21 — SwarmCursor
 
-1. **SwarmCursor (React Bits/ogl)** no Portal: enxame de luz azul-céu com
-   acento lavanda que orbita o cursor, funde-se como gosma luminosa e
-   dispersa ao clicar — magia líquida à volta de quem entra.
-2. O enxame vive na camada z-10 do portal; os botões continuam clicáveis
-   (os eventos borbulham para o canvas) e o efeito respeita
-   `prefers-reduced-motion`.
+**Regra de colocação:** os componentes React Bits enviados pelo Amândio vivem
+na **página principal da Shelcia** e, se necessário, na **página dos
+convidados** — nunca no portal.
+
+1. **SwarmCursor (React Bits/ogl)** em modo `overlay`: camada fixa que segue o
+   cursor pela página inteira sem bloquear cliques — enxame azul-céu com acento
+   lavanda que orbita, funde-se como gosma luminosa e dispersa a cada clique.
+2. Presente na página principal da Shelcia (9 partículas) e na página dos
+   convidados (8). Descansa em modo cinema e respeita `prefers-reduced-motion`.

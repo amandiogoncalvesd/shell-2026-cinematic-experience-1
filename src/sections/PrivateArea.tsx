@@ -5,6 +5,7 @@ import FloatingMusic from "../components/FloatingMusic";
 import WelcomeModal from "../components/WelcomeModal";
 import AppFooter from "../components/AppFooter";
 import { LightboxHost } from "../components/media";
+import SwarmCursor from "../components/SwarmCursor";
 import { CursorGlow, FilmGrain, ScrollProgress, SectionDock } from "../components/effects";
 import { useMusic } from "../audio/MusicProvider";
 import { SECTION_TRACKS } from "../audio/sectionTracks";
@@ -129,6 +130,18 @@ export default function PrivateArea({ onExit }: { onExit: () => void }) {
       {page === "universo" && <ScrollProgress />}
       <FilmGrain />
       <CursorGlow />
+      {/* Enxame de luz que acompanha a Shelcia pelo universo */}
+      <SwarmCursor
+        overlay
+        color="#87C3E3"
+        accentColor="#D9B8E3"
+        count={9}
+        size={8}
+        spread={90}
+        speed={2.2}
+        trail={0.7}
+        className="z-[45]"
+      />
       <FloatingMusic />
       {page === "universo" && <SectionDock sections={SECTIONS} />}
 

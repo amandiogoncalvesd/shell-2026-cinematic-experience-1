@@ -13,6 +13,7 @@ import {
   VideoText,
 } from "../components/effects";
 import { Framemation, ScrollCinema } from "../components/cinema";
+import SwarmCursor from "../components/SwarmCursor";
 import FloatingMusic from "../components/FloatingMusic";
 import WelcomeModal from "../components/WelcomeModal";
 import AppFooter from "../components/AppFooter";
@@ -70,6 +71,18 @@ export default function GuestArea({ onGoPrivate, onExitPortal }: { onGoPrivate: 
       <ScrollProgress />
       <FilmGrain />
       <CursorGlow />
+      {/* Enxame de luz que acompanha os convidados pela celebração */}
+      <SwarmCursor
+        overlay
+        color="#87C3E3"
+        accentColor="#D9B8E3"
+        count={8}
+        size={8}
+        spread={90}
+        speed={2.2}
+        trail={0.7}
+        className="z-[45]"
+      />
       <FloatingMusic />
       <SectionDock sections={SECTIONS} />
       <Navbar sections={SECTIONS} brand="Shell 2026 · Convidados" onExit={onExitPortal} exitLabel="← Portal" />
