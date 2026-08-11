@@ -5,8 +5,8 @@
    · todas as fotos/vídeos/cartazes já vistos → carregam instantaneamente
    · as fontes → o visual mantém-se offline
 ───────────────────────────────────────────────────────────── */
-const SHELL = "shell2026-shell-v5";
-const MEDIA = "shell2026-media-v5";
+const SHELL = "shell2026-shell-v6";
+const MEDIA = "shell2026-media-v6";
 const MAX_MEDIA = 400; // limite de mídias guardadas (as mais antigas saem)
 
 const SHELL_ASSETS = [
@@ -15,7 +15,6 @@ const SHELL_ASSETS = [
   "/icon.svg",
   "/icon-512.png",
   "/neural-puzzle.html",
-  "/puzzle-pool.js",
   "/images/portal-bg.jpg",
   "/images/crystal-texture.jpg",
   "/images/sky-emotional.jpg",

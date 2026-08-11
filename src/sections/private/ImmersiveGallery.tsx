@@ -33,39 +33,12 @@ import {
   childhoodPrivate,
   generic2026,
   backstage2026,
-  artMagic,
+
 } from "../../data/photos";
-import { thumb } from "../../utils/cloudinary";
+import { FLYING_ITEMS } from "../../data/flyingPool";
 import { videoRuthMoments, videoRuthCeremony, privateVideos } from "../../data/videos";
 
 type Module = "fotos" | "videos" | "voadora";
-
-// Posters que voam — um exemplar de TODAS as categorias da Shelcia,
-// num ciclo infinito. A fotografia de destaque começa sempre no centro.
-const buildFlyingPool = () => {
-  const hero = destaque18Photos[0];
-  const all = [
-    ...destaque18Photos.slice(1),
-    ...naturezaBosquesPhotos,
-    ...naturezaFloresPhotos,
-    ...naturezaPaisagensPhotos,
-    ...arquiteturaSonhoPhotos,
-    ...artTxtPhotos,
-    ...frasesSeriePhotos,
-    ...ruthCeremony.slice(0, 12),
-    ...ruthBackstage.slice(0, 8),
-    ...familyFriends2026,
-    ...childhoodPublic.slice(0, 10),
-    ...artMagic.slice(0, 12),
-  ].map((u) => thumb(u, 500));
-  // Intercala as categorias para o voo ser variado.
-  const mixed = all.filter((_, i) => i % 2 === 0).concat(all.filter((_, i) => i % 2 === 1));
-  const mid = Math.floor(mixed.length / 2);
-  const withHero = [...mixed];
-  withHero.splice(mid, 0, thumb(hero, 500));
-  return withHero;
-};
-const FLYING_ITEMS = buildFlyingPool();
 
 const PHOTO_CATS: { id: string; label: string; photos: string[] }[] = [
   { id: "destaques", label: "Destaques · 18 anos", photos: destaque18Photos },

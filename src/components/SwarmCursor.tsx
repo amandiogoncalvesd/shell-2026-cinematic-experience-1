@@ -356,7 +356,8 @@ const SwarmCursor = ({
       const r = overlayMode ? { left: 0, top: 0 } : container.getBoundingClientRect();
       const cx = e.clientX - r.left;
       const cy = e.clientY - r.top;
-      const escape = 620 + (propsRef.current.speed as number) * 130;
+      // Explosão limitada — as serpentes afastam-se, mas nunca para longe demais.
+      const escape = 240 + (propsRef.current.speed as number) * 50;
       for (let i = 0; i < MAX; i++) {
         let dx = px[i] - cx;
         let dy = py[i] - cy;
@@ -459,8 +460,8 @@ const SwarmCursor = ({
         let ay = (wishY * maxSpeed - vy[i]) * rate;
 
         if (burst > 0.001) {
-          ax -= ux * maxSpeed * burst * 5.5;
-          ay -= uy * maxSpeed * burst * 5.5;
+          ax -= ux * maxSpeed * burst * 2.2;
+          ay -= uy * maxSpeed * burst * 2.2;
         }
 
         for (let j = 0; j < n; j++) {
@@ -499,6 +500,23 @@ const SwarmCursor = ({
 
         px[i] += vx[i] * dt;
         py[i] += vy[i] * dt;
+
+        // Fronteira suave: nunca saem muito do ecrã, voltam sempre depressa.
+        const M = 140;
+        if (px[i] < -M) {
+          px[i] = -M;
+          vx[i] *= -0.3;
+        } else if (px[i] > cssW + M) {
+          px[i] = cssW + M;
+          vx[i] *= -0.3;
+        }
+        if (py[i] < -M) {
+          py[i] = -M;
+          vy[i] *= -0.3;
+        } else if (py[i] > cssH + M) {
+          py[i] = cssH + M;
+          vy[i] *= -0.3;
+        }
       }
 
       const nowSec = now * 0.001;

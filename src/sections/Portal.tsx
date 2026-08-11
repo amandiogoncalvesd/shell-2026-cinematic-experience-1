@@ -10,7 +10,13 @@ import { identity } from "../data/content";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
-export default function Portal({ onEnter }: { onEnter: (role: "guests" | "shelcia") => void }) {
+export default function Portal({
+  onEnter,
+  onOpenExtra,
+}: {
+  onEnter: (role: "guests" | "shelcia") => void;
+  onOpenExtra?: (page: "puzzle" | "posters") => void;
+}) {
   const [phase, setPhase] = useState<"loading" | "portal" | "leaving">("loading");
   const [leavingTo, setLeavingTo] = useState<"guests" | "shelcia" | null>(null);
   const [progress, setProgress] = useState(0);
@@ -132,6 +138,28 @@ export default function Portal({ onEnter }: { onEnter: (role: "guests" | "shelci
                 <p className="text-sm uppercase tracking-[0.35em] text-[#b9d9ec]/70">10 de Agosto · A Cinderela cresceu</p>
                 <span className="h-px w-12 bg-gradient-to-l from-transparent to-shell-sky/60" />
               </div>
+            </motion.div>
+
+            {/* Arcade — jogos livres, sem chave, para qualquer pessoa */}
+            <motion.div
+              variants={{ hidden: { opacity: 0, y: 24 }, show: { opacity: 1, y: 0 } }}
+              transition={{ duration: 0.9, ease: EASE }}
+              className="flex flex-wrap items-center justify-center gap-3"
+            >
+              <button
+                onClick={() => onOpenExtra?.("puzzle")}
+                className="glass group flex items-center gap-2 rounded-full px-5 py-2.5 text-[10px] font-semibold uppercase tracking-[0.25em] text-[#dceefb]/80 transition hover:bg-shell-sky/15 hover:text-white"
+              >
+                <span className="text-sm text-shell-sky transition duration-500 group-hover:rotate-180">⬡</span>
+                Neural Puzzle
+              </button>
+              <button
+                onClick={() => onOpenExtra?.("posters")}
+                className="glass group flex items-center gap-2 rounded-full px-5 py-2.5 text-[10px] font-semibold uppercase tracking-[0.25em] text-[#dceefb]/80 transition hover:bg-shell-sky/15 hover:text-white"
+              >
+                <span className="text-sm text-shell-lavender transition duration-500 group-hover:-rotate-12">💫</span>
+                Posters Voadores
+              </button>
             </motion.div>
 
             {/* Cartões de entrada — liquid glass premium com borda elétrica */}

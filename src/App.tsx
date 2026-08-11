@@ -6,9 +6,10 @@ import Portal from "./sections/Portal";
 import GuestArea from "./sections/GuestArea";
 import AuthGate from "./sections/AuthGate";
 import PrivateArea from "./sections/PrivateArea";
+import { PuzzleArcadePage, PostersPage } from "./sections/ArcadePages";
 import { requestImmersiveFullscreen } from "./utils/fullscreen";
 
-type View = "portal" | "guests" | "auth" | "private";
+type View = "portal" | "guests" | "auth" | "private" | "puzzle" | "posters";
 
 export default function App() {
   const [view, setView] = useState<View>("portal");
@@ -37,7 +38,10 @@ export default function App() {
             </motion.div>
           ) : view === "portal" ? (
             <motion.div key="portal" exit={{ opacity: 0 }} transition={{ duration: 0.5 }}>
-              <Portal onEnter={(role) => setView(role === "guests" ? "guests" : "auth")} />
+              <Portal
+                onEnter={(role) => setView(role === "guests" ? "guests" : "auth")}
+                onOpenExtra={(page) => setView(page)}
+              />
             </motion.div>
           ) : view === "guests" ? (
             <motion.div key="guests" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.6 }}>
@@ -46,6 +50,14 @@ export default function App() {
           ) : view === "auth" ? (
             <motion.div key="auth" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.6 }}>
               <AuthGate onSuccess={() => setView("private")} onBack={() => setView("portal")} />
+            </motion.div>
+          ) : view === "puzzle" ? (
+            <motion.div key="puzzle-arcade" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.6 }}>
+              <PuzzleArcadePage onExit={() => setView("portal")} />
+            </motion.div>
+          ) : view === "posters" ? (
+            <motion.div key="posters" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.6 }}>
+              <PostersPage onExit={() => setView("portal")} />
             </motion.div>
           ) : (
             <motion.div key="private" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.6 }}>

@@ -335,3 +335,23 @@ convidados** — nunca no portal.
 3. **Neural Puzzle:** voltou ao pool de **162 WebP originais** do puzzle
    funcional (Toque de Magia excluída); cache-buster `?v=2` e service worker v5
    para limpar caches antigas.
+
+---
+
+## FASE 23 — Puzzle original, arcade público e serpentes domadas
+
+1. **Neural Puzzle reconstruído a partir do código original confirmado
+   funcional**: tecnologia e sistema de jogo intactos (pool agora embutido no
+   próprio HTML — sem dependências externas); só a interface foi repintada
+   para a paleta do universo. **Uma única função nova:** botão “📷 NOVA FOTO”
+   troca a fotografia em tempo real mantendo o nível atual.
+2. **Arcade público:** página dedicada do Neural Puzzle + página dos Posters
+   Voadores, acessíveis **a qualquer pessoa diretamente do portal** — dois
+   botões elegantes lado a lado por cima dos cartões de entrada. A página
+   privada usa a mesma página única do puzzle.
+3. **Posters Voadores corrigidos:** pool partilhado (`data/flyingPool.ts`)
+   com ~30 fotos de todas as categorias (w_400) — carregam em segundos;
+   a foto de destaque começa sempre no centro; voo infinito por ciclo.
+4. **Serpentes de volta à página da Shelcia** com fronteiras suaves:
+   explosão limitada (240+speed·50), repulsão de burst reduzida (2.2×) e
+   clamp de posição (margem 140px) — afastam-se, mas voltam sempre depressa.

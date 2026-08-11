@@ -131,19 +131,6 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:997;
 .max-badge{font-size:13px;letter-spacing:4px;padding:6px 18px;border:2px solid #D9B8E3;
   color:#D9B8E3;text-shadow:0 0 15px #D9B8E3;box-shadow:0 0 20px rgba(217,184,227,.3);
   animation:gp 1.5s ease-in-out infinite alternate}
-
-#resume-ov{position:fixed;inset:0;z-index:900;background:rgba(3,16,31,0.96);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;
-  opacity:0;pointer-events:none;transition:opacity .5s}
-#resume-ov.show{opacity:1;pointer-events:auto}
-.resume-t{font-family:'Playfair Display',serif;font-size:22px;letter-spacing:2px;color:#bfe4f7;text-align:center;
-  text-shadow:0 0 24px rgba(135,195,227,.7)}
-.resume-s{font-family:'Share Tech Mono',monospace;font-size:11px;letter-spacing:2px;color:#D9B8E3;text-align:center;line-height:2}
-.resume-btns{display:flex;gap:12px;flex-wrap:wrap;justify-content:center}
-#save-toast{position:fixed;bottom:14px;right:14px;z-index:950;font-family:'Share Tech Mono',monospace;
-  font-size:9px;letter-spacing:2px;color:#0a2540;background:#87C3E3;padding:6px 12px;border-radius:20px;
-  box-shadow:0 0 18px rgba(135,195,227,.7);opacity:0;transform:translateY(10px);transition:all .4s;pointer-events:none}
-#save-toast.show{opacity:1;transform:translateY(0)}
 </style>
 </head>
 <body>
@@ -182,7 +169,7 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:997;
     <button class="btn b-purple" id="btn-prev">◉ PRÉVIA</button>
     <button class="btn b-amber" id="btn-hint">◎ DICA</button>
     <button class="btn b-blue" id="btn-shuf">⟳ BARALHAR</button>
-    <button class="btn b-green" id="btn-photo">📷 FOTO</button>
+    <button class="btn b-green" id="btn-photo">📷 NOVA FOTO</button>
     <button class="btn b-red" id="btn-reset">↩ REINICIAR</button>
   </div>
 </div>
@@ -208,7 +195,6 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:997;
   <div class="win-btns" id="win-btns"></div>
 </div>
 
-<script src="puzzle-pool.js"></script>
 <script>
 'use strict';
 
@@ -222,15 +208,170 @@ const MAX_LEVEL   = LEVEL_GRIDS.length - 1; // index 10 = 12x12
 // ════════════════════════════════════════════════
 //  ALL 203 IMAGES
 // ════════════════════════════════════════════════
-const ALL_IMGS = (window.PUZZLE_POOL && window.PUZZLE_POOL.length)
-  ? window.PUZZLE_POOL
-  : [
-    'https://res.cloudinary.com/deeki0eou/image/upload/v1772028316/Bastidores-63_bfgkyq.webp',
-    'https://res.cloudinary.com/deeki0eou/image/upload/v1772028309/Bastidores-27_chskfj.webp',
-    'https://res.cloudinary.com/deeki0eou/image/upload/v1772028308/Bastidores-08_ro2vgq.webp',
-    'https://res.cloudinary.com/deeki0eou/image/upload/v1772028307/Bastidores-03_r3tvmz.webp',
-    'https://res.cloudinary.com/deeki0eou/image/upload/v1772028307/Bastidores-48_cgbgmr.webp',
-  ];
+const ALL_IMGS = [
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028316/Bastidores-63_bfgkyq.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028309/Bastidores-27_chskfj.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028308/Bastidores-08_ro2vgq.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028307/Bastidores-03_r3tvmz.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028307/Bastidores-48_cgbgmr.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028307/Bastidores-37_zxyehe.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028304/Bastidores-43_ky3foe.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028303/Bastidores-13_zwt05a.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028302/Bastidores-29_ut5o82.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028299/Bastidores-59_e6ymtt.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028298/Bastidores-07_rfiuet.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028297/Bastidores-16_bidits.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028297/Bastidores-02_ydvrdc.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028297/Bastidores-46_h1eoob.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028296/Bastidores-22_tsvsos.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028294/Bastidores-04_vgrfvt.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028292/Bastidores-24_kplm6m.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028290/Bastidores-20_r82qj2.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028290/Bastidores-23_qr8vzl.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028289/Bastidores-14_dqvewk.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028286/Bastidores-21_bfn8de.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028285/Bastidores-19_h5bsud.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028284/Bastidores-65_wk5qeg.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028281/Bastidores-40_iqrtlm.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028280/Bastidores-18_gd9oub.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028279/Bastidores-39_plbaac.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028277/Bastidores-30_kwpbwf.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028276/Bastidores-17_zirgp6.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028276/Bastidores-12_jtwjzp.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028273/Bastidores-33_q2ssfm.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028272/Bastidores-58_l5wmct.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028271/Bastidores-38_i9hc2b.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028270/Bastidores-51_plfdk1.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028269/Bastidores-60_oo4kld.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028268/Bastidores-05_rmiq0n.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028267/Bastidores-52_ppxynj.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028265/Bastidores-34_gsy41q.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028265/Bastidores-53_rncwni.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028263/Bastidores-55_ztkx1b.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028262/Bastidores-54_tkhxql.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028261/Bastidores-26_eub26h.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028259/Bastidores-61_zdhrdv.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028258/Bastidores-44_jipo9j.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028257/Bastidores-01_xduhk5.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028256/Bastidores-56_bc3d2t.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028253/Bastidores-11_mhc5h3.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028251/Bastidores-41_jtvtib.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028251/Bastidores-15_cqy5kz.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028249/Bastidores-42_xxp2wk.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028247/Bastidores-32_uto9he.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028245/Bastidores-25_p49drx.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028243/Bastidores-06_aju0xr.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028240/Bastidores-10_hjdiym.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028236/Bastidores-62_sisxyd.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028234/Bastidores-28_inhpvs.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028233/Bastidores-64_bvffbh.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028232/Bastidores-09_ew77rv.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028231/Bastidores-35_p2j7cz.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028229/Bastidores-47_khajgu.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028224/Bastidores-57_wswodd.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028225/Bastidores-45_k5b1ai.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028224/Bastidores-50_ydemyo.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028223/Bastidores-31_kpdzw2.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028223/Bastidores-36_bshutt.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772028223/Bastidores-49_ng1yor.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772027958/Cap%C3%ADtulos-de-2023-04_wudktj.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772027958/Cap%C3%ADtulos-de-2023-02_zabclx.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772027950/Cap%C3%ADtulos-de-2023-14_jthzql.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772027943/Cap%C3%ADtulos-de-2023-13_i8thti.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772027943/Cap%C3%ADtulos-de-2023-01_qvtgpy.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772027943/Cap%C3%ADtulos-de-2023-15_g8ge0l.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772027943/Cap%C3%ADtulos-de-2023-03_ohrhxh.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772027942/Cap%C3%ADtulos-de-2023-17_vv0jzc.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772027942/Cap%C3%ADtulos-de-2023-16_g9r1qv.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772027941/Cap%C3%ADtulos-de-2023-08_dj6iml.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772027941/Cap%C3%ADtulos-de-2023-05_s4tbtf.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772027941/Cap%C3%ADtulos-de-2023-07_gs6vpm.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772027940/Cap%C3%ADtulos-de-2023-12_saljat.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772027940/Cap%C3%ADtulos-de-2023-10_bfojba.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772027940/Cap%C3%ADtulos-de-2023-11_v3y9ii.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772027940/Cap%C3%ADtulos-de-2023-06_phy6mc.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1772027940/Cap%C3%ADtulos-de-2023-09_yqpht8.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771994219/Familia-_-Amigos-11_dv9hws.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771994219/Familia-_-Amigos-18_uzaijh.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771994204/Familia-_-Amigos-01_qlze6o.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771994201/Familia-_-Amigos-09_sylksk.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771994058/Familia-_-Amigos-16_kaxobn.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993972/Familia-_-Amigos-08_azsph7.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993970/Familia-_-Amigos-03_lkeqdr.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993969/Familia-_-Amigos-22_anbyoe.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993968/Familia-_-Amigos-20_rgozlv.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993965/Familia-_-Amigos-10_brersg.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993963/Familia-_-Amigos-04_k8manv.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993962/Familia-_-Amigos-15_fuxse2.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993959/Familia-_-Amigos-21_kr9rul.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993958/Familia-_-Amigos-17_fjkcwi.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993958/Familia-_-Amigos-19_ugorfc.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993955/Familia-_-Amigos-06_sa9ri8.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993955/Familia-_-Amigos-14_wmhvee.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993953/Familia-_-Amigos-07_kqic6c.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993948/Familia-_-Amigos-12_ldbs73.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993948/Familia-_-Amigos-02_z4prio.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993947/Familia-_-Amigos-05_hw6bob.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993876/Familia-_-Amigos-04_vslunx.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993875/Familia-_-Amigos-15_gap8bx.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993874/Familia-_-Amigos-21_gyyvwq.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993873/Familia-_-Amigos-03_z6kx9i.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993873/Familia-_-Amigos-17_rt9ehh.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993872/Familia-_-Amigos-19_hnb60d.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993871/Familia-_-Amigos-06_i0gbuw.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993871/Familia-_-Amigos-14_x9u59y.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993870/Familia-_-Amigos-07_niyznm.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993869/Familia-_-Amigos-11_globnd.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993868/Familia-_-Amigos-12_q81ozz.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993867/Familia-_-Amigos-02_eamyyx.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993866/Familia-_-Amigos-05_cciovk.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993865/Familia-_-Amigos-16_sxcf7a.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993864/Familia-_-Amigos-13_ohkqcp.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993863/Familia-_-Amigos-08_j5oeoh.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993862/Familia-_-Amigos-22_w89ugg.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993862/Familia-_-Amigos-09_rbtxdq.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993861/Familia-_-Amigos-20_ihhd7b.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993861/Familia-_-Amigos-01_io0j3i.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993860/Familia-_-Amigos-18_kwznvh.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993859/Familia-_-Amigos-10_nzlsom.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993858/Familia-_-Amigos-04_k2iydv.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993853/Familia-_-Amigos-15_fsghcx.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993852/Familia-_-Amigos-21_drldl8.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993852/Familia-_-Amigos-03_hfxqrk.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993851/Familia-_-Amigos-17_vqc6gx.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993850/Familia-_-Amigos-19_smrsjn.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993849/Familia-_-Amigos-14_ptlfkk.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993849/Familia-_-Amigos-06_ttwnkq.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993848/Familia-_-Amigos-07_x0alsg.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993848/Familia-_-Amigos-11_e8sjow.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993847/Familia-_-Amigos-02_r8aumt.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993847/Familia-_-Amigos-12_f1bkei.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771993846/Familia-_-Amigos-05_z8uhml.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771970079/Familia-_-Amigos-05_zb4pdq.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771970073/Familia-_-Amigos-17_ctlloc.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771970025/Familia-_-Amigos-07_uknubm.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771970026/Familia-_-Amigos-14_f7oqfd.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771968951/Familia-_-Amigos-06_qftyqc.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771968946/Familia-_-Amigos-07_muyyav.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771968808/Familia-_-Amigos-11_z7931e.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771968774/Familia-_-Amigos-02_mlorcq.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771968728/Familia-_-Amigos-12_ffs7wg.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771968693/Familia-_-Amigos-14_x9tzbv.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771968661/Familia-_-Amigos-05_e10jbb.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771968600/Memorias-12_tpfebk.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771968593/Memorias-05_ftquas.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771968587/Memorias-07_flar4x.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771968584/Memorias-02_x44xti.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771968583/Memorias-09_gydhgk.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771968583/Memorias-08_dexyis.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771968582/Memorias-10_l8ftqu.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771968577/Memorias-11_ofsm9n.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771968577/Memorias-03_upori8.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771968576/Memorias-04_tzk47n.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771968576/Memorias-13_gcjifm.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771968568/Memorias-01_do9znu.webp',
+  'https://res.cloudinary.com/deeki0eou/image/upload/v1771968565/Memorias-06_qwlqvo.webp',,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+];
 
 const COL={r:'#DA8BA0',p:'#9F7CA9',a:'#D9B8E3',b:'#87C3E3',o:'#5A75C2'};
 
@@ -265,29 +406,6 @@ function nextImg(){
   return imgPool.pop();
 }
 
-
-// ════════════════════════════════════════════════
-//  PROGRESSO — guardar / retomar
-// ════════════════════════════════════════════════
-const SAVE_KEY='shell2026-neural-puzzle-v3';
-let bestRecords={};
-function saveProgress(showToast){
-  try{
-    localStorage.setItem(SAVE_KEY,JSON.stringify({
-      level, completed:completedLevels, best:bestRecords, img:usedImgUrl, at:Date.now()
-    }));
-    if(showToast){
-      const t=document.getElementById('save-toast');
-      if(t){ t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),1600); }
-    }
-  }catch(e){}
-}
-function loadProgress(){
-  try{ const raw=localStorage.getItem(SAVE_KEY); return raw?JSON.parse(raw):null; }
-  catch(e){ return null; }
-}
-function clearProgress(){ try{ localStorage.removeItem(SAVE_KEY); }catch(e){} }
-
 // ════════════════════════════════════════════════
 //  INIT
 // ════════════════════════════════════════════════
@@ -308,34 +426,10 @@ window.addEventListener('load',()=>{
   document.getElementById('btn-prev').onclick=()=>document.getElementById('prev-ov').classList.toggle('show');
   document.getElementById('btn-hint').onclick=doHint;
   document.getElementById('btn-shuf').onclick=doShuffle;
-  document.getElementById('btn-photo').onclick=()=>loadImage(false);
-  document.getElementById('btn-reset').onclick=()=>{ if(confirm('Recomeçar do nível 1? O progresso guardado será apagado.')) resetGame(); };
+  document.getElementById('btn-photo').onclick=()=>loadImage(true); // troca a foto em tempo real, mantendo o nível
+  document.getElementById('btn-reset').onclick=resetGame;
 
-  const save=loadProgress();
-  if(save && (save.level>0 || (save.completed&&save.completed.length))){
-    level=Math.min(save.level||0,MAX_LEVEL);
-    completedLevels=save.completed||[];
-    bestRecords=save.best||{};
-    updateLevelBar();
-    document.getElementById('resume-info').innerHTML=
-      'NÍVEL ATUAL → '+(level+1)+' · '+LEVEL_NAMES[level]+'<br>'+
-      'CONCLUÍDOS → '+completedLevels.length+'/'+LEVEL_GRIDS.length+'<br>'+
-      '✦ O teu progresso está seguro ✦';
-    document.getElementById('resume-ov').classList.add('show');
-    document.getElementById('btn-resume').onclick=()=>{
-      document.getElementById('resume-ov').classList.remove('show');
-      loadImageWithUrl(save.img,false);
-    };
-    document.getElementById('btn-fresh').onclick=()=>{
-      clearProgress();
-      level=0; completedLevels=[]; bestRecords={};
-      updateLevelBar();
-      document.getElementById('resume-ov').classList.remove('show');
-      loadImage(false);
-    };
-  } else {
-    loadImage(false);
-  }
+  loadImage(false);
   requestAnimationFrame(loop);
 });
 
@@ -371,44 +465,22 @@ function updateLevelBar(){
 // ════════════════════════════════════════════════
 //  IMAGE LOADING
 // ════════════════════════════════════════════════
-let loadAttempts=0;
 function loadImage(sameLevel=false){
-  loadAttempts=0;
-  tryNextImg(sameLevel);
-}
-function loadImageWithUrl(url,sameLevel){
-  if(!url){ loadImage(false); return; }
-  loadAttempts=0;
-  tryUrl(url,sameLevel===true,()=>loadImage(false));
-}
-function tryNextImg(sameLevel){
-  if(loadAttempts>=8){ showLoadError(); return; }
-  tryUrl(nextImg(),sameLevel,()=>{ loadAttempts++; tryNextImg(sameLevel); });
-}
-function tryUrl(url,sameLevel,onFail){
-  loadAttempts++;
-  if(loadAttempts>8){ showLoadError(); return; }
+  const url=nextImg();
   usedImgUrl=url;
   showLoading(true);
-  document.getElementById('ld-txt').textContent='CARREGANDO MEMÓRIA '+loadAttempts+'...';
   const im=new Image();
-  let done=false;
-  const timer=setTimeout(()=>{ if(!done){ done=true; onFail(); } },20000);
   im.onload=()=>{
-    if(done)return; done=true; clearTimeout(timer);
     image=im;
     document.getElementById('prev-img').src=url;
-    saveProgress(false);
     setTimeout(()=>{hideLoading(); startGame(sameLevel);},700);
   };
-  im.onerror=()=>{ if(done)return; done=true; clearTimeout(timer); onFail(); };
+  im.onerror=()=>{
+    const fallback=nextImg();
+    usedImgUrl=fallback;
+    im.src=fallback;
+  };
   im.src=url;
-}
-function showLoadError(){
-  const ld=document.getElementById('loading');
-  document.getElementById('ld-txt').textContent='TOCA AQUI PARA TENTAR DE NOVO ✦';
-  ld.style.cursor='pointer';
-  ld.onclick=()=>{ ld.onclick=null; ld.style.cursor='default'; loadAttempts=0; tryNextImg(false); };
 }
 
 function showLoading(visible){
@@ -446,7 +518,7 @@ function startGame(keepLevel=false){
 }
 
 function resetGame(){
-  level=0; completedLevels=[]; bestRecords={}; clearProgress();
+  level=0; completedLevels=[];
   shufflePool(); updateLevelBar();
   loadImage(false);
 }
@@ -778,11 +850,6 @@ function doWin(){
   btns.appendChild(rb);
 
   document.getElementById('win-ov').classList.add('show');
-  try{
-    const rec={score, moves, time:mm+':'+ss, stars};
-    if(!bestRecords[level]||score>bestRecords[level].score) bestRecords[level]=rec;
-    saveProgress(true);
-  }catch(e){}
   // Particles burst
   const cx=board.x+board.w/2,cy=board.y+board.h/2;
   [[cx,cy],[board.x,board.y],[board.x+board.w,board.y],
@@ -822,16 +889,5 @@ function tickTimer(){
 }
 function hidePrev(){document.getElementById('prev-ov').classList.remove('show');}
 </script>
-
-<!-- RETOMAR PROGRESSO -->
-<div id="resume-ov">
-  <div class="resume-t">✦ Progresso Encontrado ✦</div>
-  <div class="resume-s" id="resume-info"></div>
-  <div class="resume-btns">
-    <button class="win-btn" id="btn-resume" style="border-color:#87C3E3;color:#87C3E3">▶ CONTINUAR</button>
-    <button class="win-btn" id="btn-fresh" style="border-color:#DA8BA0;color:#DA8BA0">↩ RECOMEÇAR</button>
-  </div>
-</div>
-<div id="save-toast">✦ PROGRESSO GUARDADO</div>
 </body>
 </html>

@@ -5,6 +5,7 @@ import FloatingMusic from "../components/FloatingMusic";
 import WelcomeModal from "../components/WelcomeModal";
 import AppFooter from "../components/AppFooter";
 import { LightboxHost } from "../components/media";
+import SwarmCursor from "../components/SwarmCursor";
 import { CursorGlow, FilmGrain, ScrollProgress, SectionDock } from "../components/effects";
 import { useMusic } from "../audio/MusicProvider";
 import { SECTION_TRACKS } from "../audio/sectionTracks";
@@ -15,7 +16,7 @@ import { LibrarySection, ArtSection } from "./private/CreativeSections";
 import { CinemaSection, DreamsSection, SkySection, MusicSection } from "./private/FutureSections";
 import { NaturezaSection } from "./private/NatureSections";
 import ImmersiveGallery from "./private/ImmersiveGallery";
-import NeuralPuzzlePage from "./private/NeuralPuzzlePage";
+import { PuzzleArcadePage } from "../sections/ArcadePages";
 import CartaPage from "./private/CartaPage";
 import ReliquiasPage from "./private/ReliquiasPage";
 import TimelinePage from "./private/TimelinePage";
@@ -129,9 +130,18 @@ export default function PrivateArea({ onExit }: { onExit: () => void }) {
       {page === "universo" && <ScrollProgress />}
       <FilmGrain />
       <CursorGlow />
-      {/* SwarmCursor guardado no código — pode voltar quando quisermos.
-          <SwarmCursor overlay color="#87C3E3" accentColor="#D9B8E3" count={9}
-            size={8} spread={90} speed={2.2} trail={0.7} className="z-[45]" /> */}
+      {/* As serpentes de luz acompanham a Shelcia — agora com fronteiras suaves */}
+      <SwarmCursor
+        overlay
+        color="#87C3E3"
+        accentColor="#D9B8E3"
+        count={9}
+        size={8}
+        spread={90}
+        speed={2.2}
+        trail={0.7}
+        className="z-[45]"
+      />
       <FloatingMusic />
       {page === "universo" && <SectionDock sections={SECTIONS} />}
 
@@ -226,7 +236,7 @@ export default function PrivateArea({ onExit }: { onExit: () => void }) {
             exit={{ opacity: 0, filter: "blur(6px)" }}
             transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
           >
-            <NeuralPuzzlePage />
+            <PuzzleArcadePage onExit={() => goPage("universo")} />
           </motion.div>
         )}
       </AnimatePresence>
