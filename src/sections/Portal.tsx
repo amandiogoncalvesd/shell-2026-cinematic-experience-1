@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { CanvasParticles, Countdown, FilmGrain, LiquidBlobs } from "../components/effects";
 import LiquidChrome from "../components/LiquidChrome";
 import ElectricBorder from "../components/ElectricBorder";
+import SwarmCursor from "../components/SwarmCursor";
 import InstallBanner from "../components/InstallBanner";
 import { requestImmersiveFullscreen } from "../utils/fullscreen";
 import { universeQuote } from "../data/media2026";
@@ -54,7 +55,19 @@ export default function Portal({ onEnter }: { onEnter: (role: "guests" | "shelci
       <LiquidBlobs />
       <CanvasParticles density={90} />
 
-      <AnimatePresence mode="wait">
+      {/* Enxame de luz que orbita o cursor */}
+      <SwarmCursor
+        color="#87C3E3"
+        accentColor="#D9B8E3"
+        count={9}
+        size={8}
+        spread={90}
+        speed={2.2}
+        trail={0.7}
+        className="absolute inset-0 z-10"
+      >
+        <div className="flex min-h-screen w-full items-center justify-center">
+          <AnimatePresence mode="wait">
         {/* ══════════ FASE 1 · ABERTURA ══════════ */}
         {phase === "loading" && (
           <motion.div
@@ -200,7 +213,9 @@ export default function Portal({ onEnter }: { onEnter: (role: "guests" | "shelci
             </motion.div>
           </motion.div>
         )}
-      </AnimatePresence>
+          </AnimatePresence>
+        </div>
+      </SwarmCursor>
 
       <FilmGrain />
 

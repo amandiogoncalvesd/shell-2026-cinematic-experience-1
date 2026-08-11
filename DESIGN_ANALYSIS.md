@@ -306,3 +306,14 @@ clichés genéricos. Cada palavra é dita por ele, para ela.
 2. **FlyingPosters (React Bits/ogl):** terceiro módulo da Galeria Imersiva —
    posters 3D que voam com scroll/arrasto (destaques + flores).
 3. Regra de leveza: glifos nativos (✦ ❈ ♪ ▶ ⬇) em vez de bibliotecas de ícones.
+
+---
+
+## FASE 21 — SwarmCursor
+
+1. **SwarmCursor (React Bits/ogl)** no Portal: enxame de luz azul-céu com
+   acento lavanda que orbita o cursor, funde-se como gosma luminosa e
+   dispersa ao clicar — magia líquida à volta de quem entra.
+2. O enxame vive na camada z-10 do portal; os botões continuam clicáveis
+   (os eventos borbulham para o canvas) e o efeito respeita
+   `prefers-reduced-motion`.
