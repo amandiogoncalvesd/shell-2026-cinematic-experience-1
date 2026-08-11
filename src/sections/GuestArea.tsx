@@ -151,7 +151,7 @@ export default function GuestArea({ onGoPrivate, onExitPortal }: { onGoPrivate: 
           <SectionHeading
             kicker="Capítulo II"
             title="Melhores Momentos de 2026"
-            subtitle="Shelcia e Ruth — para sempre bestas."
+            subtitle="Shelcia, Ruth e os amigos — para sempre."
           />
         </div>
         <div className="mt-12 space-y-6">

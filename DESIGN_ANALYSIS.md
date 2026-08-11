@@ -320,3 +320,18 @@ convidados** — nunca no portal.
    lavanda que orbita, funde-se como gosma luminosa e dispersa a cada clique.
 2. Presente na página principal da Shelcia (9 partículas) e na página dos
    convidados (8). Descansa em modo cinema e respeita `prefers-reduced-motion`.
+3. **Atualização:** removido da página da Shelcia por pedido do Amândio (não
+   estava a fazer efeito). O código fica guardado no componente; mantém-se na
+   página dos convidados.
+
+---
+
+## FASE 22 — Correções finas
+
+1. Convidados: “Shelcia e Ruth” → **“Shelcia, Ruth e os amigos — para sempre.”**
+2. **Posters Voadores:** começam sempre com a fotografia de destaque no centro;
+   título “Desliza para ver a magia acontecer ✦” em destaque com brilho pulsante;
+   ciclo infinito com uma amostra de todas as categorias (~171 fotos, w_500).
+3. **Neural Puzzle:** voltou ao pool de **162 WebP originais** do puzzle
+   funcional (Toque de Magia excluída); cache-buster `?v=2` e service worker v5
+   para limpar caches antigas.

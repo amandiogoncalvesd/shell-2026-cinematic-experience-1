@@ -33,13 +33,39 @@ import {
   childhoodPrivate,
   generic2026,
   backstage2026,
+  artMagic,
 } from "../../data/photos";
+import { thumb } from "../../utils/cloudinary";
 import { videoRuthMoments, videoRuthCeremony, privateVideos } from "../../data/videos";
 
 type Module = "fotos" | "videos" | "voadora";
 
-// Posters que voam — os destaques e as flores, em 3D.
-const FLYING_ITEMS = [...destaque18Photos.slice(0, 10), ...naturezaFloresPhotos.slice(0, 6)];
+// Posters que voam — um exemplar de TODAS as categorias da Shelcia,
+// num ciclo infinito. A fotografia de destaque começa sempre no centro.
+const buildFlyingPool = () => {
+  const hero = destaque18Photos[0];
+  const all = [
+    ...destaque18Photos.slice(1),
+    ...naturezaBosquesPhotos,
+    ...naturezaFloresPhotos,
+    ...naturezaPaisagensPhotos,
+    ...arquiteturaSonhoPhotos,
+    ...artTxtPhotos,
+    ...frasesSeriePhotos,
+    ...ruthCeremony.slice(0, 12),
+    ...ruthBackstage.slice(0, 8),
+    ...familyFriends2026,
+    ...childhoodPublic.slice(0, 10),
+    ...artMagic.slice(0, 12),
+  ].map((u) => thumb(u, 500));
+  // Intercala as categorias para o voo ser variado.
+  const mixed = all.filter((_, i) => i % 2 === 0).concat(all.filter((_, i) => i % 2 === 1));
+  const mid = Math.floor(mixed.length / 2);
+  const withHero = [...mixed];
+  withHero.splice(mid, 0, thumb(hero, 500));
+  return withHero;
+};
+const FLYING_ITEMS = buildFlyingPool();
 
 const PHOTO_CATS: { id: string; label: string; photos: string[] }[] = [
   { id: "destaques", label: "Destaques · 18 anos", photos: destaque18Photos },
@@ -262,8 +288,11 @@ export default function ImmersiveGallery() {
             className="relative z-10 pb-28"
           >
             <div className="mx-auto max-w-7xl px-6">
-              <Reveal>
-                <Kicker>Posters voadores — desliza para os ver voar ✦</Kicker>
+              <Reveal className="text-center">
+                <p className="text-[10px] uppercase tracking-[0.4em] text-shell-sky/70">{FLYING_ITEMS.length} fotografias · voo sem fim</p>
+                <h3 className="glow-shell animate-pulse-glow mt-3 font-display text-2xl font-semibold sm:text-4xl">
+                  Desliza para ver a magia acontecer ✦
+                </h3>
               </Reveal>
               <div className="royal-frame mt-6 overflow-hidden rounded-3xl p-2">
                 <div className="relative h-[70vh] overflow-hidden rounded-2xl bg-[#040f1e]">
@@ -272,8 +301,8 @@ export default function ImmersiveGallery() {
                   <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-[#03101f] to-transparent" />
                 </div>
               </div>
-              <p className="mt-4 text-center text-[10px] uppercase tracking-[0.3em] text-[#b9d9ec]/45">
-                roda do rato ou arrasta para navegar entre os posters
+              <p className="animate-pulse-glow mt-4 text-center text-[11px] uppercase tracking-[0.35em] text-shell-sky/70">
+                ✦ desliza para ver a magia acontecer ✦
               </p>
             </div>
           </motion.div>

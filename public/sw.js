@@ -5,8 +5,8 @@
    · todas as fotos/vídeos/cartazes já vistos → carregam instantaneamente
    · as fontes → o visual mantém-se offline
 ───────────────────────────────────────────────────────────── */
-const SHELL = "shell2026-shell-v4";
-const MEDIA = "shell2026-media-v4";
+const SHELL = "shell2026-shell-v5";
+const MEDIA = "shell2026-media-v5";
 const MAX_MEDIA = 400; // limite de mídias guardadas (as mais antigas saem)
 
 const SHELL_ASSETS = [
