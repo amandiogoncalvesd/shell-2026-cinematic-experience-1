@@ -54,19 +54,7 @@ export default function Portal({ onEnter }: { onEnter: (role: "guests" | "shelci
       <LiquidBlobs />
       <CanvasParticles density={90} />
 
-      {/* Enxame de luz que orbita o cursor */}
-      <SwarmCursor
-        color="#87C3E3"
-        accentColor="#D9B8E3"
-        count={9}
-        size={8}
-        spread={90}
-        speed={2.2}
-        trail={0.7}
-        className="absolute inset-0 z-10"
-      >
-        <div className="flex min-h-screen w-full items-center justify-center">
-          <AnimatePresence mode="wait">
+<AnimatePresence mode="wait">
         {/* ══════════ FASE 1 · ABERTURA ══════════ */}
         {phase === "loading" && (
           <motion.div
@@ -212,9 +200,7 @@ export default function Portal({ onEnter }: { onEnter: (role: "guests" | "shelci
             </motion.div>
           </motion.div>
         )}
-          </AnimatePresence>
-        </div>
-      </SwarmCursor>
+      </AnimatePresence>
 
       <FilmGrain />
 
