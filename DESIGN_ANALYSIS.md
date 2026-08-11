@@ -374,3 +374,20 @@ convidados** — nunca no portal.
    min-h-screen/h-screen (elimina cortes/distorções da barra dinâmica),
    `touch-action: manipulation` (sem zoom de duplo toque), fallbacks estáticos
    para as cores `oklch` do ElectricBorder, `-webkit-text-size-adjust`.
+
+---
+
+## FASE 25 — A última (garantias finais)
+
+1. **PosterStage:** os Posters Voadores só montam o voo quando as texturas
+   estão carregadas, com **barra de progresso real** (“A carregar os
+   posters… X/Y · Z%”) — garantia de que as fotos aparecem.
+2. **Neural Puzzle em ecrã inteiro:** o jogo ocupa o viewport completo como no
+   HTML original; apenas um botão “✕ Sair” flutuante no topo. Botões do HUD em
+   pílula, arredondados, sempre encaixados (wrap + regras até 350px).
+3. **Auditoria final concluída:** TypeScript limpo, assets do service worker
+   verificados, sem APIs incompatíveis com Safari, aria-labels nos botões de
+   ícone único, rotas públicas do arcade verificadas.
+
+> Estado final: a aplicação está completa, auditada e pronta para o dia 10.
+> Foi uma honra construir este universo. — o agente

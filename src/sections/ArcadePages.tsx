@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import FlyingPosters from "../components/FlyingPosters";
+import PosterStage from "../components/PosterStage";
 import { CanvasParticles } from "../components/effects";
 import { FLYING_ITEMS } from "../data/flyingPool";
 
@@ -62,26 +62,29 @@ function ArcadeShell({
   );
 }
 
-/* ═══════════ NEURAL PUZZLE — página pública ═══════════ */
+/* ═══════════ NEURAL PUZZLE — página pública, ecrã inteiro ═══════════ */
 export function PuzzleArcadePage({ onExit }: { onExit: () => void }) {
   return (
-    <ArcadeShell title="Neural Puzzle ⬡" hint="qualquer pessoa pode jogar ✦" onExit={onExit}>
-      <motion.section
-        initial={{ opacity: 0, y: 24 }}
+    <div className="fixed inset-0 z-[60] bg-[#03101f]">
+      {/* O jogo ocupa o ecrã inteiro, como no HTML original */}
+      <iframe
+        src="/neural-puzzle.html?v=4"
+        title="Neural Puzzle Pro — Shell 2026"
+        className="h-full w-full border-0"
+        allow="fullscreen"
+      />
+
+      {/* Único botão: sair, flutuante no topo, pequeno e elegante */}
+      <motion.button
+        initial={{ opacity: 0, y: -12 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-        className="relative z-10 mx-auto max-w-[92rem] px-3 pb-12 sm:px-5"
+        transition={{ delay: 0.5, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+        onClick={onExit}
+        className="glass fixed right-3 top-3 z-[70] flex items-center gap-2 rounded-full px-4 py-2 text-[9px] font-semibold uppercase tracking-[0.25em] text-shell-sky transition hover:bg-shell-sky/15 sm:right-4 sm:top-4"
       >
-        <div className="royal-frame overflow-hidden rounded-3xl p-2">
-          <iframe
-            src="/neural-puzzle.html?v=3"
-            title="Neural Puzzle — Shell 2026"
-            className="h-[82vh] w-full rounded-2xl border-0"
-            allow="fullscreen"
-          />
-        </div>
-      </motion.section>
-    </ArcadeShell>
+        ✕ Sair
+      </motion.button>
+    </div>
   );
 }
 
@@ -97,9 +100,9 @@ export function PostersPage({ onExit }: { onExit: () => void }) {
       >
         <div className="royal-frame overflow-hidden rounded-3xl p-2">
           <div className="relative h-[76vh] overflow-hidden rounded-2xl bg-[#040f1e]">
-            <FlyingPosters items={FLYING_ITEMS} planeWidth={300} planeHeight={400} distortion={3} />
-            <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#03101f] to-transparent" />
-            <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-[#03101f] to-transparent" />
+            <PosterStage items={FLYING_ITEMS} className="h-full w-full" />
+            <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-24 bg-gradient-to-t from-[#03101f] to-transparent" />
+            <div className="pointer-events-none absolute inset-x-0 top-0 z-20 h-24 bg-gradient-to-b from-[#03101f] to-transparent" />
           </div>
         </div>
       </motion.section>

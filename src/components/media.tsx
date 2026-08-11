@@ -163,6 +163,7 @@ export function LightboxHost() {
                 e.stopPropagation();
                 prev();
               }}
+              aria-label="Anterior"
             >
               ‹
             </button>
@@ -172,6 +173,7 @@ export function LightboxHost() {
                 e.stopPropagation();
                 next();
               }}
+              aria-label="Próxima"
             >
               ›
             </button>

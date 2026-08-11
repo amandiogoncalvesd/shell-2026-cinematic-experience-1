@@ -2,7 +2,7 @@ import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { CanvasParticles, LiquidBlobs, Reveal } from "../../components/effects";
 import { Framemation } from "../../components/cinema";
-import FlyingPosters from "../../components/FlyingPosters";
+import PosterStage from "../../components/PosterStage";
 import { LightboxHost, MediaCarousel, PhotoStage, VideoCard, openLightbox } from "../../components/media";
 import { GlassButton, Kicker, Chip } from "../../components/ui";
 import { useMusic } from "../../audio/MusicProvider";
@@ -269,9 +269,9 @@ export default function ImmersiveGallery() {
               </Reveal>
               <div className="royal-frame mt-6 overflow-hidden rounded-3xl p-2">
                 <div className="relative h-[70vh] overflow-hidden rounded-2xl bg-[#040f1e]">
-                  <FlyingPosters items={FLYING_ITEMS} planeWidth={300} planeHeight={400} distortion={3} />
-                  <div className="pointer-events-none absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[#03101f] to-transparent" />
-                  <div className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-[#03101f] to-transparent" />
+                  <PosterStage items={FLYING_ITEMS} className="h-full w-full" />
+                  <div className="pointer-events-none absolute inset-x-0 bottom-0 z-20 h-24 bg-gradient-to-t from-[#03101f] to-transparent" />
+                  <div className="pointer-events-none absolute inset-x-0 top-0 z-20 h-24 bg-gradient-to-b from-[#03101f] to-transparent" />
                 </div>
               </div>
               <p className="animate-pulse-glow mt-4 text-center text-[11px] uppercase tracking-[0.35em] text-shell-sky/70">

@@ -143,6 +143,31 @@ body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:997;
   #hud{height:auto;min-height:56px;flex-wrap:wrap;padding:8px 10px}
   .hud-stats{gap:10px}
 }
+
+/* ── Refinamento final do HUD: botões pill, tudo encaixado ── */
+#hud{height:auto;min-height:56px;flex-wrap:wrap;padding:8px 12px;overflow:visible;gap:8px 12px}
+.logo{font-size:11px}
+.level-info .level-name{font-size:10px}
+.grid-tag{font-size:8px}
+.hud-btns{margin-left:auto;flex-wrap:wrap;justify-content:flex-end;row-gap:5px;max-width:100%}
+.btn{border-radius:999px;padding:6px 11px;font-size:7.5px}
+.btn:hover{transform:translateY(-1px)}
+.win-btn{border-radius:999px}
+#resume-ov .win-btn{border-radius:999px}
+@media (max-width:480px){
+  #hud{gap:6px 8px;padding:6px 8px}
+  .hud-sep{display:none}
+  #lvl-bar{order:3;width:100%;justify-content:center;margin-top:2px}
+  .hud-stats{gap:8px}
+  .stat{min-width:38px}
+  .stat-v{font-size:11px}
+  .btn{padding:5px 9px;font-size:7px;letter-spacing:1px}
+  .logo{font-size:10px;letter-spacing:2px}
+  .level-info .level-name{font-size:9px}
+}
+@media (max-width:350px){
+  .logo{display:none}
+}
 </style>
 </head>
 <body>
