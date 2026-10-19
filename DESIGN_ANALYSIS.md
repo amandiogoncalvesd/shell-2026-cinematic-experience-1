@@ -406,3 +406,5 @@ convidados** — nunca no portal.
    a cada encaixe, ao baralhar, ao vencer, a cada 5 s, ao ocultar a página
    e ao sair. Ao voltar, o jogo retoma exatamente onde parou.
    “Reiniciar” limpa o progresso guardado.
+3. **SwarmCursor removido de toda a aplicação** (pedido final do Amândio).
+   O componente fica guardado em `components/SwarmCursor.tsx` para o futuro.
