@@ -1,0 +1,28 @@
+.film-seek {
+  appearance: none;
+  height: 3px;
+  border-radius: 99px;
+  background: linear-gradient(90deg, #d9b8e3, #87c3e3 60%, rgba(255,255,255,.18));
+  cursor: pointer;
+  outline: none;
+}
+.film-seek::-webkit-slider-thumb {
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #e6f6ff;
+  border: 2px solid #87c3e3;
+  box-shadow: 0 0 14px rgba(135,195,227,.8);
+}
+.film-seek::-moz-range-thumb {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #e6f6ff;
+  border: 2px solid #87c3e3;
+  box-shadow: 0 0 14px rgba(135,195,227,.8);
+}
+@media (prefers-reduced-motion: reduce) {
+  .film-seek { scroll-behavior: auto; }
+}
