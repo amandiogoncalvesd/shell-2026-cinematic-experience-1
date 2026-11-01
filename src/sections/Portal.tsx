@@ -7,6 +7,7 @@ import InstallBanner from "../components/InstallBanner";
 import { requestImmersiveFullscreen } from "../utils/fullscreen";
 import { universeQuote } from "../data/media2026";
 import { identity } from "../data/content";
+import CelebrationFilm from "../components/CelebrationFilm";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
 
@@ -20,6 +21,7 @@ export default function Portal({
   const [phase, setPhase] = useState<"loading" | "portal" | "leaving">("loading");
   const [leavingTo, setLeavingTo] = useState<"guests" | "shelcia" | null>(null);
   const [progress, setProgress] = useState(0);
+  const [filmOpen, setFilmOpen] = useState(false);
 
   useEffect(() => {
     const id = setInterval(() => {
@@ -59,6 +61,7 @@ export default function Portal({
       </div>
       <LiquidBlobs />
       <CanvasParticles density={90} />
+      {filmOpen && <CelebrationFilm onClose={() => setFilmOpen(false)} />}
 
 <AnimatePresence mode="wait">
         {/* ══════════ FASE 1 · ABERTURA ══════════ */}
@@ -139,6 +142,17 @@ export default function Portal({
                 <span className="h-px w-12 bg-gradient-to-l from-transparent to-shell-sky/60" />
               </div>
             </motion.div>
+
+            {/* O filme de marca: experiência integral de 60 segundos, controlável e com som opcional. */}
+            <motion.button
+              variants={{ hidden: { opacity: 0, y: 20 }, show: { opacity: 1, y: 0 } }}
+              transition={{ duration: 0.9, ease: EASE }}
+              onClick={() => setFilmOpen(true)}
+              className="group flex items-center gap-3 rounded-full border border-shell-sky/35 bg-[#87c3e3]/10 px-6 py-3 text-[10px] font-semibold uppercase tracking-[0.28em] text-shell-sky shadow-[0_0_35px_rgba(135,195,227,.12)] backdrop-blur transition hover:border-shell-sky/70 hover:bg-shell-sky/20 hover:shadow-[0_0_50px_rgba(135,195,227,.24)]"
+            >
+              <span className="grid h-7 w-7 place-items-center rounded-full border border-shell-sky/40 text-[10px] transition group-hover:scale-110">▶</span>
+              Assistir ao filme · 60 segundos
+            </motion.button>
 
             {/* Arcade — jogos livres, sem chave, para qualquer pessoa */}
             <motion.div
